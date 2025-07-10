@@ -1,0 +1,58 @@
+.card-information .save-wrapper {
+    padding-left: 2px;
+}
+
+.card-information .price .price-item {
+    margin: 0 2px 0 0;
+}
+
+.similar-main-wrapper .card-information .save-wrapper,
+.similar-main-wrapper .save-wrapper .save-content,
+.similar-main-wrapper .card__information .price__sale .price-item--sale span,
+.similar-main-wrapper .card-wrapper .price-item--regular span,
+.related__main .card-information .save-wrapper,
+.related__main .save-wrapper .save-content,
+.related__main .card__information .price__sale .price-item--sale span,
+.related__main .card-wrapper .price-item--regular span {
+    font-size: 10px;
+}
+
+
+@media(min-width:990px) {
+    .card-product-row {
+        gap: 20px;
+        flex-wrap: wrap;
+    }
+
+    .card-product-row .card-product-coll {
+        width: calc(14.2% - 19px);
+        max-width: calc(14.2% - 19px);
+        border: 1px solid #e9e9eb;
+    }
+      .similar-main-wrapper .card-information .save-wrapper,
+    .similar-main-wrapper .save-wrapper .save-content,
+    .similar-main-wrapper .card__information .price__sale .price-item--sale span,
+    .similar-main-wrapper .card-wrapper .price-item--regular span,
+    .related__main .card-information .save-wrapper,
+    .related__main .save-wrapper .save-content,
+    .related__main .card__information .price__sale .price-item--sale span,
+    .related__main .card-wrapper .price-item--regular span {
+        font-size: 11px;
+    }
+}
+
+@media(min-width:1300px) {
+    .card-product-row {
+        gap: 40px;
+    }
+
+    .card-product-row .card-product-coll {
+        width: calc(14.2% - 36px);
+        max-width: calc(14.2% - 36px);
+        border: 1px solid #e9e9eb;
+    }
+}
+
+.card-product-row .card-product-coll {
+    border: 1px solid #e9e9eb;
+}

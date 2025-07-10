@@ -1,0 +1,338 @@
+<style>
+  .exclusive-main-banner .exclusive-banner-inner .textbox {
+    top: {{section.settings.position_top}}%;
+    left:{{section.settings.position_left}}%;
+      transform: translate(-{{section.settings.position_left}}%, -{{section.settings.position_top}}%);
+      width:{{section.settings.width}}%
+    }
+
+    video{
+        width: 100%;
+    }
+    .exclusive-main-banner .exclusive-banner-inner .video-controls {
+      position: absolute;
+      bottom: 5%;
+      left: 50%;
+      transform: translate(-50%,-5%);
+      z-index: 2;
+      width: 90%;
+      /* border: 1px solid rgba(255,255,255,0.2); */
+    }
+
+    @media(min-width:990px){
+        .exclusive-main-banner .exclusive-banner-inner .textbox .para{
+            max-width: 325px;
+        }
+        .exclusive-main-banner .exclusive-banner-inner .video-controls{
+          width: 95%;
+        }
+    }
+</style>
+<div class="exclusive-main-banner">
+  <div class="page-width p-0">
+    <div class="exclusive-banner-inner relative">
+      {% if section.settings.image_or_video == 'image' %}
+        <img
+          class="w-full small-hide medium-hide"
+          src="{{section.settings.image_desk |  img_url: 'master'}}"
+          alt="banner Image"
+          loading="lazy"
+        >
+        <img
+          class="w-full large-up-hide"
+          src="{{section.settings.image_mbl |  img_url: 'master'}}"
+          alt="banner Image"
+          loading="lazy"
+        >
+
+      {% else %}
+        <div class="video-banner-desk w-full small-hide medium-hide">
+          {{ section.settings.video_desk | video_tag: autoplay: true, loop: true, muted: true, controls: false }}
+        </div>
+        <div class="video-banner-mbl w-full large-up-hide">
+          {{ section.settings.video_mbl | video_tag: autoplay: true, loop: true, muted: true, controls: false }}
+        </div>
+      {% endif %}
+      <div class="textbox text-center absolute">
+        <h2 class="f-size-48-lg f-size-24 c-dark-black leading-9 font-bold p-0 m-0">{{ section.settings.heading }}</h2>
+        <p class="para f-size-12-lg c-dark-black leading-5 lt-space-1 m-auto py-10">{{ section.settings.paragraph }}</p>
+        <a
+          class="f-size-12-lg bg-black c-white leading-5 lt-space-1 text-no-decoration uppercase px-40 py-10"
+          href="{{section.settings.button_link}}"
+        >
+          {{- section.settings.button_text -}}
+        </a>
+      </div>
+      <div class="video-controls flex justify-between">
+        <div class="play-pause">
+          <svg
+            class="play pointer cstm-hide"
+            width="26"
+            height="26"
+            viewBox="0 0 26 26"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+          >
+            <rect x="0.765625" y="0.488281" width="24.8092" height="24.8092" fill="url(#pattern0_656_377)"/>
+            <defs>
+            <pattern id="pattern0_656_377" patternContentUnits="objectBoundingBox" width="1" height="1">
+            <use xlink:href="#image0_656_377" transform="scale(0.01)"/>
+            </pattern>
+            <image id="image0_656_377" width="100" height="100" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAACXBIWXMAAAsTAAALEwEAmpwYAAACVUlEQVR4nO3aPY7TUBiFYQskBBISJS30UIIEGwA2wRYoaSlp2QJbcJ1sYLKATO02UgqQi4nkF00REfEzSmY+5557v/Os4MYn8/Pa7jozMzMzMzMzaxjwuvQZ7AAwAd+Bp74wAvjtJ/AFeFD6TKnxt0vgQ+lzpcX/9cDz0udLh5uNwFfgcelzpsFxBuBj6bOmwGmWwMvSZ24ap9sB34Anpc/eJG5vA3wC7pf+DE3h7lbA29KfoxnEmFz7WoPs/XDtaw1yWPvvY74yyTCv3rWvNcg1177YIHuufbFBDmv/xak/yWlQxs61rzXIn7V/77xfQ2FoWAFvSl8LCeiYXPtag+zlrn10XaasffT1qWqfOoxpnu1Tl6H5Z/vUadls7VOvXZO1T/02TdU+7Vg1Ufu0Zaq+9mnTFvhcZe3TtnV1tU8OfTW1Tx5jFbVPPoN07ZPXUrL2yW0nV/ulr4gIndovfSVEeBAR/pUlZOE/6hr8b69QGF6/zfKoU0aeWyfPuhrQtrVvLmrw7XcRfkAlxI9wRehUdgTqdSV3YzACdVpIVnYE6jJIP1yKQB3GKio7Avr6aio7AtqV/a7LBj3bal9yi4COqfrXQCOg4aKJF6UjFB5i01RlRyg0xFWTlR2hwBiLZis7whmHGJqv7AhnGGJMU9kRZh6jT1XZEWYaYp2ysiMED7FNXdkRgoaYXNk6g1y4sgPdYYiNK3sGtxjClT2nE8dwZc/tyCFc2edyZGU/PNuBsrthDFd2Cf8YwpVd0sEQrmwFrmwxwKvSZzAzMzMzMzMz60L8AioNdtitwGPTAAAAAElFTkSuQmCC"/>
+            </defs>
+          </svg>
+          <svg
+            class="pause pointer"
+            width="26"
+            height="26"
+            viewBox="0 0 30 30"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path d="M0 6C0 3.17157 -8.9407e-08 1.75735 0.878685 0.878685C1.75735 -8.9407e-08 3.17157 0 6 0C8.82843 0 10.2426 -8.9407e-08 11.1213 0.878685C12 1.75735 12 3.17157 12 6V24C12 26.8284 12 28.2426 11.1213 29.1213C10.2426 30 8.82843 30 6 30C3.17157 30 1.75735 30 0.878685 29.1213C-8.9407e-08 28.2426 0 26.8284 0 24V6Z" fill="white"/>
+            <path d="M18 6C18 3.17157 18 1.75735 18.8787 0.878685C19.7574 -7.15256e-08 21.1716 0 24 0C26.8284 0 28.2426 -7.15256e-08 29.1213 0.878685C30 1.75735 30 3.17157 30 6V24C30 26.8284 30 28.2426 29.1213 29.1213C28.2426 30 26.8284 30 24 30C21.1716 30 19.7574 30 18.8787 29.1213C18 28.2426 18 26.8284 18 24V6Z" fill="white"/>
+          </svg>
+        </div>
+        <div class="mute-unmute">
+          <svg
+            class="mute pointer"
+            width="30"
+            height="26"
+            viewBox="0 0 30 26"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path d="M16.9193 0.128075L6.28712 8.11284C6.22174 8.1654 6.16749 8.23046 6.12754 8.30422H0V17.3254H6.12754C6.16731 17.3992 6.22158 17.4643 6.28712 17.5167L16.9193 25.4968C17.0141 25.568 17.1268 25.6115 17.2448 25.6222C17.3629 25.633 17.4816 25.6106 17.5876 25.5577C17.6937 25.5047 17.7829 25.4232 17.8452 25.3224C17.9075 25.2216 17.9405 25.1054 17.9404 24.9869V0.638017C17.9405 0.519484 17.9075 0.403282 17.8452 0.302452C17.7829 0.201622 17.6937 0.120156 17.5876 0.0671954C17.4816 0.0142349 17.3629 -0.00812367 17.2448 0.00263027C17.1268 0.0133842 17.0141 0.0568238 16.9193 0.128075ZM28.681 18.0885L30 16.7689L26.0429 12.8118L30 8.85479L28.681 7.53577L24.7239 11.4928L20.7669 7.53577L19.4479 8.85479L23.4049 12.8118L19.4479 16.7689L20.7669 18.0879L24.7239 14.1309L28.681 18.0879V18.0885Z" fill="white"/>
+          </svg>
+
+          <svg
+            class="unmute pointer cstm-hide"
+            width="34"
+            height="30"
+            viewBox="0 0 26 26"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+          >
+            <rect x="0.4375" y="0.488281" width="24.8092" height="24.8092" fill="url(#pattern0_656_378)"/>
+            <defs>
+            <pattern id="pattern0_656_378" patternContentUnits="objectBoundingBox" width="1" height="1">
+            <use xlink:href="#image0_656_378" transform="scale(0.01)"/>
+            </pattern>
+            <image id="image0_656_378" width="100" height="100" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAACXBIWXMAAAsTAAALEwEAmpwYAAAFRUlEQVR4nO2dW6xeQxTHl4ai7hJp6toEDySi6lYlSESEh1L6pERfSoIQWkpdIvGAaOKhgigv9EFRjgdJhTZehIhrCMe9RMWtUY3j2vrJpPMlJyfHN2vvmb2798z6Jefty5q19//M3nutWbNGxDAMwzAMwzAMwzAMwzCM1gBmKn4ztR1vCgeYCXyl+N3TwHfABuAh4HLgkHa8LEwMAKUgk/EJ8ABwUjteFyCGI0KQ8YwCtwD7t3MVmYrhSCTIgK3ACnukKQAOB76YeAcTCzLgd+BeYB+Nb8XBJDOjYUEGfANc3M5V9nxmDGhYkAHOxgFSOgyZGS0L4viy6C8yFGIoBTnZf0GtAb6PFGUMWCClgVIMjSAT7O4CnADc5f/j6/AvsExKgQpiVBVkEnHOAdbVFOZOyR0qihEjyIRxTwRerSHK7ZIr1BAjlSDjfFhQ4z1zleQGNcVILYj35SDguQou/A2cLbkQI4ajIZ/c+2UZsB0dPwFHSOliOBr2bx7wBzrcO2iKlCyGQzHOacBhEX6e6+MPDUukZDEcFSL194Cb6qTYgQuAfwjjZtPRUqoYjhqpky0+MKwkDLAYHc9LqWI4InJZvwCLKvq/Ch1nSYliOBIkF1dr1z2APYEPCfO6lCiGI1G291OX5ldeyxzl5/AZUpoYjoTp98+1S7fAw718lzQthiPxeoirRJmusDkd+C1ga7umbqzKzbzQR6sxf42K0YAgjpdcpK6we4/CVro0fcKVtkaR8HVcBLxf0ey1CrszfB5rGO+YIP+DK1YAvlUKMqYJ8PwqZIijJAW5zJDxuGAQeFlp+hnRRfAhrpQU5CiIA9gNGFEu1R4rQwB295H/MFZLCnIVxAHsBbyrMP+gxN+nryUFOQviAI5TJAx/BnaVIQDXKdw8UGLJXRAH8FhsXsqXGYU4VWIpRJDjYwsZgGn+fTOMy2L8LEYQB/BxYIgRCQBsCti4Q2IpSJBVgSE+UNh4I2BjRayfJQmyJDDEZoWNUGzzSKyfJQlyRWCIvxQ2RhqPRQoSZFECQV4I2DBBWn5krQ/YsEdWyy/1NwM27lc7NGSQUh5Zo7Erf4p6YPvs1QDMUmi+PGBjb4WNhSqHSp8hwOOKIc4M2LDUyXgixJgNbCNcRB1KLt5AGEsuJkq/r1TYWhuwsVFSkOsjC5iqiBvwCcNjArb2AH4N2HkySogClnBfUZpeo9yuEGJxlBC5CsKO7WpVihyCxQnAUwpbR0aLkZMgwHwX3FU0e7XC7qGKMqC3kojhB1zoG7DE/PWxUG6dslDuPoWtm6VL9LCUdFRZSnqwopR0Wyf3Hfao2Pozd6OV1/Sowt5a6So92I4wqt2HCJyu3I4wV7pMhzfsPOHyUcprmOYr5EO8Jn2gY1vaNrsOpQ3kvrq7WadOQ7Kq1BBkq/8CrLrp85pUNcGdYydti34buBHYr4a/8xQxx6BXY5pAMOPGAXNiuowC5wF/Kt25XvpMiseXNOvfJRVaa6zvdWuNHjSfuVVRIjrgx5j2HVnNFGmmPdOLxbZn6koDM3bMCteo/4eKLqRJr3cRdl6Lv7k1W/wNLYDIAtprgjkFOL/CgtVEbpNSoLk2sU6EU4C7fRvxOrg81lIpDdI1UnYCLAee9V9DMbiU+3wpFbrVatz1QpktpUM3mvG7jLAdXdGB4yo2up4voTGKhHYPdBnzGWHVOkmx0PyRR1t88cKMdq4oA2jmUDDXtm8psG87V5EZpDk27yN/ANisdrzOHKodLLnJR+QrgUvtkdSgKBL+jR29ahiGYRiGYRiGYRiGYRiSjv8A0lPoycnKC1oAAAAASUVORK5CYII="/>
+            </defs>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% schema %}
+{
+  "name": "Exclusive Main Banner",
+  "settings": [
+    {
+      "type": "select",
+      "id": "image_or_video",
+      "label": "Select Image/Video",
+      "options": [
+        {
+          "value": "image",
+          "label": "Image"
+        },
+        {
+          "value": "video",
+          "label": "Video"
+        }
+      ],
+      "default": "video"
+    },
+    {
+      "type": "image_picker",
+      "label": "Select Image ",
+      "id": "image_desk"
+    },
+    {
+      "type": "image_picker",
+      "label": "Select Image Mobile",
+      "id": "image_mbl"
+    },
+    {
+      "type": "video",
+      "label": "Select Video Desktop",
+      "id": "video_desk"
+    },
+    {
+      "type": "video",
+      "label": "Select Video ",
+      "id": "video_mbl"
+    },
+    {
+      "type": "text",
+      "label": "Enter  Heading",
+      "id": "heading"
+    },
+    {
+      "type": "text",
+      "label": "Enter  Heading",
+      "id": "paragraph"
+    },
+    {
+      "type": "header",
+      "content": "Button Content"
+    },
+    {
+      "type": "text",
+      "label": "Enter Button Text",
+      "id": "button_text"
+    },
+    {
+      "type": "url",
+      "label": "Paste Button Link",
+      "id": "button_link"
+    },
+    {
+      "type": "header",
+      "content": "Textbox Position"
+    },
+    {
+      "type": "range",
+      "id": "position_top",
+      "min": 2,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "label": "Position Top/Bottom",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "position_left",
+      "min": 2,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "label": "Position Left/Right",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "width",
+      "min": 20,
+      "max": 90,
+      "step": 1,
+      "unit": "%",
+      "label": "width",
+      "default": 50
+    }
+  ],
+  "presets": [
+    {
+      "name": "Exclusive Banner",
+      "category": "custom content"
+    }
+  ]
+}
+{% endschema %}
+
+<script>
+  // let bannerVideoDesk = document.querySelector('.video-banner-desk video');
+  // let bannerVideoMbl = document.querySelector('.video-banner-mbl video');
+  // let play = document.querySelector('.video-controls .play');
+  // let pause = document.querySelector('.video-controls .pause');
+  // let mute = document.querySelector('.video-controls .mute');
+  // let unmute = document.querySelector('.video-controls .unmute');
+
+  // play.addEventListener('click', function () {
+  //   this.classList.add('cstm-hide');
+  //   pause.classList.remove('cstm-hide');
+
+  //   if (window.innerWidth < 990) {
+  //     bannerVideoMbl.play();
+  //   }
+  //   else{
+  //     bannerVideoDesk.play();
+  //   }
+  // });
+  // pause.addEventListener('click', function () {
+
+  //   this.classList.add('cstm-hide');
+  //   play.classList.remove('cstm-hide');
+  //   if (window.innerWidth < 990) {
+  //     bannerVideoMbl.pause();
+  //   }
+  //   else{
+  //     bannerVideoDesk.pause();
+  //   }
+  // });
+
+  // mute.addEventListener('click', function () {
+  //   bannerVideoDesk.muted = false;
+  //   bannerVideoMbl.muted = false;
+  //   this.classList.add('cstm-hide');
+  //   unmute.classList.remove('cstm-hide');
+  //   if (window.innerWidth < 990) {
+  //     bannerVideoMbl.muted = false;
+  //   }
+  //   else{
+  //     bannerVideoDesk.muted = false;
+  //   }
+  // });
+  // unmute.addEventListener('click', function () {
+  //   bannerVideoDesk.muted = true;
+  //   bannerVideoMbl.muted = true;bannerVideoMbl.muted = true;
+  //   this.classList.add('cstm-hide');
+  //   mute.classList.remove('cstm-hide');
+  //   if (window.innerWidth < 990) {
+  //     bannerVideoDesk.muted = true;
+  //   }
+  //   else{
+  //     bannerVideoMbl.muted = true;
+  //   }
+  // });
+
+  const bannerVideoDesk = document.querySelector('.video-banner-desk video');
+  const bannerVideoMbl = document.querySelector('.video-banner-mbl video');
+  const play = document.querySelector('.video-controls .play');
+  const pause = document.querySelector('.video-controls .pause');
+  const mute = document.querySelector('.video-controls .mute');
+  const unmute = document.querySelector('.video-controls .unmute');
+
+  play.addEventListener('click', togglePlay);
+  pause.addEventListener('click', togglePause);
+  mute.addEventListener('click', toggleMute);
+  unmute.addEventListener('click', toggleUnmute);
+
+  function togglePlay() {
+    handlePlayPause(true);
+  }
+
+  function togglePause() {
+    handlePlayPause(false);
+  }
+
+  function handlePlayPause(playState) {
+    play.classList.toggle('cstm-hide', playState);
+    pause.classList.toggle('cstm-hide', !playState);
+    if (window.innerWidth < 990) {
+      playState ? bannerVideoMbl.play() : bannerVideoMbl.pause();
+    } else {
+      playState ? bannerVideoDesk.play() : bannerVideoDesk.pause();
+    }
+  }
+
+  function toggleMute() {
+    handleMuteUnmute(true);
+  }
+
+  function toggleUnmute() {
+    handleMuteUnmute(false);
+  }
+
+  function handleMuteUnmute(isMute) {
+    mute.classList.toggle('cstm-hide', isMute);
+    unmute.classList.toggle('cstm-hide', !isMute);
+    bannerVideoDesk.muted = bannerVideoMbl.muted = !isMute;
+  }
+</script>

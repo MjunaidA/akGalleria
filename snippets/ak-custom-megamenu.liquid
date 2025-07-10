@@ -1,0 +1,365 @@
+<style>
+  .header {
+    /* position: relative; */
+  }
+  .ak-menu-header-nav .parent-ul {
+    display: flex;
+    /* gap: 0 17px; */
+    padding: 0;
+    margin: 0;
+  }
+
+  .ak-menu-header-nav .parent-ul .parent__nav_item {
+    list-style-type: none;
+    padding: 29px 17px;
+    border-bottom: 4px solid transparent;
+  }
+
+  .ak-menu-header-nav .parent-ul .parent__nav_item .parent-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #282c3f;
+    text-decoration: none;
+    line-height: 1.2;
+    letter-spacing: .3px;
+  }
+
+  .ak-menu-header-nav .parent-ul .parent__nav_item  .parent__nav_item-row{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  .ak-menu-header-nav .parent-ul .parent__nav_item  .parent__nav_item-row span.inner-text{
+    padding: 2px 6px;
+    border-radius: 7px;
+    font-size: 10px;
+    font-weight: 700;
+    vertical-align: middle;
+    line-height: 11.4286px;
+    display: initial;
+    position: absolute;
+    top: -8px;
+    right: -30px;
+    white-space: nowrap;
+  }
+  .ak-menu-header-nav .ak-megamenu-wrapper {
+    position: absolute;
+    /* left: 50%; */
+    top: 100%;
+    z-index: 99;
+    display: none;
+    box-shadow: 0px 4px 10px 0px #00000012;
+    background-color: #fff;
+    overflow: auto;
+    width: 1135px;
+    /* transform: translateX(-50%); */
+    margin: 0 auto;
+    padding: 0 10px 0 15px;
+  }
+
+  .ak-menu-header-nav .ak-megamenu-wrapper .ak-megamenu-inner {
+    display: flex;
+  }
+
+
+  .ak-menu-header-nav .parent__nav_item:hover .ak-megamenu-wrapper {
+    display: block;
+  }
+
+  .ak-megamenu-wrapper .ak-megamenu-inner .ak-navigation_menu-row{
+    display: flex;
+
+  }
+  .ak-megamenu-wrapper .ak-megamenu-inner .ak-navigation_menu-row .ak-navigation_menu-col{
+    text-align: left;
+    width: 216px;
+    margin: 0;
+    padding: 4px 0 0 25px;
+    height: 436px;
+  }
+
+  .ak-megamenu-wrapper .ak-megamenu-inner .ak-navigation_menu-row .ak-navigation_menu-col:nth-child(2),
+  .ak-megamenu-wrapper .ak-megamenu-inner .ak-navigation_menu-row .ak-navigation_menu-col:nth-child(4){
+    background-color: {{section.settings.menu_bg_color}};
+  }
+
+  .ak-megamenu-wrapper .ak-megamenu-inner .ak-navigation_menu-row .ak-navigation_menu-col ul li {
+    list-style-type: none;
+  }
+
+  .ak-megamenu-wrapper .ak-megamenu-inner .ak-navigation_menu-row .ak-navigation_menu-col ul li .child-link-wrap{
+    padding-bottom: 1px;
+  }
+
+  .ak-megamenu-wrapper .ak-megamenu-inner .ak-navigation_menu-row .ak-navigation_menu-col ul li .child-link-wrap:not(:first-child){
+    padding-top: 10px;
+  }
+
+  .ak-megamenu-wrapper .ak-megamenu-inner .ak-navigation_menu-row .ak-navigation_menu-col .child-main-wrapper.hr-shows .desktop-hr-line {
+    width: 140px;
+    height: 1px;
+    margin: 10px 0 8px 0;
+    background-color: #eaeaec;
+  }
+
+  .ak-megamenu-wrapper .ak-megamenu-inner .ak-navigation_menu-row .ak-navigation_menu-col .child-main-wrapper.hr-shows:not(:first-child) .desktop-hr-line{
+    margin: 12px 0 10px 0;
+  }
+
+  .ak-megamenu-wrapper .ak-megamenu-inner .ak-navigation_menu-row .ak-navigation_menu-col .child-main-wrapper.hr-shows:last-child .desktop-hr-line{
+    display: none;
+  }
+
+  .ak-megamenu-wrapper .child-main-wrapper .child-nav-item a {
+    font-size: 14px;
+    line-height: 25px;
+    font-weight: 700;
+    color: rgb(238, 95, 115);
+    text-decoration: none;
+    letter-spacing: -0.03px;
+  }
+
+  .ak-megamenu-wrapper .ak-megamenu-inner .ak-navigation_menu-row .child-main-wrapper{
+    padding: 0;
+  }
+
+  .ak-megamenu-wrapper .ak-megamenu-inner .ak-navigation_menu-row .child-main-wrapper.no-childs:not(:last-child){
+    padding-bottom: 10px;
+  }
+
+  .ak-megamenu-wrapper .ak-megamenu-inner .ak-navigation_menu-row .child-main-wrapper .grandchild-main-wrapper {
+    padding: 0;
+  }
+
+  .ak-megamenu-wrapper .ak-megamenu-inner .ak-navigation_menu-row .child-main-wrapper:first-child .child-nav-item{
+    padding: 10px 0 2px;
+  }
+
+  .ak-megamenu-wrapper .child-main-wrapper .grandchild-main-wrapper .grandchild-nav-item {
+    line-height: 23px;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .ak-megamenu-wrapper .child-main-wrapper .grandchild-main-wrapper .grandchild-nav-item a {
+    line-height: 23px;
+  }
+
+  .ak-megamenu-wrapper .child-main-wrapper .grandchild-main-wrapper .grandchild-nav-item .grandchild-title{
+    font-size: 14px;
+    line-height: 23px;
+    font-weight: 400;
+    color: rgb(40, 44, 63);
+    text-decoration: none;
+  }
+
+  .ak-megamenu-wrapper .child-main-wrapper .grandchild-main-wrapper .grandchild-nav-item:hover .grandchild-title{
+    font-weight: 700;
+  }
+</style>
+
+{% for block in section.blocks %}
+  {% for link in linklists[section.settings.menu].links %}
+    {% assign link_handle = link.title | handleize %}
+    {% if block.type == 'custom_menu' %}
+      {% if block.settings.menu_handle == link_handle %}
+        <style>
+          .parent__nav_item.color-{{link_handle}} .ak-megamenu-wrapper .ak-megamenu-inner .ak-navigation_menu-row .ak-navigation_menu-col ul li .child-link-wrap a{
+            color: {{block.settings.menu_text_color}};
+          }
+
+          .ak-menu-header-nav .parent-ul .parent__nav_item.color-{{link_handle}}:hover {
+            border-color: {{block.settings.menu_text_color}};
+          }
+          .ak-menu-header-nav .parent-ul .parent__nav_item  .parent__nav_item-row span.inner-text.sale-{{link_handle}}{
+            color: {{block.settings.sale_color}};
+          }
+        </style>
+      {% endif %}
+    {% endif %}
+  {% endfor %}
+{% endfor %}
+
+<div class="ak-menu-header-nav small-hide medium-hide">
+  <ul class="parent-ul">
+    {% for link in linklists[section.settings.menu].links %}
+      {% assign link_handle = link.title | handleize %}
+      <li
+        class="parent__nav_item color-{{link_handle}} {%if block.settings.enable_sale == true%} sale_true sale-{{link_handle}} {% endif %}"
+        menu_Handle="{{link.title |  handleize}}"
+      >
+        <div class="parent__nav_item-row">
+          <a href="{{ link.url }}" class="parent-title">{{ link.title }}</a>
+          {% for block in section.blocks %}
+            {% if block.type == 'custom_menu' %}
+              {% assign link_handle = link.title | handleize %}
+              {% if block.settings.menu_handle == link_handle %}
+                {% if block.settings.enable_sale %}
+                  <span class="inner-text inner-text-NEW sale-{{link_handle}}">
+                    {{ block.settings.sale_text }}
+                  </span>
+                {% endif %}
+              {% endif %}
+            {% endif %}
+          {% endfor %}
+        </div>
+
+        <div class="ak-megamenu-wrapper">
+          <div class="ak-container">
+            <div class="ak-megamenu-inner">
+              {% for block in section.blocks %}
+                {% if block.type == 'custom_menu' %}
+                  {% if block.settings.menu_handle == link_handle %}
+                    <div class="ak-navigation_menu-row">
+                      <div class="ak-navigation_menu-col">
+                        {% if block.settings.menu_first != blank %}
+                          {% for first_link in block.settings.menu_first.links %}
+                            <ul class="child-main-wrapper {% if first_link.links != blank %}hr-shows{% endif %}">
+                              <li class="child-nav-item">
+                                <div class="child-link-wrap">
+                                  <a href="{{ first_link.url }}">{{ first_link.title }}</a>
+                                </div>
+                                {% if first_link.links != blank %}
+                                  {% for first_child_link in first_link.links %}
+                                    <ul class="grandchild-main-wrapper">
+                                      <li class="grandchild-nav-item">
+                                        <a href="{{ first_child_link.url }}">
+                                          <span class="grandchild-title">{{ first_child_link.title }}</span>
+                                        </a>
+                                      </li>
+                                    </ul>
+                                  {% endfor %}
+                                {% endif %}
+                              </li>
+                              <div class="desktop-hr-line"></div>
+                            </ul>
+                          {% endfor %}
+                        {% endif %}
+                      </div>
+                      <div class="ak-navigation_menu-col">
+                        {% if block.settings.menu_second != blank %}
+                          {% for second_link in block.settings.menu_second.links %}
+                            <ul class="child-main-wrapper {% if second_link.links != blank %}hr-shows{% endif %}">
+                              <li class="child-nav-item">
+                                <div class="child-link-wrap">
+                                  <a href="{{ second_link.url }}">{{ second_link.title }}</a>
+                                </div>
+                                {% if second_link.links != blank %}
+                                  {% for second_child_link in second_link.links %}
+                                    <ul class="grandchild-main-wrapper">
+                                      <li class="grandchild-nav-item">
+                                        <a href="{{ second_child_link.url }}">
+                                          <span class="grandchild-title">{{ second_child_link.title }}</span>
+                                        </a>
+                                      </li>
+                                    </ul>
+                                  {% endfor %}
+                                {% endif %}
+                              </li>
+                              <div class="desktop-hr-line"></div>
+                            </ul>
+                          {% endfor %}
+                        {% endif %}
+                      </div>
+                      <div class="ak-navigation_menu-col">
+                        {% if block.settings.menu_third != blank %}
+                          {% for third_link in block.settings.menu_third.links %}
+                            <ul class="child-main-wrapper {% if third_link.links != blank %}hr-shows{% else %}no-childs{% endif %}">
+                              <li class="child-nav-item">
+                                <div class="child-link-wrap">
+                                  <a href="{{ third_link.url }}">{{ third_link.title }}</a>
+                                </div>
+                                {% if third_link.links != blank %}
+                                  {% for third_child_link in third_link.links %}
+                                    <ul class="grandchild-main-wrapper">
+                                      <li class="grandchild-nav-item">
+                                        <a href="{{ third_child_link.url }}">
+                                          <span class="grandchild-title">{{ third_child_link.title }}</span>
+                                        </a>
+                                      </li>
+                                    </ul>
+                                  {% endfor %}
+                                {% endif %}
+                              </li>
+                              <div class="desktop-hr-line"></div>
+                            </ul>
+                          {% endfor %}
+                        {% endif %}
+                      </div>
+                      <div class="ak-navigation_menu-col">
+                        {% if block.settings.menu_fourth != blank %}
+                          {% for fourth_link in block.settings.menu_fourth.links %}
+                            <ul class="child-main-wrapper {% if fourth_link.links != blank %}hr-shows{% endif %}">
+                              <li class="child-nav-item">
+                                <div class="child-link-wrap">
+                                  <a href="{{ fourth_link.url }}">{{ fourth_link.title }}</a>
+                                </div>
+                                {% if fourth_link.links != blank %}
+                                  {% for fourth_child_link in fourth_link.links %}
+                                    <ul class="grandchild-main-wrapper">
+                                      <li class="grandchild-nav-item">
+                                        <a href="{{ fourth_child_link.url }}">
+                                          <span class="grandchild-title">{{ fourth_child_link.title }}</span>
+                                        </a>
+                                      </li>
+                                    </ul>
+                                  {% endfor %}
+                                {% endif %}
+                              </li>
+                              <div class="desktop-hr-line"></div>
+                            </ul>
+                          {% endfor %}
+                        {% endif %}
+                      </div>
+                      <div class="ak-navigation_menu-col">
+                        {% if block.settings.menu_fifth != blank %}
+                          {% for fifth_link in block.settings.menu_fifth.links %}
+                            <ul class="child-main-wrapper {% if fifth_link.links != blank %}hr-shows{% endif %}">
+                              <li class="child-nav-item">
+                                <div class="child-link-wrap">
+                                  <a href="{{ fifth_link.url }}">{{ fifth_link.title }}</a>
+                                </div>
+                                {% if fifth_link.links != blank %}
+                                  {% for fifth_child_link in fifth_link.links %}
+                                    <ul class="grandchild-main-wrapper">
+                                      <li class="grandchild-nav-item">
+                                        <a href="{{ fifth_child_link.url }}">
+                                          <span class="grandchild-title">{{ fifth_child_link.title }}</span>
+                                        </a>
+                                      </li>
+                                    </ul>
+                                  {% endfor %}
+                                {% endif %}
+                              </li>
+                              <div class="desktop-hr-line"></div>
+                            </ul>
+                          {% endfor %}
+                        {% endif %}
+                      </div>
+                    </div>
+                  {% endif %}
+                {% endif %}
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </li>
+    {% endfor %}
+  </ul>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', (event) => {
+    let akHeader = document.querySelector('.ak-menu-header-nav .parent-ul');
+    let akMenuPosition = akHeader.getBoundingClientRect().left;
+    let akMenu = akHeader.querySelectorAll('.parent__nav_item');
+    akMenu.forEach((item) => {
+      let menuLeftPosition = item.querySelector('.ak-megamenu-wrapper');
+      if (menuLeftPosition) {
+        akMenuPositionCalculate = akMenuPosition - 40;
+        menuLeftPosition.style.left = akMenuPositionCalculate + 'px';
+      }
+    });
+  });
+</script>

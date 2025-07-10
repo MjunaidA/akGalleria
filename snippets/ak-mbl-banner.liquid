@@ -1,0 +1,80 @@
+{% assign bts = block.settings %}
+<style>
+    .ak-banner-mbl-main-wrapper.banner-{{block.id}}{
+      display: none;
+    }
+     @media(max-width:990px){
+    .ak-banner-mbl-main-wrapper.banner-{{block.id}}{
+      padding-top: {{ block.settings.padding_top }}px;
+      padding-bottom: {{ block.settings.padding_bottom }}px;
+      background-color: {{bts.bg_color}};
+      display: block;
+    }
+    .ak-banner-mbl-main-wrapper.banner-{{block.id}} .ak-banner-mbl-main-inner {
+      padding: {{bts.inner_padding_top_bottom}}px {{bts.inner_padding_left_right}}px;
+      border-radius: {{bts.border_radius}}px;
+    }
+    .ak-banner-mbl-main-wrapper.banner-{{block.id}} .ak-banner-mbl-main-inner p{
+      color: {{bts.text_color}};
+    }
+    .ak-banner-mbl-main-wrapper.banner-{{block.id}} .ak-banner-mbl-main-inner .button-container a{
+      background-color: {{bts.btn_bg}};
+    }
+  }
+</style>
+<div class="ak-banner-mbl-main-wrapper banner-{{block.id}}">
+  <div class="page-width {%if bts.width_adjustment == 'full'%}p-0{% endif %}">
+    <div class="ak-banner-mbl-main-inner">
+      {% if bts.banner_link_enable == true %}<a href="{{ bts.banner_link }}">{% endif %}
+        {% if bts.image_or_text == 'image' %}
+          {% if bts.banner_img != blank %}
+            <div class="img-box flex">
+              <a href="{{ bts.banner_img_url }}">
+                <img class="w-full" src="{{bts.banner_img |  img_url: 'master'}}" alt="Banner Image" loading="lazy">
+              </a>
+            </div>
+          {% endif %}
+        {% else %}
+          <div class="flex justify-between items-center">
+            <div
+              class="
+                banner-textbox flex
+                {%if bts.text_align == "left"%}justify-start flex-wrap{% elsif bts.text_align == "center"%}justify-center text-center flex-wrap{% elsif bts.text_align == "right" %}justify-end text-right flex-wrap{% else %}flex justify-between items-center{% endif %}
+              "
+            >
+              <p class="font-bold f-size-16 m-0 capitalize leading-5 w-full">{{ bts.text_first }}</p>
+              {% if bts.snd_text_align == 'para' %}
+                <p class="font-normal f-size-14 m-0 capitalize pt-5 leading-4 w-full {%if bts.text_align == "inline"%}text-right{% endif %}">
+                  {{ bts.text_second }}
+                </p>
+              {% elsif bts.snd_text_align == 'heading' %}
+                <p class="font-bold f-size-16 m-0 capitalize pt-5 leading-4 w-full {%if bts.text_align == "inline"%}text-right{% endif %}">
+                  {{ bts.text_second }}
+                </p>
+              {% else %}
+                <div class="logo-img-box m-x-40x flex items-center {%unless bts.text_align == "inline"%}pt-10{% endunless %}">
+                  <img
+                    class="w-full h-full"
+                    src="{{bts.logo_img |  img_url: 'master'}}"
+                    alt="Banner Image"
+                    loading="lazy"
+                  >
+                </div>
+              {% endif %}
+            </div>
+            {% if bts.btn_txt != blank %}
+              <div class="button-container">
+                <a
+                  class="f-size-12 leading-5 py-8 px-15 txt-nowrap rounded-4x text-no-decoration c-white font-bold"
+                  href="{{bts.btn_link}}"
+                >
+                  {{- bts.btn_txt -}}
+                </a>
+              </div>
+            {% endif %}
+          </div>
+        {% endif %}
+      {% if bts.banner_link_enable == true %}</a>{% endif %}
+    </div>
+  </div>
+</div>

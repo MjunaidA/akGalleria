@@ -1,0 +1,106 @@
+<div
+  class="product-grid-container{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %} desk-layout"
+  id="ProductGridContainer"
+  {% if settings.animations_reveal_on_scroll %}
+  data-cascade
+  {% endif %}>
+  {%- if collection.products.size == 0 -%}
+    <div
+      class="collection collection--empty page-width"
+      id="product-grid"
+      data-id="{{ section.id }}">
+      <div class="loading-overlay gradient"></div>
+      <div class="title-wrapper center">
+        <h2 class="title title--primary">
+          {{ 'sections.collection_template.empty' | t -}}
+          <br>
+          {{ 'sections.collection_template.use_fewer_filters_html'
+ | t: link: collection.url, class: 'underlined-link link'
+          }}
+        </h2>
+      </div>
+    </div>
+  {%- else -%}
+    <div class="collection page-width">
+      <div class="loading-overlay gradient"></div>
+      {% assign subDesc = section.blocks | where: 'type', 'sub-description' %}
+      <ul
+        id="product-grid"
+        data-id="{{ section.id }}"
+        class="grid product-grid grid--{{ section.settings.columns_mobile }}-col-tablet-down grid--layout-custom">
+        {%- assign style_index = 0 -%}
+        {% assign temptump = paginate.current_page | minus: 1 %}
+        {% assign desc_index = 2 | times: temptump %}
+
+        {%- for product in collection.products -%}
+          {% assign lazy_load = false %}
+          {%- if forloop.index > 2 -%}
+            {%- assign lazy_load = true -%}
+          {%- endif -%}
+
+          {%- capture current_style -%}
+          {%- cycle style_index: 'card','card','banner-card','card','card','mini-banner','card','banner-card','card','card','card','card','card','card' -%}
+          {%- endcapture -%}
+
+          {% if forloop.index0 == 0 %}
+            <li class="grid__item {{ current_style }} description-card" data-page="{{ paginate.current_page }}">
+              {% for block in section.blocks %}
+                {% if block.type == 'card-banner-1' %}
+                  <a href="{{ block.settings.card_banner_url_1 }}">
+                    <img class="w-full" src="{{ block.settings.card_banner_img_1 |  img_url: 'master'}}">
+                  </a>
+                {% endif %}
+              {% endfor %}
+            </li>
+          {% elsif forloop.index0 == 5 %}
+            <li class="grid__item {{ current_style }} description-card" data-page="{{ paginate.current_page }}">
+              {% for block in section.blocks %}
+                {% if block.type == 'marketing-card' %}
+                  <img class="w-full" src="{{ block.settings.marketing_card_img |  img_url: 'master'}}">
+                  <a class="marketing-card-link" href="{{ block.settings.marketing_card_url }}">Shop Now</a>
+                {% endif %}
+              {% endfor %}
+            </li>
+          {% elsif forloop.index0 == 7 %}
+            <li class="grid__item {{ current_style }} description-card" data-page="{{ paginate.current_page }}">
+              {% for block in section.blocks %}
+                {% if block.type == 'card-banner-2' %}
+                  <a href="{{ block.settings.card_banner_url_2 }}">
+                    <img class="w-full" src="{{ block.settings.card_banner_img_2 |  img_url: 'master'}}">
+                  </a>
+                {% endif %}
+              {% endfor %}
+            </li>
+          {% else %}
+            <li class="grid__item {{ current_style }}" data-page="{{ paginate.current_page }}">
+              {% render 'card-product'
+                ,
+ card_product: product
+                ,
+ media_aspect_ratio: section.settings.image_ratio
+                ,
+ image_shape: section.settings.image_shape
+                ,
+ show_secondary_image: section.settings.show_secondary_image
+                ,
+ show_vendor: section.settings.show_vendor
+                ,
+ show_rating: section.settings.show_rating
+                ,
+ lazy_load: lazy_load
+                ,
+ show_quick_add: section.settings.enable_quick_add
+                ,
+ section_id: section.id
+                ,
+ card_style: current_style
+                ,
+ imgOrientation: imgOrientation
+              %}
+            </li>
+          {% endif %}
+        {%- endfor -%}
+      </ul>
+    </div>
+  {%- endif -%}
+</div>

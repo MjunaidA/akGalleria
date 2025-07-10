@@ -1,0 +1,155 @@
+<style>
+  .header {
+    /* position: relative; */
+  }
+  .ak-header-nav .parent-ul {
+    display: flex;
+    gap: 0 17px;
+    padding: 0;
+	  margin: 0;
+  }
+  .ak-header-nav .parent-ul .parent__nav_item {
+	  list-style-type: none;
+    padding: 15px 0;
+	}
+	.ak-header-nav .parent-ul .parent__nav_item:hover {
+		/* border-bottom: 1px solid; */
+	}
+  .ak-header-nav .parent-ul .parent__nav_item .parent-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #282c3f;
+    text-decoration: none;
+    line-height: 1.2;
+	letter-spacing: -0.3px;
+  }
+  .ak-header-nav .ak-megamenu-wrapper {
+    position: absolute;
+    /* left: 50%; */
+    top: 100%;
+    z-index: 99;
+    display: none;
+    box-shadow: 0px 4px 10px 0px #00000012;
+    background-color: #fff;
+    max-width: 1365px;
+    margin: 0 auto;
+    width: 90%;
+    /* transform: translateX(-50%); */
+    padding: 20px 50px;
+  }
+  .ak-header-nav .ak-megamenu-wrapper .ak-megamenu-inner {
+    display: flex;
+  }
+  .ak-header-nav .ak-megamenu-wrapper .ak-megamenu-inner ul.child {
+    columns: 5;
+	width: 100%;
+	padding: 0;
+  }
+  .ak-header-nav .ak-megamenu-wrapper .ak-megamenu-inner ul.child .child-nav-item {
+    list-style-type: none;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+  .ak-header-nav .ak-megamenu-wrapper .ak-megamenu-inner ul.child .child-nav-item a {
+	  text-decoration: none;
+  }
+  .ak-header-nav .ak-megamenu-wrapper .ak-megamenu-inner ul.child .child-nav-item .child-title {
+    font-size: 16px;
+    font-weight: 600;
+    /* color: #111; */
+    line-height: 1.2;
+  }
+  .ak-header-nav .ak-megamenu-wrapper .ak-megamenu-inner ul.child .child-nav-item .grandchild {
+	padding: 0;
+  }
+  .ak-header-nav .ak-megamenu-wrapper .ak-megamenu-inner ul.child .child-nav-item .grandchild .grandchild-nav-item {
+	list-style-type: none;
+  }
+  .ak-header-nav .ak-megamenu-wrapper .ak-megamenu-inner ul.child .child-nav-item .grandchild .grandchild-nav-item .grandchild-title{
+	font-size: 16px;
+    font-weight: 400;
+    color: #111;
+    line-height: 1.2;
+    text-decoration: none;
+  }
+  .ak-header-nav ul .parent__nav_item:hover .ak-megamenu-wrapper {
+    display: block;
+  }
+  .parent-ul .parent__nav_item.color-men{
+    border-bottom: 3px solid transparent;
+  }
+</style>
+
+<div class="ak-header-nav">
+  <ul class="parent-ul">
+    {% for link in linklists[section.settings.menu].links %}
+      <li
+        class="parent__nav_item color-{{link.title |  handleize}}"
+      >
+        <a href="{{ link.url }}" class="parent-title">{{ link.title }}</a>
+        {% if link.links != blank %}
+          <div class="ak-megamenu-wrapper">
+            <div class="ak-container">
+              <div class="ak-megamenu-inner">
+                <ul class="child">
+                  {% for child_link in link.links %}
+                    <li class="child-nav-item">
+                      <a href="{{ child_link.url }}">
+                        <span class="child-title">{{ child_link.title }}</span>
+                      </a>
+                      {% if child_link.links != blank %}
+                        <ul class="grandchild">
+                          {% for grandchild_link in child_link.links %}
+                            <li class="grandchild-nav-item">
+                              <a
+                                class="grandchild-title"
+                                href="{{ grandchild_link.url }}"
+                              >
+                                {{- grandchild_link.title }}
+                              </a>
+                            </li>
+                          {% endfor %}
+                        </ul>
+                      {% endif %}
+                    </li>
+                  {% endfor %}
+                </ul>
+              </div>
+            </div>
+          </div>
+        {% endif %}
+      </li>
+	  {% for block in section.blocks %}
+		{% assign link_title = link.title |  downcase %}
+		{% assign menu_title = block.settings.menu_name |  downcase %}
+		{% if link_title  == menu_title %}
+			<style>
+				.ak-header-nav .parent-ul .parent__nav_item.color-{{link.title |  handleize}}:hover{
+					border-bottom: 3px solid {{block.settings.menu_color}} !important;
+				}
+				.ak-header-nav .parent-ul .parent__nav_item.color-{{link.title |  handleize}} .ak-megamenu-inner ul.child .child-nav-item .child-title{
+					color: {{block.settings.menu_color}};
+				}
+			</style>
+		{% endif %}
+	  {% endfor %}
+    {% endfor %}
+  </ul>
+</div>
+
+
+
+<script>
+let akHeader = document.querySelector(".ak-header-nav");
+let akMenuPosition = akHeader.getBoundingClientRect().left;
+let akMenu = akHeader.querySelectorAll(".parent__nav_item");
+
+akMenu.forEach(item => {
+  let menuLeftPosition = item.querySelector(".ak-megamenu-wrapper");
+  if (menuLeftPosition) {
+    akMenuPositionCalculate = akMenuPosition - 50;
+    menuLeftPosition.style.left = akMenuPositionCalculate + "px"
+  }
+});
+
+</script>

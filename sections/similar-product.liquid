@@ -1,0 +1,176 @@
+{{ 'card-product-custom.css' | asset_url | stylesheet_tag }}
+
+<style>
+  .similar-main-wrapper .similar-buttons-row {
+    padding: 35px 0 50px;
+  }
+  .similar-main-wrapper .similar-buttons-row .similar-buttons-col {
+    border-radius: 24px;
+    background-color: #fff;
+    border: 1px solid #bfc0c6;
+    padding: 15px 20px;
+    display: inline-block;
+    color: #ff3e6c;
+    font-size: 14px;
+    font-weight: 700;
+    margin-right: 16px;
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 990px) {
+    .similar-main-wrapper .similar-buttons-row {
+      /* padding: 15px 0; */
+      padding: 0;
+      gap: 0;
+    }
+    .similar-main-wrapper .similar-buttons-row .similar-buttons-col {
+      border-left: 0;
+      border-right: 0;
+      margin: 0;
+      border-radius: 0;
+      padding: 12px 1.5rem;
+      border-bottom: none;
+      border-top: 1px solid #eaeaec;
+      gap: 0;
+    }
+    .similar-main-wrapper .similar-buttons-row .similar-buttons-col:last-child {
+      border-bottom: 1px solid #eaeaec;
+    }
+    .similar-main-wrapper .similar-buttons-row .similar-buttons-col .similar-link {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+    }
+  }
+</style>
+<div class="similar-main-wrapper mbl-product-border-top pt-5" id = "similar-product">
+  <div class="page-width width-1600 m-auto overflow-hidden">
+    <div class="similar-inner card-product-wrap">
+      <h2 class="f-size-16-lg f-size-14 font-bold leading-1 lt-space-1 uppercase">{{ section.settings.heading }}</h2>
+
+      {% for collection in product.collections %}
+        {% assign collection_handle = 'collection.handle' %}
+        {% assign collection = collections[collection_handle] %}
+
+        {% if collection.products.size > 0 %}
+          <div class="similar-product-row flex wrap flex-wrap similar__main">
+            <div class="swiper-wrapper card-product-row">
+              {% for product in collection.products %}
+                {% unless forloop.index >= 29 %}
+                  <div class="card-product-coll swiper-slide">
+                    {% render 'card-product',
+                      media_aspect_ratio: section.settings.image_ratio,
+                      card_product: product,
+                      lazy_load: lazy_load,
+                      section_id: section.id
+                    %}
+                  </div>
+                {% endunless %}
+              {% endfor %}
+            </div>
+          </div>
+        {% else %}
+          <p>No products found in this collection.</p>
+        {% endif %}
+        {% break %}
+      {% endfor %}
+    </div>
+  </div>
+  <div class="similar-buttons-row flex gap-10 justify-center flex-wrap">
+    {% for block in section.blocks %}
+      <div class="similar-buttons-col w-full-sm">
+        <a class="similar-link text-no-decoration sizechart-clr flex items-center" href="{{block.settings.btn_link}}">
+          <span class="f-size-14-lg">{{ block.settings.btn_text }}</span>
+          {% render 'icon-next-arrow' %}
+        </a>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+<script>
+  // if (window.innerWidth <= 990) {
+  //   var swiper = new Swiper('.similar__main', {
+  //     slidesPerView: 2.5,
+  //     spaceBetween: 10,
+  //   });
+  // }
+
+  document.addEventListener('DOMContentLoaded', () => {
+  const checkAndInitSwiper = () => {
+    if (window.innerWidth <= 990) {
+      const swiperContainer = document.querySelector('.similar__main');
+      if (swiperContainer) {
+        new Swiper(swiperContainer, {
+          slidesPerView: 2.5,
+          spaceBetween: 10,
+        });
+        observer.disconnect(); 
+      }
+    }
+  };
+  const observer = new MutationObserver(checkAndInitSwiper);
+  observer.observe(document.body, { childList: true, subtree: true });
+  checkAndInitSwiper();
+});
+</script>
+
+{% schema %}
+{
+  "name": "Similar Product",
+  "max_blocks": 3,
+  "settings": [
+    {
+      "type": "text",
+      "label": "Enter Heading",
+      "id": "heading",
+      "default": "SIMILAR PRODUCTS"
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "options": [
+        {
+          "value": "adapt",
+          "label": "t:sections.main-collection-product-grid.settings.image_ratio.options__1.label"
+        },
+        {
+          "value": "portrait",
+          "label": "t:sections.main-collection-product-grid.settings.image_ratio.options__2.label"
+        },
+        {
+          "value": "square",
+          "label": "t:sections.main-collection-product-grid.settings.image_ratio.options__3.label"
+        }
+      ],
+      "default": "adapt",
+      "label": "t:sections.main-collection-product-grid.settings.image_ratio.label"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "Image",
+      "name": "Button",
+      "settings": [
+        {
+          "type": "text",
+          "label": "Enter Text",
+          "id": "btn_text"
+        },
+        {
+          "type": "url",
+          "label": "Paste Link",
+          "id": "btn_link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Similar Products",
+      "category": "custom content"
+    }
+  ]
+}
+{% endschema %}

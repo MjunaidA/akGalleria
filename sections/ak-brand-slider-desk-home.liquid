@@ -1,0 +1,127 @@
+<style>
+    .brand-desk-main-wrapper {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+    .brand-wrapper-inner .brand-inner-wrap .swiper-button-next,
+    .brand-wrapper-inner .brand-inner-wrap .swiper-button-prev {
+      z-index: 7;
+    }
+    .brand-desk-main-wrapper .brand-wrapper-inner .brand-inner-wrap{
+      max-width: 80%;
+    }
+    @media (max-width: 1400px) and (min-width: 990px) {
+    .brand-desk-main-wrapper .brand-wrapper-inner .brand-inner-wrap {
+      max-width: 70%;
+    }
+  }
+</style>
+<div class="brand-desk-main-wrapper">
+  <div class="page-width page-width-fluid ">
+    <h2 class="home-desk-heading p-30">{{ section.settings.heading }}</h2>
+    <div class="brand-wrapper-inner relative">
+      <div class="brand-inner-wrap brand-main  m-auto overflow-hidden">
+        <div class="brand-row swiper-wrapper">
+          {% for block in section.blocks %}
+            <div class="brand-col swiper-slide">
+              <a class="link" href="{{block.settings.image_url}}">
+                <div class="image-box">
+                  <img
+                    class="image w-full"
+                    src="{{block.settings.image |  img_url: 'master'}}"
+                    loading="lazy"
+                    alt="brand Image"
+                  >
+                </div>
+              </a>
+            </div>
+          {% endfor %}
+        </div>
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Ak Brands",
+  "settings": [
+    {
+      "type": "text",
+      "label": "Enter Heading",
+      "id": "heading",
+      "default": "OUR BRANDS"
+    },
+    {
+      "type": "range",
+      "id": "slider_gap",
+      "min": 0,
+      "max": 50,
+      "step": 0.5,
+      "unit": "px",
+      "label": "Slider Gap",
+      "default": 5
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 160,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 160,
+      "step": 2,
+      "unit": "px",
+      "label": "Pdding Bottom",
+      "default": 16
+    }
+  ],
+  "blocks": [
+    {
+      "type": "Image",
+      "name": "Image Banner",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image Banner"
+        },
+        {
+          "type": "url",
+          "id": "image_url",
+          "label": "Image Url"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Ak Brands",
+      "category": "custom content"
+    }
+  ]
+}
+{% endschema %}
+
+<script>
+  var slideGap = {{section.settings.slider_gap}};
+  galleryMain = new Swiper('.brand-main', {
+    slidesPerView: 6,
+    loop: true,
+    spaceBetween:slideGap,
+    autoplay: true,
+    navigation: {
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev',
+    },
+  });
+</script>

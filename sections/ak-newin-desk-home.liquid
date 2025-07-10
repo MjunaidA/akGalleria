@@ -1,0 +1,141 @@
+<style>
+  .newin-desk-main-wrapper {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+</style>
+
+<div class="newin-desk-main-wrapper">
+  <div class="page-width page-width-fluid">
+    <div class="newin-wrapper-inner m-x-90 m-auto ">
+      <div class="newin-row swiper-wrapper justify-center">
+        <div class="newin-col flex-30 flex items-center">
+          <div class="textbox pr-10">
+            <p class="font-normal f-size-16 c-light-black m-0 leading-4">{{ section.settings.sub_heading }}</p>
+            <p class="font-bold f-size-50 c-light-black m-0 py-20 leading-4">{{ section.settings.heading }}</p>
+            <p class="font-semi-bold f-size-16 c-light-black m-0 leading-5 py-20">{{ section.settings.para }}</p>
+            <a class="font-normal bg-black c-white f-size-12 c-light-black m-0 pt-10 leading-4 py-10 px-30 text-no-decoration" href="{{section.settings.btn_link}}">
+              {{- section.settings.btn_text -}}
+            </a>
+          </div>
+        </div>
+        <div class="newin-col flex-70 newin-main overflow-hidden relative">
+          <div class="swiper-wrapper">
+            {% for block in section.blocks %}
+              <div class="newin-sub-col swiper-slide text-center">
+                <a class="link text-no-decoration w-full" href="{{block.settings.image_url}}">
+                  <div class="content-box flex flex-col items-center">
+                    <img
+                      class="image w-full"
+                      src="{{block.settings.image |  img_url: 'master'}}"
+                      loading="lazy"
+                      alt="brand Image">
+                    <p class="text font-normal f-size-22 c-light-black m-0 py-10 leading-5 text-center">
+                      {{ block.settings.sub_heading }}
+                    </p>
+                  </div>
+                </a>
+              </div>
+            {% endfor %}
+          </div>
+          <div class="swiper-button-next"></div>
+          <div class="swiper-button-prev"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% schema %}
+  {
+    "name": "New In",
+    "settings": [
+      {
+        "type": "text",
+        "label": "Enter Heading",
+        "id": "sub_heading",
+        "default": "459 NEW ITEMS"
+      },
+      {
+        "type": "text",
+        "label": "Enter Heading",
+        "id": "heading",
+        "default": "New In"
+      },
+      {
+        "type": "text",
+        "label": "Enter Paragraph",
+        "id": "para",
+        "default": "Stay Head off the style curve with our latest arrivals"
+      },
+      {
+        "type": "header",
+        "content": "Button Content"
+      }, {
+        "type": "text",
+        "label": "Enter Button text",
+        "id": "btn_text"
+      }, {
+        "type": "url",
+        "label": "Paster Button Link",
+        "id": "btn_link"
+      }, {
+        "type": "range",
+        "id": "padding_top",
+        "min": 0,
+        "max": 160,
+        "step": 2,
+        "unit": "px",
+        "label": "Padding Top",
+        "default": 16
+      }, {
+        "type": "range",
+        "id": "padding_bottom",
+        "min": 0,
+        "max": 160,
+        "step": 2,
+        "unit": "px",
+        "label": "Pdding Bottom",
+        "default": 16
+      }
+    ],
+    "blocks": [
+      {
+        "type": "Image",
+        "name": "Image Banner",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image Banner"
+          }, {
+            "type": "text",
+            "id": "sub_heading",
+            "label": "Enter Heading"
+          }, {
+            "type": "url",
+            "id": "image_url",
+            "label": "Image Url"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Ak New In",
+        "category": "custom content"
+      }
+    ]
+  }
+{% endschema %}
+
+<script>
+  galleryMain = new Swiper('.newin-main', {
+    slidesPerView: 4,
+    spaceBetween: 30,
+    loop: true,
+    navigation: {
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev',
+    },
+  });
+</script>

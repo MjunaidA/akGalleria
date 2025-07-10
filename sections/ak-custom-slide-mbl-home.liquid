@@ -1,0 +1,252 @@
+<style>
+  .custom-slide-mbl-main-wrapper.mbl-cstm-slide-{{ section.id }} {
+    display:none;
+  }
+  @media(max-width:990px){
+    .custom-slide-mbl-main-wrapper.mbl-cstm-slide-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+      display:block;
+    }
+    .custom-slide-mbl-main-wrapper.mbl-cstm-slide-{{ section.id }} .custom-slide-wrapper-inner .textbox {
+      top: {{section.settings.top_bottom}}%;
+      left: {{section.settings.left_right}}%;
+      transform: translate(-{{section.settings.left_right}}%, -{{section.settings.top_bottom}}%);
+    }
+    .custom-slide-mbl-main-wrapper.mbl-cstm-slide-{{ section.id }} .custom-slide-wrapper-inner .textbox {}
+  }
+</style>
+
+<div class="custom-slide-mbl-main-wrapper mbl-cstm-slide-{{ section.id }}">
+  <div class="page-width page-width-fluid">
+    {% if section.settings.heading != blank %}
+      <h2 class="home-desk-heading p-30">{{ section.settings.heading }}</h2>
+    {% endif %}
+    <div class="custom-slide-wrapper-inner index-section overflow-hidden relative">
+      {% if section.settings.layout == 'layout_first' %}
+        <div class="swiper-wrapper">
+          {% for block in section.blocks %}
+            <div class="slide-col swiper-slide text-center">
+              <a class="link text-center text-no-decoration" href="{{block.settings.link}}">
+                <div class="image-box flex ">
+                  <img
+                    class="image w-full"
+                    src="{{block.settings.image |  img_url: 'master'}}"
+                    loading="lazy"
+                    alt="slide Image"
+                  >
+                </div>
+                {% if block.settings.heading_first != blank %}
+                  <p class="text font-normal f-size-10 c-light-black m-0 capitalize pt-5 leading-4">
+                    {{ block.settings.heading_first }}
+                  </p>
+                {% endif %}
+              </a>
+            </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <div class="swiper-wrapper">
+          {% for block in section.blocks %}
+            <div class="slide-col swiper-slide ">
+              <img
+                class="image w-full"
+                src="{{block.settings.image |  img_url: 'master'}}"
+                loading="lazy"
+                alt="slide Image"
+              >
+              <div class="textbox absolute z-10">
+                {% if block.settings.heading_first != blank %}
+                <p class="text font-normal f-size-14 m-0 uppercase pt-10 leading-4 {% if section.settings.txt_color == 'black' %}c-black{% else %}c-white{% endif %}">
+                    {{ block.settings.heading_first }}
+                  </p>
+                {% endif %}
+                {% if block.settings.heading_second != blank %}
+                  <p class="text font-normal f-size-14 m-0 uppercase pt-10 leading-4 {% if section.settings.txt_color == 'black' %}c-black{% else %}c-white{% endif %}">
+                    {{ block.settings.heading_second }}
+                  </p>
+                {% endif %}
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Custom Slider Mobile",
+  "settings": [
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Set Layout",
+      "options": [
+        {
+          "value": "layout_first",
+          "label": "First Layout"
+        },
+        {
+          "value": "layout_second",
+          "label": "Second Layout"
+        }
+      ],
+      "default": "layout_first"
+    },
+    {
+      "type": "select",
+      "id": "txt_color",
+      "label": "Set Layout",
+      "options": [
+        {
+          "value": "black",
+          "label": "Black"
+        },
+        {
+          "value": "white",
+          "label": "White"
+        }
+      ],
+      "default": "black"
+    },
+    {
+      "type": "text",
+      "label": "Enter Heading",
+      "id": "heading"
+    },
+    {
+      "type": "range",
+      "id": "slide_show",
+      "min": 0,
+      "max": 10,
+      "step": 0.1,
+      "unit": "px",
+      "label": "slide Show",
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "gap_between",
+      "min": 0,
+      "max": 50,
+      "step": 0.5,
+      "unit": "px",
+      "label": "Gap Between",
+      "default": 5
+    },
+    {
+      "type": "checkbox",
+      "label": "Enable Arrow",
+      "id": "enable_arrow"
+    },
+    {
+      "type": "checkbox",
+      "label": "Enable Infinite",
+      "id": "enable_loop"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 80,
+      "step": 1,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 80,
+      "step": 1,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 10
+    },
+    {
+      "type": "header",
+      "content": "Extra Second Layout Content"
+    },
+    {
+      "type": "range",
+      "id": "top_bottom",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "%",
+      "label": "Space From Top",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "left_right",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "%",
+      "label": "Space From Left",
+      "default": 16
+    }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "slider",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Add Image"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Add Link"
+        },
+        {
+          "type": "text",
+          "id": "heading_first",
+          "label": "Enter Text"
+        },
+        {
+          "type": "header",
+          "content": "Extra Second Layout Content"
+        },
+        {
+          "type": "text",
+          "id": "heading_second",
+          "label": "Enter Text"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom Slider Mobile",
+      "category": "customm content"
+    }
+  ]
+}
+{% endschema %}
+
+<script></script>
+<script>
+  var slideGap = {{section.settings.gap_between}};
+  var slideQuantity = {{section.settings.slide_show}};
+  var enableArrow = {{section.settings.enable_arrow}};
+  var infiniteScroll = {{section.settings.enable_loop}}
+
+  var galleryMain = new Swiper('.mbl-cstm-slide-{{ section.id }} .index-section', {
+    slidesPerView: slideQuantity,
+    loop: infiniteScroll,
+    spaceBetween:slideGap,
+    autoplay: {
+      delay: 8500,
+      disableOnInteraction: false,
+    },
+
+  });
+</script>

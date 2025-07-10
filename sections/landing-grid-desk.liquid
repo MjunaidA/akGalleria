@@ -1,0 +1,104 @@
+<style>
+  .landing-desk-main-wrapper-{{section.id}} {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+</style>
+<div class="landing-desk-main-wrapper-{{section.id}}">
+  <div class="page-width">
+    <div class="landing-inner">
+      <h2 class="landing-desk-heading p-30">{{ section.settings.heading }}</h2>
+      <div class="landing-row flex flex-wrap justify-center">
+        {% for block in section.blocks %}
+          <div class="landing-col {%if section.settings.image_qty == 'four' %}basis-4{%elsif section.settings.image_qty == 'five' %}basis-5{% else %}basis-6{% endif %}">
+              <a class="flex" href="{{block.settings.link}}">
+                <img
+                  class="w-full h-full"
+                  src="{{block.settings.image | img_url: 'master'}}"
+                  alt="category Image"
+                  loading="lazy"
+                >
+              </a>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "t:sections.image-with-text.name",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "label": "Enter Heading",
+      "id": "heading"
+    },
+    {
+      "type": "select",
+      "id": "image_qty",
+      "label": "Select Quantity",
+      "options": [
+        {
+          "value": "four",
+          "label": "4"
+        },
+        {
+          "value": "five",
+          "label": "5"
+        },
+        {
+          "value": "six",
+          "label": "6"
+        }
+      ],
+      "default": "five"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 160,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 160,
+      "step": 2,
+      "unit": "px",
+      "label": "Pdding Bottom",
+      "default": 16
+    }
+  ],
+  "blocks": [
+    {
+      "type": "heading",
+      "name": "grid",
+      "settings": [
+        {
+          "type": "url",
+          "label": "Paste Link",
+          "id": "link"
+        },
+        {
+          "type": "image_picker",
+          "label": "Pick Image",
+          "id": "image"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Landing Grid Desktop"
+    }
+  ]
+}
+{% endschema %}

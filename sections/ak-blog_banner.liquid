@@ -1,0 +1,135 @@
+{% stylesheet %}
+  .section-banner {
+    height: 20rem;
+    width: 100%;
+    background-size: cover;
+    border-bottom: 0.3rem solid rgb(0, 0, 0);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .section-banner h2 {
+    text-transform: capitalize;
+    color: {{ section.settings.heading_color }};
+    font-size: {{ section.settings.heading_size }}rem;
+    font-weight: {{ section.settings.heading_weight }};
+  }
+{% endstylesheet %}
+
+
+<style>
+  .blog-section-banner{
+    position:relative;
+  }
+  
+  .blog-section-banner .heading{
+    color: {{ section.settings.heading_color }};
+    font-size: {{ section.settings.heading_size }}rem;
+    font-weight: {{ section.settings.heading_weight }};
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 4;
+    transform: translate(-50%, -50%); 
+    margin:0;
+  }
+</style>
+
+{%- comment -%}
+  This is a dynamic section for Shopify Liquid with customizable settings.
+  The section includes a heading, a background image, and options for heading color, size, weight, and padding.
+{%- endcomment -%}
+
+{%- assign section_id = section.id | handleize -%}
+
+<div
+  class="section-outer-container"
+  style="padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px; background-color: {{ section.settings.background_color }};"
+>
+  <div class="{{ section_id }} blog-section-banner">
+    <img class="w-full small-hide medium hide" src="{{ section.settings.background_image | img_url: 'master' }}">
+    <img class="w-full large-up-hide" src="{{ section.settings.background_image_mbl | img_url: 'master' }}">
+    <h2 class="heading" style="">
+      {{ section.settings.heading_text }}
+    </h2>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Custom Banner Section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background Image Desktop"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image_mbl",
+      "label": "Background Image Mobile"
+    },
+    {
+      "type": "text",
+      "id": "heading_text",
+      "label": "Heading Text",
+      "default": "Add your custom heading here"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Heading Size",
+      "min": 1,
+      "max": 4,
+      "step": 0.1,
+      "default": 2
+    },
+    {
+      "type": "range",
+      "id": "heading_weight",
+      "label": "Heading Font Weight",
+      "min": 100,
+      "max": 900,
+      "step": 100,
+      "default": 400
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top Padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom Padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 0
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#ffffff"
+    }
+  ],
+  "presets": [
+    {
+      "category": "Custom",
+      "name": "Custom Banner Section"
+    }
+  ]
+}
+{% endschema %}

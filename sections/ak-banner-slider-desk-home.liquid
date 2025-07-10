@@ -1,0 +1,179 @@
+<style>
+  .desk-main-banner {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+</style>
+
+{% if section.settings.pagination_type == 'bar' %}
+  <style>
+    .desk-main-banner.desk-banner-{{ section.id }} .swiper-pagination-bullets .swiper-pagination-bullet {
+      width: 180px;
+      background: #fff;
+      height: 5px;
+      border-radius: 2px;
+      max-width: 10%;
+    }
+  </style>
+{% else %}
+  <style>
+    .desk-main-banner.desk-banner-{{ section.id }} .swiper-pagination {
+      position: initial;
+      padding-top: 20px;
+    }
+    /* .desk-main-banner.desk-banner-{{ section.id }} .swiper-pagination-bullets .swiper-pagination-bullet {
+      background: #535766;      
+    } */
+  </style>
+{% endif %}
+{% if section.settings.enable_pagination == false %}
+  <style>
+    .desk-main-banner.desk-banner-{{ section.id }} .swiper-pagination {
+      display: none;
+    }
+  </style>
+{% endif %}
+  
+
+<div class="desk-main-banner desk-banner-{{ section.id }}">
+  <div class="page-width p-0">
+    <div class="image-banner-inner">
+      <h2 class="home-desk-heading p-30">{{ section.settings.heading }}</h2>
+      <div class="swiper image-banner banner__{{section.id}} w-full">
+        <div class="swiper-wrapper">
+          {% for block in section.blocks %}
+            <div class="swiper-slide">
+              <a href="{{block.settings.image_url}}">
+                {% if block.settings.content_select == 'image' %}
+                  <img
+                    class="banner-image banner-image-dsk w-full"
+                    src="{{ block.settings.image | img_url: 'master' }}"
+                    alt="Banner Image Desktop"
+                    loading="lazy"
+                  >
+                {% else %}
+                  <div class="video-banner w-full">
+                    {{ block.settings.video | video_tag: autoplay: true, loop: true, muted: true, controls: false }}
+                  </div>
+                {% endif %}
+              </a>
+            </div>
+          {% endfor %}
+        </div>
+          <div class="swiper-pagination"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Slider Banner",
+  "settings": [
+    {
+      "type": "text",
+      "label": "Enter Text",
+      "id": "heading"
+    },
+    {
+      "type": "checkbox",
+      "label": "Enable Pagination",
+      "id": "enable_pagination"
+    },
+    {
+      "type": "select",
+      "id": "pagination_type",
+      "label": "Pagination Type",
+      "options": [
+        {
+          "value": "dot",
+          "label": "dot"
+        },
+        {
+          "value": "bar",
+          "label": "bar"
+        }
+      ],
+      "default": "bar"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 80,
+      "step": 1,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 80,
+      "step": 1,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 10
+    }
+  ],
+  "blocks": [
+    {
+      "type": "Image",
+      "name": "Banner",
+      "settings": [
+        {
+          "type": "select",
+          "id": "content_select",
+          "label": "Select Image or Video",
+          "options": [
+            {
+              "value": "image",
+              "label": "Image"
+            },
+            {
+              "value": "video",
+              "label": "Video"
+            }
+          ],
+          "default": "image"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image Banner"
+        },
+        {
+          "type": "url",
+          "id": "image_url",
+          "label": "Image Url"
+        },
+        {
+          "type": "video",
+          "label": "Select Video",
+          "id": "video"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "AK Slider Banner",
+      "category": "custom content"
+    }
+  ]
+}
+{% endschema %}
+
+<script>
+  galleryMain = new Swiper('.desk-banner-{{ section.id }} .image-banner', {
+    autoplay: {
+      delay: 2500,
+      disableOnInteraction: false,
+    },
+    pagination: {
+      el: '.swiper-pagination',
+      clickable: true,
+    },
+  });
+</script>

@@ -1,0 +1,66 @@
+<style>
+  .explore-category-grid-mbl-wrapper.ak-explore-{{block.id}} {
+    display:none;
+  }
+  @media(max-width:990px){
+    .explore-category-grid-mbl-wrapper.ak-explore-{{block.id}} {
+      padding-top: {{ bts.padding_top }}px;
+      padding-bottom: {{ bts.padding_bottom }}px;
+      display:block;
+    }
+}
+</style>
+
+<div class="explore-category-grid-mbl-wrapper ak-explore-{{block.id}}">
+  <div class="page-width">
+    <div class="explore-slide-mbl-inner">
+      {% if block.settings.banner_img != blank %}
+        <img class="w-full" src="{{block.settings.banner_img |  img_url: 'master'}}">
+      {% endif %}
+      <div class="cate-grid-row flex flex-wrap">
+        {% if block.settings.grid_img1 != blank %}
+          <div class="cate-grid-col basis-3 px-5">
+            <a href="{{block.settings.grid_link1}}">
+              <img class="w-full" src="{{block.settings.grid_img1 |  img_url: 'medium'}}" alt="grid-img" loading="lazy">
+            </a>
+          </div>
+        {% endif %}
+        {% if block.settings.grid_img2 != blank %}
+          <div class="cate-grid-col basis-3 px-5">
+            <a href="{{block.settings.grid_link2}}">
+              <img class="w-full" src="{{block.settings.grid_img2 |  img_url: 'medium'}}" alt="grid-img" loading="lazy">
+            </a>
+          </div>
+        {% endif %}
+        {% if block.settings.grid_img3 != blank %}
+          <div class="cate-grid-col basis-3 px-5">
+            <a href="{{block.settings.grid_link3}}">
+              <img class="w-full" src="{{block.settings.grid_img3 |  img_url: 'medium'}}" alt="grid-img" loading="lazy">
+            </a>
+          </div>
+        {% endif %}
+        {% if block.settings.grid_img4 != blank %}
+          <div class="cate-grid-col basis-3 px-5">
+            <a href="{{block.settings.grid_link4}}">
+              <img class="w-full" src="{{block.settings.grid_img4 |  img_url: 'medium'}}" alt="grid-img" loading="lazy">
+            </a>
+          </div>
+        {% endif %}
+        {% if block.settings.grid_img5 != blank %}
+          <div class="cate-grid-col basis-3 px-5">
+            <a href="{{block.settings.grid_link5}}">
+              <img class="w-full" src="{{block.settings.grid_img5 |  img_url: 'medium'}}" alt="grid-img" loading="lazy">
+            </a>
+          </div>
+        {% endif %}
+        {% if block.settings.grid_img6 != blank %}
+          <div class="cate-grid-col basis-3 px-5">
+            <a href="{{block.settings.grid_link6}}">
+              <img class="w-full" src="{{block.settings.grid_img6 |  img_url: 'medium'}}" alt="grid-img" loading="lazy">
+            </a>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>

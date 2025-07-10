@@ -1,0 +1,476 @@
+<style>
+  .studio-section-wraper .studio-profile-wrap .profile-row .image {
+    border-radius: 50px;
+    border: 1px solid rgba(40, 44, 63, 0.2);
+    max-width: 34px;
+    max-height: 34px;
+  }
+  .studio-section-wraper .follow_btn {
+    color: #ff3f6c;
+  }
+
+  /* Card Styling */
+  .studio-section-wraper .card {
+    display: flex;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    padding: 10px 2px 10px 10px ;
+    cursor: pointer;
+    min-height: 60px;
+  }
+
+  .studio-section-wraper .card--standard > .card__content.card-information-content {
+    padding: 0;
+  }
+
+  .studio-section-wraper .card-wrapper .card .card__information {
+    padding: 0 0 0 8px;
+  }
+  .studio-section-wraper .card-wrapper .card .card__information .card__heading {
+    font-weight: 400;
+    font-size: 14px;
+  }
+  .studio-section-wraper .card .card__inner {
+    /* max-width: 43px; */
+    /* width: 43px; */
+    width: 60px;
+  }
+  .studio-section-wraper .card .card__inner a{
+    display: flex;
+  }
+  .studio-section-wraper .card__badge,
+  .studio-section-wraper .card__heading .studio-section-wraper .card .card__inner .pd-sub-title,
+  .studio-section-wraper .card__inner .card__content {
+    display: none;
+  }
+  .studio-section-wraper .price-item,
+  .studio-section-wraper .price-item .money {
+    font-size: 12px;
+  }
+
+  .studio-section-wraper .pd-sub-title {
+    display: none;
+  }
+  .studio-section-wraper .card__media {
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+  }
+  .studio-section-wraper .price,
+  .studio-section-wraper .save-wrapper {
+    width: 100%;
+  }
+  .studio-section-wraper .save-wrapper .save-content{
+    text-wrap: nowrap;
+    font-size: 10px;
+  }
+  .studio-section-wraper .price__container {
+    line-height: 1;
+    width:fit-content;
+    max-width: fit-content;
+  }
+  .studio-section-wraper .wishlist-mbl {
+    display: none;
+  }
+  .studio-section-wraper .save-wrapper .save-content {
+    font-weight: 400;
+  }
+
+  /* studio wrap styling */
+
+  .studio-section-wraper .studio-shop-wrap .studio-shop-row .shop-all-content {
+    min-width: 65px;
+  }
+  .studio-section-wraper .studio-shop-wrap .studio-shop-row .img-container {
+    border: 1px solid rgb(255, 63, 108);
+    border-radius: 24px;
+    border-width: 1px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 37px;
+    height: 37px;
+    padding: 7px;
+  }
+
+  .studio-section-wraper .studio-shop-wrap .studio-shop-row .shop-all-product-list {
+    width: calc(100% - 65px);
+    padding-left: 5px;
+  }
+  .studio-section-wraper .studio-desc-wrap {
+    padding: 0 10px;
+    position: relative;
+  }
+  .studio-section-wraper .studio-desc-wrap p {
+    line-height: 20px;
+    margin-top: 0;
+  }
+
+  /* Description Style */
+  .studio-section-wraper .studio-desc-wrap.desc-fix-height {
+    max-height: 77px;
+    overflow: hidden;
+  }
+  .studio-section-wraper .studio-desc-wrap .see-more-btn {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    padding: 2px 55px 1px 8px;
+    background: #fff;
+    line-height: 10px;
+  }
+
+  /* Swiper Style */
+  .studio-section-wraper .swiper-pagination-bullets.swiper-pagination-horizontal {
+    position: relative;
+    line-height: 1;
+    bottom: 0;
+    /* padding: 5px 0 2px 0; */
+    margin: 5px 0;
+    /* margin-bottom:3px */
+  }
+  .studio-section-wraper .swiper-slide {
+    padding: 0;
+    display: flex;
+  }
+ 
+  /* Video And Image Style */
+  .studio-section-wraper .video-banner video {
+    width: 100%;
+  }
+
+  .studio-section-wraper .video-play-btn {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  @media(max-width:990px){
+    .studio-section-wraper .card{
+      padding: 4px;
+    }
+  }
+</style>
+<div class="studio-section-wraper bg-white main-{{section.id}} pb-10 mb-10">
+  {% if section.settings.heading_follow == 'follow' %}
+    <div class="studio-profile-wrap p-10">
+      <div class="studio-profile-container">
+        <div class="profile-row flex items-center">
+          <img class="image w-full" src="{{section.settings.profile_img  |  img_url: 'master'}}">
+          <h3 class="f-size-14 font-bold leading-5 c-black m-0 pl-10">{{ section.settings.title }}</h3>
+          <div
+            dir="auto"
+            class="css-901oao r-1kihuf0 r-2kwtcw"
+            style="color: rgba(40, 44, 63, 0.2); font-size: 8px; margin-right: 8px; margin-left: 8px;"
+          >
+            ⬤
+          </div>
+          <a
+            class="follow_btn text-no-decoration f-size-14 font-bold leading-5 m-0"
+            href="{{section.settings.follow_link}}"
+          >
+            {{ section.settings.follow_text }}
+          </a>
+        </div>
+      </div>
+    </div>
+  {% else %}
+    <h2 class="font-bold f-size-16 c-light-black m-0 leading-5 px-10 pt-25 pb-10 studio-bg-clr">
+      {{ section.settings.main_heading }}
+    </h2>
+  {% endif %}
+  <div class="studio-slide-images slide-img overflow-hidden">
+    <div class="swiper-wrapper">
+      {% for block in section.blocks %}
+        <div class="slide-col swiper-slide text-center">
+          {% if block.settings.image_or_video == 'image' %}
+            <img class="w-full" src="{{block.settings.image |  img_url: 'master'}}">
+          {% else %}
+            <div class="video-banner w-full">
+              <div class="video-play-btn absolute pointer z-10">
+                <svg width="56" height="56" viewBox="0 0 52 52">
+                  <g fill="none" fill-rule="evenodd"><g fill="#ffffff" fill-rule="nonzero"><g><g><g><path fill-opacity="0.203" stroke="#ffffff" stroke-width="1.31" d="M22.1-.395c6.212 0 11.836 2.518 15.906 6.589 4.071 4.07 6.589 9.694 6.589 15.906s-2.518 11.836-6.589 15.906c-4.07 4.071-9.694 6.589-15.906 6.589s-11.836-2.518-15.906-6.589C2.123 33.936-.395 28.312-.395 22.1S2.123 10.264 6.194 6.194C10.264 2.123 15.888-.395 22.1-.395z" transform="translate(-154 -416) translate(0 172) translate(154 244) translate(3.9 3.9)"></path><path d="M29.648 23.258l-10.92 6.825c-.22.138-.472.207-.723.207-.228 0-.456-.057-.662-.171-.434-.24-.703-.697-.703-1.194v-13.65c0-.497.27-.953.703-1.194.434-.242.965-.227 1.385.036l10.92 6.825c.4.25.642.688.642 1.158s-.243.908-.642 1.158z" transform="translate(-154 -416) translate(0 172) translate(154 244) translate(3.9 3.9)"></path></g></g></g></g></g>
+                </svg>
+              </div>
+
+              {{ block.settings.video | video_tag: autoplay: false, loop: true, muted: false, controls: false }}
+            </div>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+    {% if section.settings.enable_pagination == true %}
+      <div class="swiper-pagination"></div>
+    {% endif %}
+  </div>
+
+  <div class="studio-shop-wrap {%if section.settings.enable_pagination != true %}pt-10{% endif %}">
+    <div class="studio-shop-row flex">
+      <div class="shop-all-content coll1 flex items-center px-10">
+        <a href="{{section.settings.shop_link}}" class="text-no-decoration">
+          <div class="img-container">
+            <img class="w-full" src="{{ section.settings.shop_image |  img_url: 'master'}}">
+          </div>
+          <h3 class="leading-5 f-size-12 font-bold sale-clr lt-space-1 text-center m-0">
+            {{ section.settings.shop_text }}
+          </h3>
+        </a>
+      </div>
+      <div class="shop-all-product-list swiper product-list coll2 p-0 m-0">
+        <div class="swiper-wrapper">
+          {% for list in section.settings.product_list %}
+            <div class="swiper-slide">
+              {% render 'card-product', card_product: list, lazy_load: lazy_load %}
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="studio-link-wrapper f-size-14 px-10 pt-10">
+    <div class="studio-link-row flex gap-20">
+      <div class="studio-link-col">
+        <a href="#">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="rgba(40, 44, 63, 1)">
+            <g fill="none" fill-rule="evenodd"><g fill="rgba(40, 44, 63, 1)" fill-rule="nonzero"><g><path d="M16.458 2.75c3.193 0 5.792 2.557 5.792 5.702 0 .665-.108 1.361-.32 2.076l-.081.254.05.095c.164.33.273.684.322 1.05l.022.222.007.224c0 1.575-.934 3.133-2.295 4.519-1.215 1.238-2.639 2.162-3.565 2.162-.288 0-.612-.087-.966-.252l-.044-.021-.123.087c-1.057.725-2.048 1.226-2.873 1.352l-.202.023-.182.007c-.746 0-1.716-.412-2.9-1.216-1.065-.723-2.224-1.721-3.265-2.813-2.351-2.465-4.085-5.227-4.085-7.769 0-3.145 2.6-5.702 5.792-5.702 1.106 0 2.182.308 3.11.89.344.216.662.466.95.745l.211.215.187.211.187-.211c.205-.22.427-.425.665-.61l.243-.181.253-.168c.928-.583 2.004-.891 3.11-.891zm0 1.653c-1.591 0-3.01.873-3.707 2.279-.14.283-.432.463-.751.463s-.61-.18-.75-.463c-.698-1.406-2.117-2.28-3.708-2.28-2.272 0-4.12 1.818-4.12 4.05 0 1.757 1.354 4.249 3.63 6.635 1.914 2.008 4.133 3.51 4.948 3.51.327 0 .985-.26 1.792-.755l.094-.06c-.28-.233-.556-.483-.815-.74l-.254-.259c-1.317-1.38-2.287-2.937-2.287-4.41 0-1.892 1.563-3.429 3.481-3.429.834 0 1.622.287 2.242.801l.137.122.138-.122c.563-.467 1.265-.747 2.015-.793l.226-.008c.575 0 1.129.14 1.624.398l.093.052.033-.186c.026-.173.044-.343.053-.51l.006-.246c0-2.232-1.848-4.05-4.12-4.05zm2.311 6.194c-.7 0-1.322.383-1.628 1-.14.284-.432.463-.75.463-.32 0-.61-.179-.751-.462-.306-.618-.93-1-1.629-1-.998 0-1.809.797-1.809 1.775 0 .834.682 2.071 1.831 3.276.985 1.033 2.07 1.752 2.357 1.752.314 0 1.404-.68 2.366-1.66 1.162-1.184 1.822-2.42 1.822-3.368 0-.978-.81-1.776-1.809-1.776z" transform="translate(-12 -622) translate(12 622)"></path></g></g></g>
+          </svg>
+        </a>
+      </div>
+      <div class="studio-link-col">
+        <button id="shareButton" class="bg-transparent border-remove">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="#282C3F">
+            <g fill="none" fill-rule="evenodd"><g fill="#282C3F" fill-rule="nonzero" stroke="rgba(40, 44, 63, 0.9)" stroke-width="0.5"><g><g><g><path d="M14.656 12.329c-1.104 0-2.088.526-2.718 1.339l-5.272-2.945c.124-.355.192-.737.192-1.132 0-.398-.068-.777-.196-1.135l5.268-2.941c.626.817 1.614 1.347 2.722 1.347 1.889 0 3.43-1.538 3.43-3.431S16.546 0 14.653 0c-1.893 0-3.431 1.538-3.431 3.43 0 .4.068.782.195 1.136L6.152 7.507C5.527 6.687 4.54 6.16 3.431 6.16 1.542 6.16 0 7.698 0 9.591s1.542 3.431 3.435 3.431c1.108 0 2.096-.53 2.725-1.35l5.268 2.944c-.127.359-.2.745-.2 1.144 0 1.888 1.539 3.43 3.432 3.43s3.43-1.538 3.43-3.43c0-1.893-1.541-3.431-3.434-3.431zm0-11.25c1.299 0 2.355 1.057 2.355 2.356S15.955 5.79 14.656 5.79c-1.3 0-2.355-1.056-2.355-2.355 0-1.3 1.06-2.355 2.355-2.355zM3.435 11.947c-1.3 0-2.355-1.056-2.355-2.355s1.056-2.355 2.355-2.355S5.79 8.292 5.79 9.591c0 1.3-1.06 2.355-2.355 2.355zm11.22 6.165c-1.298 0-2.354-1.056-2.354-2.355 0-1.3 1.056-2.355 2.355-2.355s2.355 1.056 2.355 2.355-1.056 2.355-2.355 2.355z" transform="translate(-89 -664) translate(12 664) translate(77) translate(3 2)"></path></g></g></g></g></g>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="studio-desc-wrap f-size-14 px-10 desc-fix-height">
+    {{ section.settings.description }}
+    <button
+      type="button"
+      class="see-more-btn f-size-12 leading-5 lt-space-1 font-bold footer-black bg-transparent border-remove p-0 m-0 pointer"
+    >
+      ... See More
+    </button>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Studio App",
+  "settings": [
+    {
+      "type": "select",
+      "id": "heading_follow",
+      "label": "Heading Or Follow",
+      "options": [
+        {
+          "value": "heading",
+          "label": "Heading"
+        },
+        {
+          "value": "follow",
+          "label": "Follow"
+        }
+      ],
+      "default": "follow",
+      "info": "Select Or Follow Functionality"
+    },
+    {
+      "type": "text",
+      "label": "Enter Heading",
+      "id": "main_heading"
+    },
+    {
+      "type": "image_picker",
+      "label": "Select Profile Image",
+      "id": "profile_img"
+    },
+    {
+      "type": "text",
+      "label": "Enter Heading",
+      "id": "title"
+    },
+    {
+      "type": "text",
+      "label": "Follow Text",
+      "id": "follow_text",
+      "default": "Follow"
+    },
+    {
+      "type": "url",
+      "label": "Follow Link",
+      "id": "follow_link"
+    },
+    {
+      "type": "checkbox",
+      "label": "Enable Pagination",
+      "id": "enable_pagination",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "slider_limit",
+      "min": 1,
+      "max": 1.5,
+      "step": 0.1,
+      "unit": "px",
+      "label": "slide Limit",
+      "default": 1.2
+    },
+    {
+      "type": "range",
+      "id": "slider_gap",
+      "min": 0,
+      "max": 20,
+      "step": 0.5,
+      "unit": "px",
+      "label": "Slider Gap",
+      "default": 5
+    },
+    {
+      "type": "header",
+      "content": "Shop all content"
+    },
+    {
+      "type": "text",
+      "label": "Shop All Text",
+      "id": "shop_text"
+    },
+    {
+      "type": "image_picker",
+      "label": "Shop All Image",
+      "id": "shop_image"
+    },
+    {
+      "type": "text",
+      "label": "Shop All Link",
+      "id": "shop_link"
+    },
+    {
+      "type": "product_list",
+      "id": "product_list",
+      "label": "Products",
+      "limit": 10
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 80,
+      "step": 1,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 80,
+      "step": 1,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 10
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image_slide",
+      "name": "Image Slide",
+      "settings": [
+        {
+          "type": "select",
+          "id": "image_or_video",
+          "label": "Select Image/Video",
+          "options": [
+            {
+              "value": "image",
+              "label": "Image"
+            },
+            {
+              "value": "video",
+              "label": "Video"
+            }
+          ],
+          "default": "image"
+        },
+        {
+          "type": "image_picker",
+          "label": "Select Image",
+          "id": "image"
+        },
+        {
+          "type": "video",
+          "label": "Select Video ",
+          "id": "video"
+        },
+        {
+          "type": "url",
+          "label": "Paste Url",
+          "id": "link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Studio App",
+      "category": "custom content"
+    }
+  ]
+}
+{% endschema %}
+
+<script>
+  var slideGap = {{section.settings.slider_gap}};
+  var slideQuantity = {{section.settings.slider_limit}};
+
+  galleryMain = new Swiper('.main-{{section.id}} .slide-img', {
+    slidesPerView: slideQuantity,
+    spaceBetween:slideGap,
+    loop: true,
+    pagination: {
+      clickable: true,
+      el: '.swiper-pagination',
+    },
+  });
+
+  productlistMain = new Swiper('.main-{{section.id}} .product-list', {
+    slidesPerView: 1.4,
+    spaceBetween: 10,
+    loop: true,
+    breakpoints: {
+        400: {
+          // spaceBetween: 10,
+          slidesPerView: 1.7
+        },
+    }
+  });
+</script>
+
+<script>
+  document.getElementById('shareButton').addEventListener('click', async () => {
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: 'Web Share API Demo',
+          text: 'Check out this cool Web Share API!',
+          url: 'https://ak-galleria-pk.myshopify.com/pages/studio',
+        });
+        // console.log('Successfully shared');
+      } catch (error) {
+        console.error('Error sharing:', error);
+      }
+    } else {
+      // console.log('Web Share API not supported.');
+    }
+  });
+</script>

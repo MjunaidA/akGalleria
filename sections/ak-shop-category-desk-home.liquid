@@ -1,0 +1,83 @@
+<div class="shop-category-desk-main-wrapper">
+  <div class="page-width">
+    <div class="shop-category-inner">
+      <h2 class="home-desk-heading p-20">{{ section.settings.heading }}</h2>
+      <div class="shop-category-row flex flex-wrap justify-center">
+        {% for block in section.blocks %}
+          <div class="shop-category-col basis-6 p-15">
+            {% if block.settings.category_image != blank %}
+              <a class="flex items-center flex-col text-no-decoration" href="{{block.settings.image_url}}">
+                <img
+                  class="w-full h-full rounded-5x"
+                  src="{{block.settings.category_image | img_url: 'master'}}"
+                  alt="category Image"
+                  loading="lazy">
+                {% if block.settings.text != blank %}
+                  <p class="f-size-25 font-normal c-dark-black leading-7 m-0 pt-10">{{ block.settings.text }}</p>
+                {% endif %}
+              </a>
+            {% endif %}
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Ak Shop By Category",
+    "settings": [
+      {
+        "type": "text",
+        "label": "Enter Text",
+        "id": "heading"
+      }, {
+        "type": "range",
+        "id": "padding_top",
+        "min": 0,
+        "max": 160,
+        "step": 2,
+        "unit": "px",
+        "label": "Padding Top",
+        "default": 16
+      }, {
+        "type": "range",
+        "id": "padding_bottom",
+        "min": 0,
+        "max": 160,
+        "step": 2,
+        "unit": "px",
+        "label": "Pdding Bottom",
+        "default": 16
+      }
+    ],
+    "blocks": [
+      {
+        "type": "Image",
+        "name": "Image Banner",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "category_image",
+            "label": "Image Banner"
+          }, {
+            "type": "text",
+            "label": "Enter Text",
+            "id": "text"
+          }, {
+            "type": "url",
+            "id": "image_url",
+            "label": "Image Url"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Ak Shop By Category",
+        "category": "custom content"
+      }
+    ]
+  }
+{% endschema %}

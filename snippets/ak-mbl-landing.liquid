@@ -1,0 +1,48 @@
+{% assign bts = block.settings %}
+
+<style>
+  .ak-landing-mbl-main-wrapper.ak-landing-{{block.id}}{
+    display: none;
+  }
+  @media(max-width:990px){
+    .ak-landing-mbl-main-wrapper.ak-landing-{{block.id}}{
+      padding-top: {{ block.settings.padding_top }}px;
+      padding-bottom: {{ block.settings.padding_bottom }}px;
+      display: block;
+    }
+  }
+</style>
+<div class="ak-landing-mbl-main-wrapper ak-landing-{{block.id}}">
+  <div class="page-width">
+    <div class="ak-landing-mbl-inner">
+      <div class="flex">
+        {% if bts.top_banner != blank %}
+          <img class="w-full" src="{{ bts.top_banner |  img_url: 'master' }}">
+        {% endif %}
+      </div>
+      <div class="ak-landing-row flex">
+        <div class="ak-landing-col flex-50">
+          {% if bts.first_halft_banner != blank %}
+          <a href="{{bts.first_button_link}}" class="flex">
+            <img class="w-full" src="{{bts.first_halft_banner |  img_url: 'master'}}">
+            {{ bts.first_button_text }}
+          </a>
+          {% endif %}
+        </div>
+        <div class="ak-landing-col flex-50">
+          {% if bts.second_half_banner != blank %}
+          <a href="{{bts.second_button_link}}" class="flex">
+            <img class="w-full" src="{{bts.second_half_banner |  img_url: 'master'}}">
+            {{ bts.second_button_text }}
+          </a>
+          {% endif %}
+        </div>
+      </div>
+      <div class="flex">
+        {% if bts.bottom_banner != blank %}
+        <img class="w-full" src="{{bts.bottom_banner |  img_url: 'master' }}">
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>

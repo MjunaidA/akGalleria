@@ -1,0 +1,223 @@
+<style>
+      :root {
+    --fixed-height: 62px; /* Fixed height */
+    --remaining-height: calc(100% - var(--fixed-height)); /* Calculate remaining height */
+    --calculated-height: calc(var(--remaining-height) * 33.33 / 100); /* Calculate height */
+  }
+
+  .ak__card-list {
+    height:100%; /* Set height */
+  }
+
+      .ak__blog__maincontainer {
+       width: 100%;
+      }
+
+      .multi-row {
+      display: flex;
+      flex-wrap: wrap;
+      width: 100%;
+      height:var(--calculated-height);
+      }
+
+      .ak__card-list{
+      display: flex;
+      width: 100%;
+      flex-direction: column;
+      }
+
+  .ak__card-list .ak_custom_blog_v-article .article-card > .card__inner {
+    width: 180px;
+  }
+
+      .ak__card-list .ak__ep__heading{
+      align-items: center;
+      justify-content: center;
+      display: flex;
+      padding: 2rem 0px;
+      font-size: 1.8rem;
+      line-height: 2.1rem;
+      text-transform: uppercase;
+      font-family: Montserrat, sans-serif;
+      font-weight: 700;
+      background: white;
+    }
+    .multi-row .card:not(.ratio){
+      display: flex;
+      flex-direction: row;
+      border-top: 0.1rem solid rgb(187, 188, 188);
+    }
+
+      .multi-row .ak__subheading{
+          display: none;
+      }
+
+
+      .ak__card-list .ak_custom_blog_v-article .article-card > .card__inner {
+          width: 180px;
+      }
+
+
+      .ak__card-list .ak_custom_blog_v-article .article-card > .card__content {
+          padding: 15px 20px;
+          display: flex;
+          align-items: center;
+      }
+      .ak__card-list .ak_custom_blog_v-article .article-card > .card__content .card__information  {
+          padding:0px;
+      }
+
+      .ak__card-list .ak_custom_blog_v-article .article-card > .card__content .card__information .card__heading {
+          font-size: 14px;
+          line-height: 18px;
+          height: 36px;
+          width: 100%;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          -webkit-line-clamp: 2;
+          display: -webkit-box;
+          -webkit-box-orient: vertical;
+          text-transform: uppercase;
+      }
+
+      .ak__card-list .ak_custom_blog_v-article .article-card > .card__content .card__information .article-card__excerpt {
+          font-size: 14px;
+          line-height: 21px;
+          height: 42px;
+          width: 100%;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          -webkit-line-clamp: 2;
+          display: -webkit-box;
+          -webkit-box-orient: vertical;
+          margin: 0;
+      }
+      .ak__card-list .ak_custom_blog_v-article .article-card > .card__content .card__information .ak__subheading__article {
+          font-size: 14px;
+          line-height: 19px;
+          width: 100%;
+          text-decoration: underline;
+          font-weight: 700;
+      }
+</style>
+<div
+  class="section-outer-container"
+  style="padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px; background-color: {{ section.settings.background_color }};"
+>
+  <div class="ak__blog__maincontainer page-width width-1600">
+    <div class="blog-articles">
+      {% for block in section.blocks %}
+        {% if block.type == 'article' %}
+          {% render 'article-card',
+            blog: section.settings.blog,
+            article: block.settings.article,
+            media_aspect_ratio: 1.33,
+            show_image: true,
+            show_date: true,
+            show_author: true,
+            show_excerpt: true,
+            show_additional_text: true,
+            show_article_text: false
+          %}
+        {% endif %}
+      {% endfor %}
+
+      <div class="ak__card-list">
+        <div class="ak__ep__heading">
+          {{ section.settings.titlename }}
+        </div>
+        {% for block in section.blocks %}
+          {% if block.type == 'article_row' %}
+            <div class="multi-row ak_custom_blog_v-article">
+              {% render 'article-card',
+                blog: section.settings.blog,
+                article: block.settings.article,
+                media_aspect_ratio: 0.70,
+                show_image: true,
+                show_excerpt: true,
+                show_author: false,
+                show_date: false,
+                show_additional_text: false,
+                show_article_text: true
+              %}
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+    "name": "Custom Blog",
+    "settings": [
+        {
+        "type": "inline_richtext",
+        "id": "titlename",
+        "default": "EDITORS PICKS",
+        "label": "Main Heading"
+        },
+        {
+            "type": "text",
+            "id": "title",
+            "label": "Slideshow Title"
+        },
+        {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top Padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom Padding",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 0
+    },
+    {
+    "type": "color",
+    "id": "background_color",
+    "label": "Background Color",
+    "default": "#ffffff"
+    }
+    ],
+    "max_blocks": 5,
+    "blocks": [
+        {
+            "type": "article",
+            "name": "Article Block 1",
+            "settings": [
+                {
+                    "type": "article",
+                    "id": "article",
+                    "label": "Select Article"
+                }
+            ]
+        },
+
+        {
+            "type": "article_row",
+            "name": "Article Row Block",
+            "settings": [
+                {
+                    "type": "article",
+                    "id": "article",
+                    "label": "Select Article"
+                }
+            ]
+        }
+    ],
+    "presets": [
+        {
+            "name": "Custom Blog Preset"
+        }
+    ]
+}
+{% endschema %}

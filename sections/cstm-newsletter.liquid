@@ -1,0 +1,247 @@
+<style>
+  @media (max-width: 767px) {
+    .cs-newsletter-main-wrapper {
+      transition: 0.4s;
+      z-index: 5;
+    }
+    .newsletter-fixed {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: #fff;
+      /* padding-top: 10px; */
+    }
+    .newsletter-on-bottom {
+      transform: translateY(101%);
+    }
+
+    .letter-submit-button {
+    }
+    .cs-newsletter-main-wrapper .newsletter-form__field-wrapper {
+      max-width: 100%;
+    }
+
+    .cs-newsletter-main-wrapper .middle-heading p,
+    .cs-newsletter-main-wrapper .bottom-heading p {
+      margin: 0;
+      font-size: 13px;
+      line-height: 1;
+    }
+    .cs-newsletter-main-wrapper .letter-close-btn {
+      position: absolute;
+      top: 5px;
+      right: 3px;
+      background: transparent;
+      border: none;
+    }
+    .newsletter-modal-bg-gradient {
+      position: fixed;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      z-index: 4;
+      background-color: rgba(0, 0, 0, 0.8);
+    }
+  }
+</style>
+<div class="newsletter-modal-bg-gradient hidden"></div>
+<div class="cs-newsletter-main-wrapper newsletter-fixed newsletter-on-bottom large-up-hide">
+  <div class="cs-newsletter-inner">
+    <a class="flex" href="{{section.settings.image_link}}">
+      <img class="w-full" src="{{section.settings.image |  img_url: 'master'}}">
+    </a>
+
+    <div class="top-heading mbl-space py-20">
+      {{ section.settings.heading }}
+    </div>
+
+    <div class="mbl-space">
+      {% form 'customer', class: 'newsletter-form' %}
+        <input type="hidden" name="contact[tags]" value="newsletter">
+        <div
+          class="newsletter-form__field-wrapper{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+          {% if settings.animations_reveal_on_scroll %}
+            data-cascade
+            style="--animation-order: {{ forloop.index }};"
+          {% endif %}
+        >
+          <div class="field">
+            <input
+              id="NewsletterForm--{{ section.id }}"
+              type="email"
+              name="contact[email]"
+              class="field__input"
+              value="{{ form.email }}"
+              aria-required="true"
+              autocorrect="off"
+              autocapitalize="off"
+              autocomplete="email"
+              {% if form.errors %}
+                autofocus
+                aria-invalid="true"
+                aria-describedby="Newsletter-error--{{ section.id }}"
+              {% elsif form.posted_successfully? %}
+                aria-describedby="Newsletter-success--{{ section.id }}"
+              {% endif %}
+              placeholder="{{ 'newsletter.label' | t }}"
+              required
+            >
+            <label class="field__label" for="NewsletterForm--{{ section.id }}">
+              {{ 'newsletter.label' | t }}
+            </label>
+            {% comment %}
+              <button
+                type="submit"
+                class="newsletter-form__button field__button"
+                name="commit"
+                id="Subscribe"
+                aria-label="{{ 'newsletter.button_label' | t }}"
+              >
+                {% render 'icon-arrow' %}
+              </button>
+            {% endcomment %}
+          </div>
+          {%- if form.errors -%}
+            <small class="newsletter-form__message form__message" id="Newsletter-error--{{ section.id }}">
+              {%- render 'icon-error' -%}
+              {{- form.errors.translated_fields.email | capitalize }}
+              {{ form.errors.messages.email -}}
+            </small>
+          {%- endif -%}
+        </div>
+
+        <div class="middle-heading py-20 w-full">
+          {{ section.settings.subheading }}
+        </div>
+
+        <div class="w-full">
+          <button
+            type="submit"
+            class="letter-submit-button btn-cstm-style w-full border-remove uppercase"
+            name="commit"
+            id="Subscribe"
+            aria-label="{{ 'newsletter.button_label' | t }}"
+          >
+            {{ section.settings.btn_text }}
+          </button>
+        </div>
+
+        {%- if form.posted_successfully? -%}
+          <h3
+            class="newsletter-form__message newsletter-form__message--success form__message"
+            id="Newsletter-success--{{ section.id }}"
+            tabindex="-1"
+            autofocus
+          >
+            {% render 'icon-success' -%}
+            {{- 'newsletter.success' | t }}
+          </h3>
+        {%- endif -%}
+      {% endform %}
+    </div>
+
+    <div class="bottom-heading mbl-space py-20">
+      {{ section.settings.bottom_heading }}
+    </div>
+
+    <button type="button" class="letter-close-btn">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="1.5"
+        stroke="currentColor"
+        class="size-6"
+        width="30"
+        height="30"
+      >
+        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+      </svg>
+    </button>
+  </div>
+</div>
+
+<script>
+  let closeNewsletter = document.querySelector('.letter-close-btn');
+  let newsletterWrapper = document.querySelector('.newsletter-on-bottom');
+  let newsletterGradient = document.querySelector('.newsletter-modal-bg-gradient');
+  let lastScrollTop = 0; 
+  window.addEventListener('scroll', function () {
+    const scrollPosition = window.scrollY + window.innerHeight;
+    const documentHeight = document.body.offsetHeight;
+    const gap = 20; 
+    let scrollTop = window.scrollY;
+    if (scrollTop > lastScrollTop) { 
+      if (scrollPosition >= documentHeight - gap) {
+        setTimeout(function() {
+          newsletterWrapper.classList.remove('newsletter-on-bottom');
+          newsletterGradient.classList.remove("hidden");
+        }, 300);
+      }
+    } else {
+      newsletterWrapper.classList.add('newsletter-on-bottom');
+      newsletterGradient.classList.add("hidden");
+    }
+    lastScrollTop = scrollTop; 
+  });
+  closeNewsletter.addEventListener('click', function () {
+    newsletterWrapper.classList.add('newsletter-on-bottom');
+    newsletterGradient.classList.add("hidden");
+  });
+</script>
+{% schema %}
+{
+  "name": "Custom Newsletter",
+  "class": "section-header",
+
+  "settings": [
+    {
+      "type": "image_picker",
+      "label": "Select Image",
+      "id": "image"
+    },
+    {
+      "type": "url",
+      "label": "Image Link",
+      "id": "image_link"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Enter Heading"
+    },
+    {
+      "type": "richtext",
+      "id": "subheading",
+      "label": "Enter Middle Heading"
+    },
+    {
+      "type": "header",
+      "content": "Button content"
+    },
+    {
+      "type": "text",
+      "label": "Button Text",
+      "id": "btn_text"
+    },
+    {
+      "type": "url",
+      "label": "Button Link",
+      "id": "btn_link"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "bottom_heading",
+      "label": "Bottom Text"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Newsletter Custom",
+      "category": "custom content"
+    }
+  ]
+}
+{% endschema %}

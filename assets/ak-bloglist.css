@@ -1,0 +1,101 @@
+
+    :root {
+  --fixed-height: 62px; /* Fixed height */
+  --remaining-height: calc(100% - var(--fixed-height)); /* Calculate remaining height */
+  --calculated-height: calc(var(--remaining-height) * 33.33 / 100); /* Calculate height */
+}
+
+.ak__card-list {
+  height:100%; /* Set height */
+}
+
+    .ak__blog__maincontainer {
+     width: 100%;
+    }
+
+    .multi-row {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    height:var(--calculated-height);
+    }
+
+    .ak__card-list{
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    }
+    
+
+    .ak__card-list .ak__ep__heading{
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    padding: 2rem 0px;
+    font-size: 1.8rem;
+    line-height: 2.1rem;
+    text-transform: uppercase;
+    font-family: Montserrat, sans-serif;
+    font-weight: 700;
+    background: white;
+  }
+  .multi-row .card:not(.ratio){
+    display: flex;
+    flex-direction: row;
+    border-top: 0.1rem solid rgb(187, 188, 188);
+  }
+
+    .multi-row .ak__subheading{
+        display: none;
+    }
+
+
+    .ak__card-list .ak_custom_blog_v-article .article-card > .card__inner {
+        width: 180px;
+    }
+
+
+    .ak__card-list .ak_custom_blog_v-article .article-card > .card__content {
+        padding: 15px 20px;
+        display: flex;
+        align-items: center;
+    }
+    .ak__card-list .ak_custom_blog_v-article .article-card > .card__content .card__information  {
+        padding:0px;
+    }
+    
+    .ak__card-list .ak_custom_blog_v-article .article-card > .card__content .card__information .card__heading {
+        font-size: 14px;
+        line-height: 18px;
+        height: 36px;
+        width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        -webkit-line-clamp: 2;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        text-transform: uppercase;
+    }
+
+    .ak__card-list .ak_custom_blog_v-article .article-card > .card__content .card__information .article-card__excerpt {
+        font-size: 14px;
+        line-height: 21px;
+        height: 42px;
+        width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        -webkit-line-clamp: 2; 
+        display: -webkit-box;
+        -webkit-box-orient: vertical; 
+        margin: 0;
+    }
+    .ak__card-list .ak_custom_blog_v-article .article-card > .card__content .card__information .ak__subheading__article {
+        font-size: 14px;
+        line-height: 19px;
+        width: 100%;
+        text-decoration: underline;
+        font-weight: 700;
+    }
+    .article-card__image{
+      position:unset;
+    }

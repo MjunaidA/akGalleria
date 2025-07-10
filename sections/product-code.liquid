@@ -1,0 +1,80 @@
+<div class="product-code-section-wrapper pt-10 pt-5 dsk-border productcode-wrap mbl-product-border-top  large-up-hide">
+  {% assign pd_code = section.settings.pd_code | split: ':' %}
+  {% assign seller_code = section.settings.pd_seller | split: ':' %}
+
+  {% if section.settings.bg_img != blank %}
+  <a class="flex  py-10" href="{{section.settings.img_link}}">
+    <img class="w-full" src="{{ section.settings.bg_img | img_url: 'master' }}">
+  </a>
+  {% endif %}
+
+  {% if section.settings.heading != blank %}
+    <p class="f-size-16-lg leading-7 lt-space-1 p-0 m-0 font-bold c-black mbl-space pt-10 pb-5">{{section.settings.heading}}</p>
+  {% endif %}
+
+  <p class="f-size-16-lg leading-7 lt-space-1 p-0 m-0 mbl-space">
+    {{ pd_code.first }} : <span class="font-bold c-black">{{ pd_code.last }}</span>
+  </p>
+  <p class="f-size-16-lg leading-7 lt-space-1 p-0 m-0 font-normal mbl-space">
+    {{ seller_code.first }}: <span class="sizechart-clr font-bold">{{ seller_code.last }}</span>
+  </p>
+  <a
+    class="f-size-16-lg leading-7 lt-space-1 p-0 m-0 sizechart-clr font-bold text-no-decoration small-hide medium-hide mbl-space"
+    href="{{section.settings.sp_button_link}}"
+  >
+    {{- section.settings.sp_button_text -}}
+  </a>
+</div>
+
+{% schema %}
+{
+  "name": "Product Code Mbl",
+  "settings": [
+    {
+      "type": "text",
+      "label": "Enter Heading",
+      "id": "heading"
+    },
+    {
+      "type": "image_picker",
+      "label": "Select Image",
+      "id": "bg_img"
+    },
+    {
+      "type": "url",
+      "label": "Image Link",
+      "id": "img_link"
+    },
+    {
+      "type": "text",
+      "label": "Product code",
+      "id": "pd_code"
+    },
+    {
+      "type": "text",
+      "label": "Seller",
+      "id": "pd_seller"
+    },
+    {
+      "type": "header",
+      "content": "Buton Content"
+    },
+    {
+      "type": "text",
+      "label": "supplier Button Text",
+      "id": "sp_button_text"
+    },
+    {
+      "type": "url",
+      "label": "supplier Button Link",
+      "id": "sp_button_link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product Code",
+      "category": "custom content"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,322 @@
+{{ 'component-article-card.css' | asset_url | stylesheet_tag }}
+{{ 'component-card.css' | asset_url | stylesheet_tag }}
+{{ 'section-main-blog.css' | asset_url | stylesheet_tag }}
+{{ 'ajaxinate.min.js' | asset_url | script_tag }}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+  #load-more {
+    position: relative;
+    font-family: Montserrat, Helvetica, Arial, sans-serif;
+    text-transform: uppercase;
+    font-size: 1.3rem;
+    border-radius: 5rem;
+    cursor: pointer;
+    background-color: rgb(0, 0, 0);
+    color: rgb(255, 255, 255);
+    padding: 1.5rem 3rem;
+    font-weight: 700;
+    outline: none;
+    text-decoration: none;
+  }
+  .load-more-btn {
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+  .blog-articles__article,
+  .article-card-wrapper,
+  .ak__card-list .ak__ep__heading {
+    background-color: rgb(255, 255, 255);
+    box-shadow: rgba(0, 0, 0, 0.1) 0 0.4rem 1.5rem;
+  }
+  .blog-articles__article .custom-blog-card {
+    position: relative;
+    background-color: {{ extraInfoCard.custom_bg_color }};
+    padding: 20px;
+    color: #fff;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    line-height: normal;
+  }
+  .blog-articles__article .custom-blog-card .top-text {
+    font-size: 1.5rem;
+    font-weight: 700;
+        font-size: 3.8rem;
+    font-weight: 700;
+    /* display: flex; */
+    text-align: center;
+  }
+  .blog-articles__article .custom-blog-card .textbox{
+    text-align:left;
+  }
+  .blog-articles__article .custom-blog-card .bottom-text {
+        font-size: 3.3rem;
+    font-weight: 700;
+    /* margin: 0; */
+    padding-right: 14rem;
+    padding-left: 0rem;
+  }
+  .blog-articles__article .custom-blog-card .button {
+    text-transform: uppercase;
+    font-size: 1.3rem;
+    border-radius: 5rem;
+    cursor: pointer;
+    background-color: rgb(231, 231, 231);
+    color: rgb(0, 0, 0);
+    padding: 1.5rem 3rem;
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+
+  .ak__main_blog {
+    background-color: {{ section.settings.background_color }};
+  }
+{%- endstyle -%}
+
+{%- paginate blog.articles by 8 -%}
+  <div class="main-blog page-width width-1600 section-{{ section.id }}-padding">
+    {% comment %}
+      <h1 class="title--primary{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+            {{ blog.title | escape }}
+      </h1>
+    {% endcomment %}
+
+    <div
+      id="AjaxinateContainer"
+      class="blog-articles {% if section.settings.layout == 'collage' %}blog-articles--collage{% endif %}"
+    >
+      {%- for article in blog.articles -%}
+        {% if forloop.index0 == 1 and paginate.current_page == 1 %}
+          {% assign extraInfoCardBLock = section.blocks | where: 'type', 'custom-blog-card-block' %}
+          {% assign extraInfoCard = extraInfoCardBLock[0].settings %}
+          <div
+            class="blog-articles__article article custom-outer-color {% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+            {% if settings.animations_reveal_on_scroll %}
+              data-cascade
+              style="--animation-order: {{ forloop.index }}; background-color: {{ extraInfoCard.custom_bg_color }};"
+            {% else %}
+              style="background-color: {{ extraInfoCard.custom_bg_color }};"
+            {% endif %}
+          >
+            <div class="custom-blog-card">
+              <p class="top-text">{{ extraInfoCard.custom_top_text }}</p>
+              <div class="textbox">
+                <p class="bottom-text">{{ extraInfoCard.custom_bottom_text }}</p>
+                {% if extraInfoCard.custom_button_link and extraInfoCard.custom_button_text %}
+                  <a href="{{ extraInfoCard.custom_button_link }}" class="button">
+                    {{- extraInfoCard.custom_button_text -}}
+                  </a>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        {% endif %}
+        <div
+          class="blog-articles__article article{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+          {% if settings.animations_reveal_on_scroll %}
+            data-cascade
+            style="--animation-order: {{ forloop.index }};"
+          {% endif %}
+        >
+          {%- render 'article-card',
+            article: article,
+            media_height: section.settings.image_height,
+            media_aspect_ratio: 1.33,
+            show_image: section.settings.show_image,
+            show_date: section.settings.show_date,
+            show_author: section.settings.show_author,
+            show_excerpt: true,
+            show_additional_text: true
+          -%}
+        </div>
+      {%- endfor -%}
+    </div>
+
+    {% comment %}
+      {%- if forloop.index0 == 1 -%}
+
+      {%- endif -%}
+    {% endcomment %}
+    <div class="load-more-btn" id="AjaxinatePagination">
+      {% if paginate.next %}
+        <a
+          type="button"
+          id="load-more"
+          href="{{ paginate.next.url }}"
+          >Load More</a
+        >
+      {% endif %}
+    </div>
+  </div>
+{%- endpaginate -%}
+
+{% schema %}
+{
+  "name": "Main Blog Section",
+  "tag": "section",
+  "class": "section ak__main_blog",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Main Blog Settings"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "options": [
+        {
+          "value": "grid",
+          "label": "Grid Layout"
+        },
+        {
+          "value": "collage",
+          "label": "Collage Layout"
+        }
+      ],
+      "default": "collage",
+      "label": "Select Layout",
+      "info": "Choose between grid or collage layout for blog articles."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_image",
+      "default": true,
+      "label": "Show Featured Image",
+      "info": "Display featured images for blog articles."
+    },
+    {
+      "type": "select",
+      "id": "image_height",
+      "options": [
+        {
+          "value": "adapt",
+          "label": "Adaptive Height"
+        },
+        {
+          "value": "small",
+          "label": "Small Height"
+        },
+        {
+          "value": "medium",
+          "label": "Medium Height"
+        },
+        {
+          "value": "large",
+          "label": "Large Height"
+        }
+      ],
+      "default": "medium",
+      "label": "Image Height",
+      "info": "Set the height of featured images."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_date",
+      "default": true,
+      "label": "Show Date",
+      "info": "Display publication dates for blog articles."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_author",
+      "default": false,
+      "label": "Show Author",
+      "info": "Display author names for blog articles."
+    },
+    {
+      "type": "paragraph",
+      "content": "Customize the appearance and layout of your blog section."
+    },
+    {
+      "type": "header",
+      "content": "Padding Settings"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 36
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background Color",
+      "default": "#ffffff"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "custom-blog-card-block",
+      "name": "Custom Blog Card",
+      "settings": [
+        {
+          "id": "custom_bg_color",
+          "type": "color",
+          "label": "Background Color",
+          "default": "#000000"
+        },
+        {
+          "id": "custom_top_text",
+          "type": "text",
+          "label": "Top Text"
+        },
+        {
+          "id": "custom_bottom_text",
+          "type": "text",
+          "label": "Bottom Text"
+        },
+        {
+          "id": "custom_button_text",
+          "type": "text",
+          "label": "Button Text"
+        },
+        {
+          "id": "custom_button_link",
+          "type": "url",
+          "label": "Button Link"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    var endlessScroll = new Ajaxinate({
+      container: '#AjaxinateContainer',
+      pagination: '#AjaxinatePagination',
+      method: 'click',
+      offset: 1000
+    });
+  });
+</script>

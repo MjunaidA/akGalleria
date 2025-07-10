@@ -1,0 +1,18 @@
+.button-show-more {
+  padding-left: 0;
+  justify-content: flex-start;
+  padding-bottom: 1.1rem;
+}
+
+.button-show-more,
+.button-show-less {
+  /* margin-top: 1.5rem; */
+  font-size: 15px;
+  color: #ff3f6c;
+  text-decoration: none;
+}
+.button-show-more:hover,
+.button-show-less:hover {
+  color: #ff3f6c;
+  text-decoration: none;
+}

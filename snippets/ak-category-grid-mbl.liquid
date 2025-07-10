@@ -1,0 +1,89 @@
+{% assign bts = block.settings %}
+<style>
+  .category-grid-mbl-main-wrapper.ak-category-{{block.id}} {
+    display:none;
+  }
+  @media(max-width:990px){
+    .category-grid-mbl-main-wrapper.ak-category-{{block.id}} {
+      padding-top: {{ bts.padding_top }}px;
+      padding-bottom: {{ bts.padding_bottom }}px;
+      display:block;
+    }
+}
+</style>
+
+<div class="category-grid-mbl-main-wrapper ak-category-{{block.id}}" style="background-color: {{ bts.background_color }};">
+  <div class="page-width {%if bts.width_adjustment == 'full'%}p-0{% endif %}">
+    <div class="slide-mbl-inner">
+      {% if bts.banner_img != blank %}
+          <img class="w-full" src="{{ bts.banner_img | img_url: 'master' }}">
+      {% endif %}
+      
+      <div class="cate-grid-row flex flex-wrap">
+        {% if bts.grid_img1 != blank %}
+        <div class="cate-grid-col {%if bts.grid_quantity == "eight"%}basis-4{% else %}basis-3{%endif%}">
+            <a class="flex" href="{{bts.grid_link1}}">
+              <img class="w-full" src="{{bts.grid_img1 |  img_url: 'medium'}}" alt="grid-img" loading="lazy">
+            </a>
+          </div>
+        {% endif %}
+        {% if bts.grid_img2 != blank %}
+        <div class="cate-grid-col {%if bts.grid_quantity == "eight"%}basis-4{% else %}basis-3{%endif%}">
+            <a class="flex" href="{{bts.grid_link2}}">
+              <img class="w-full" src="{{bts.grid_img2 |  img_url: 'medium'}}" alt="grid-img" loading="lazy">
+            </a>
+          </div>
+        {% endif %}
+        {% if bts.grid_img3 != blank %}
+        <div class="cate-grid-col {%if bts.grid_quantity == "eight"%}basis-4{% else %}basis-3{%endif%}">
+            <a class="flex" href="{{bts.grid_link3}}">
+              <img class="w-full" src="{{bts.grid_img3 |  img_url: 'medium'}}" alt="grid-img" loading="lazy">
+            </a>
+          </div>
+        {% endif %}
+        {% if bts.grid_img4 != blank %}
+        <div class="cate-grid-col {%if bts.grid_quantity == "eight"%}basis-4{% else %}basis-3{%endif%}">
+            <a class="flex" href="{{bts.grid_link4}}">
+              <img class="w-full" src="{{bts.grid_img4 |  img_url: 'medium'}}" alt="grid-img" loading="lazy">
+            </a>
+          </div>
+        {% endif %}
+        {% if bts.grid_img5 != blank %}
+        <div class="cate-grid-col {%if bts.grid_quantity == "eight"%}basis-4{% else %}basis-3{%endif%}">
+            <a class="flex" href="{{bts.grid_link5}}">
+              <img class="w-full" src="{{bts.grid_img5 |  img_url: 'medium'}}" alt="grid-img" loading="lazy">
+            </a>
+          </div>
+        {% endif %}
+        {% if bts.grid_img6 != blank %}
+        <div class="cate-grid-col {%if bts.grid_quantity == "eight"%}basis-4{% else %}basis-3{%endif%}">
+            <a class="flex" href="{{bts.grid_link6}}">
+              <img class="w-full" src="{{bts.grid_img6 |  img_url: 'medium'}}" alt="grid-img" loading="lazy">
+            </a>
+          </div>
+        {% endif %}
+        {% if bts.grid_img7 != blank %}
+        <div class="cate-grid-col {%if bts.grid_quantity == "eight"%}basis-4{% else %}basis-3{%endif%}">
+            <a class="flex" href="{{bts.grid_link7}}">
+              <img class="w-full" src="{{bts.grid_img7 |  img_url: 'medium'}}" alt="grid-img" loading="lazy">
+            </a>
+          </div>
+        {% endif %}
+        {% if bts.grid_img8 != blank %}
+        <div class="cate-grid-col {%if bts.grid_quantity == "eight"%}basis-4{% else %}basis-3{%endif%}">
+            <a class="flex" href="{{bts.grid_link8}}">
+              <img class="w-full" src="{{bts.grid_img8 |  img_url: 'medium'}}" alt="grid-img" loading="lazy">
+            </a>
+          </div>
+        {% endif %}
+        {% if bts.grid_img9 != blank %}
+        <div class="cate-grid-col {%if bts.grid_quantity == "eight"%}basis-4{% else %}basis-3{%endif%}">
+            <a class="flex" href="{{bts.grid_link9}}">
+              <img class="w-full" src="{{bts.grid_img9 |  img_url: 'medium'}}" alt="grid-img" loading="lazy">
+            </a>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>

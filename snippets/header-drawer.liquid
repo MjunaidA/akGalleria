@@ -1,0 +1,415 @@
+{% comment %} 
+          Renders a header drawer menu for mobile and desktop.
+         
+          Usage:
+          {% render 'header-drawer' %} 
+{% endcomment %}
+
+<style>
+  .header-drawer-main-wrapper .menu-drawer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 75%;
+  }
+
+  .header-drawer-main-wrapper .header .hb__sidebar_inner {
+    padding: 10px 12px
+  }
+
+  .drawer-bg-wrapper {
+    background-color: {{ section.settings.drawer_bg_color }};
+    min-height: 138px;
+  }
+  .drawer-bottom-bg-wrapper {
+    background-color: {{ section.settings.drawer_bottom_bg_color }};
+    min-height: 120px;
+  }
+
+  .drawer-bg-wrapper .drawer-bg-image,
+  .drawer-bottom-bg-wrapper .drawer-bg-image {
+    width: 100%;
+  }
+  .header .hb__sidebar_inner.hb__sidebar_inner_first_nav {
+    padding: 0 0 5px;
+    border-bottom: 1px solid #eaeaec;
+    margin-bottom: 5px;
+  }
+
+  .header .hb__sidebar_inner.hb__sidebar_inner_second_nav {
+    padding: 0;
+    border-bottom: none;
+  }
+
+  .header .hb__sidebar_inner .hb__sidebar_nav_wrap ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .header .hb__sidebar_inner .hb__sidebar_nav_wrap ul .parent__nav_item .link-title {
+    font-size: 14px;
+    text-decoration: none;
+    color: inherit;
+    text-transform: capitalize;
+    display: block;
+    font-weight: 700;
+    flex: 1;
+    line-height: 20px;
+    color: rgb(62, 65, 82);
+    letter-spacing: -0.05px;
+    opacity: 1;
+  }
+  .header .hb__sidebar_inner .hb__sidebar_nav_wrap ul .parent__nav_item .inner-text-{{ settings.highlight_text }} {
+
+    margin-left: 3px;
+    padding: 2px 6px;
+    border-radius: 7px;
+    border: 0.5px solid #ff3f6c;
+    font-family: Assistant;
+    font-size: 8px;
+    font-weight: 600;
+    color: #ff3f6c;
+    vertical-align: middle;
+    line-height: 11.4286px;
+    display: initial;
+  }
+  .header .hb__sidebar_inner .hb__sidebar_nav_wrap ul .parent__nav_item .inner-text-{{ settings.highlight_text }}
+  .not-available {
+    border: none;
+  }
+
+  .header .hb__sidebar_inner_second_nav .hb__sidebar_nav_wrap ul .parent__nav_item .link-title,
+  .header .hb__sidebar_inner .hb__sidebar_nav_wrap ul .parent__nav_item .child .link-title {
+    font-weight: 400;
+  }
+
+  .header .hb__sidebar_inner .hb__sidebar_nav_wrap ul .grandchild a {
+    font-size: 14px;
+    text-decoration: none;
+    color: inherit;
+    text-transform: capitalize;
+    display: block;
+    font-weight: 400;
+    flex: 1;
+    line-height: 20px;
+    color: rgb(62, 65, 82);
+    letter-spacing: -0.05px;
+    opacity: 1;
+  }
+
+  .header .hb__sidebar_inner .hb__sidebar_nav_wrap ul .parent__nav_item_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 20px;
+  }
+  .header .hb__sidebar_inner .hb__sidebar_nav_wrap ul .child__nav_item_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 20px;
+  }
+  .header .hb__sidebar_inner.hb__sidebar_inner_first_nav .hb__sidebar_nav_wrap ul .parent__nav_item_header {
+    padding: 0 20px;
+  }
+
+  .header .hb__sidebar_inner.hb__sidebar_inner_first_nav .hb__sidebar_nav_wrap ul .parent__nav_item_header .parent-main-link {
+    width: 90%;
+    /* background-color: red; */
+    padding: 12px 0;
+  }
+  .header .hb__sidebar_inner.hb__sidebar_inner_first_nav .hb__sidebar_nav_wrap ul .parent__nav_item_header .target-link {
+    width: 10%;
+    /* background-color: rgb(130, 97, 97); */
+    padding: 10px 0;
+  }
+
+  .header .hb__sidebar_inner .hb__sidebar_nav_wrap ul .parent__nav_item_header span,
+  .header .hb__sidebar_inner .hb__sidebar_nav_wrap ul .child__nav_item_header span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+  }
+
+  .header .hb__sidebar_inner .hb__sidebar_nav_wrap ul .parent__nav_item_header svg,
+  .header .hb__sidebar_inner .hb__sidebar_nav_wrap ul .child__nav_item_header svg {
+    width: 16px;
+    height: 16px;
+    color: rgba(0, 0, 0, 0.7);
+    opacity: 1;
+    transform: rotate(-90deg);
+  }
+  .header .hb__sidebar_inner .hb__sidebar_nav_wrap ul .parent__nav_item-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .header .hb__sidebar_inner .hb__sidebar_nav_wrap ul .child,
+  .header .hb__sidebar_inner .hb__sidebar_nav_wrap ul .grandchild {
+    padding-left: 20px;
+    display: none;
+  }
+
+  .header .hb__sidebar_inner .hb__sidebar_nav_wrap ul .grandchild {
+    gap: 16px;
+  }
+
+  .header .hb__sidebar_inner .hb__sidebar_nav_wrap ul li.active > .parent__nav_item_header svg,
+  .header .hb__sidebar_inner .hb__sidebar_nav_wrap ul li.active > .child__nav_item_header svg {
+    transform: rotate(0deg);
+    opacity: 1;
+  }
+
+  .header .hb__sidebar_inner .hb__sidebar_nav_wrap ul li > .parent__nav_item_header svg.icon-minus,
+  .header .hb__sidebar_inner .hb__sidebar_nav_wrap ul li > .child__nav_item_header svg.icon-minus {
+    display: none;
+  }
+
+  .header .hb__sidebar_inner .hb__sidebar_nav_wrap ul li.active > .parent__nav_item_header svg.icon-minus,
+  .header .hb__sidebar_inner .hb__sidebar_nav_wrap ul li.active > .child__nav_item_header svg.icon-minus {
+    display: block;
+  }
+
+  .header .hb__sidebar_inner .hb__sidebar_nav_wrap ul li.active > .parent__nav_item_header svg.icon-plus,
+  .header .hb__sidebar_inner .hb__sidebar_nav_wrap ul li.active > .child__nav_item_header svg.icon-plus {
+    display: none;
+  }
+
+  .header .hb__sidebar_inner .hb__sidebar_nav_wrap ul > li.active .child,
+  .header .hb__sidebar_inner .hb__sidebar_nav_wrap ul > li ul li.active .grandchild {
+    display: block;
+  }
+
+  .header .hb__sidebar_inner .hb__sidebar_nav_wrap ul > li ul li.active .grandchild li a {
+    padding: 14px 20px;
+  }
+
+  .header .hb__sidebar_inner .hb__sidebar_nav_wrap ul .parent__nav_item .parent__nav_item_header a {
+    opacity: 1;
+  }
+
+  .header .hb__sidebar_inner .hb__sidebar_nav_wrap ul .parent__nav_item.active .parent__nav_item_header a {
+    opacity: 1;
+  }
+
+  .header .hb__sidebar_inner .hb__sidebar_nav_wrap ul > li > ul .child__nav_item .child__nav_item_header a {
+    font-weight: 400;
+  }
+
+  .header .hb__sidebar_inner .hb__sidebar_nav_wrap .parent .account_nav_item {
+    border-bottom: 1px solid rgba(var(--color-foreground), 0.08);
+    padding: 11px 0;
+
+  }
+
+  .header .hb__sidebar_inner .hb__sidebar_nav_wrap .link-title {
+    line-height: 1.8;
+    font-size: 14px;
+    font-weight: 400;
+    color: #000;
+    text-transform: uppercase;
+    margin-right: 10px;
+    text-decoration: none;
+    opacity: 0.7;
+
+  }
+</style>
+{% assign menu = settings.mbl_menu %}
+{% for link in linklists[menu].links %}
+  {% for block in section.blocks %}
+    {% if block.type == 'custom_menu' %}
+      {% assign link_handle = link.title | handleize %}
+      {% if block.settings.menu_handle == link_handle %}
+        <style>
+          .header .hb__sidebar_inner .hb__sidebar_nav_wrap ul .parent__nav_item .sale-{{ link_handle }} .inner-text-NEW {
+            color: {{ block.settings.sale_color }};
+            border-color: {{ block.settings.sale_color }};
+            padding: 1px 6px;
+          }
+        </style>
+      {% endif %}
+    {% endif %}
+  {% endfor %}
+{% endfor %}
+
+<header-drawer data-breakpoint="{% if section.settings.menu_type_desktop == 'drawer' %}desktop{% else %}tablet{% endif %}" class="header-drawer-main-wrapper">
+  <details id="Details-menu-drawer-container" class="menu-drawer-container">
+    <summary class="header__icon header__icon--menu header__icon--summary link focus-inset" aria-label="{{ 'sections.header.menu' | t }}">
+      <span>
+        {% render 'icon-hamburger' %}
+        {% render 'icon-close' %}
+      </span>
+    </summary>
+    <div id="menu-drawer" class="gradient menu-drawer motion-reduce color-{{ section.settings.menu_color_scheme }}">
+      <div class="menu-drawer__inner-container">
+        {% if section.settings.drawer_img != blank %}
+          <div class="drawer-bg-wrapper">
+            <img
+              class="drawer-bg-image"
+              src="{{section.settings.drawer_img | img_url: "master"}}"
+              alt="Drawer Image">
+          </div>
+        {% endif %}
+
+        <div class="hb__sidebar_inner hb__sidebar_inner_first_nav">
+          <div class="hb__sidebar_nav_wrap">
+            {% assign menu = settings.mbl_menu %}
+            <ul class="parent">
+              {% for link in linklists[menu].links %}
+                <li class="parent__nav_item">
+                  <div class="parent__nav_item_header nav_item_header">
+                    <a href="{{link.url}}" class="text-no-decoration parent-main-link">
+                      <div class="parent__nav_item-row">
+                        <span class="link-title without-block-add">
+                          {{ link.title }}</span>
+                        {% for block in section.blocks %}
+                          {% if block.type == 'custom_menu' %}
+                            {% assign link_handle = link.title | handleize %}
+                            {% if block.settings.menu_handle == link_handle %}
+                              {% if block.settings.enable_sale %}
+                                <span class="inner-text-NEW sale-{{link_handle}} {% if block.settings.sale_text == blank %}not-available{% endif %}">
+                                  {{ block.settings.sale_text }}
+                                </span>
+                              {% endif %}
+                            {% endif %}
+                          {% endif %}
+                        {% endfor %}
+                      </div>
+                    </a>
+
+                    {% if link.links != blank %}
+                      <span hb-nav-dropdown-trigger class="target-link">
+                        <svg
+                          width="16"
+                          height="16"
+                          viewBox="0 0 24 24"
+                          fill="#a9abb3"
+                          class="pull-right">
+                          <g fill="none" fill-rule="evenodd">
+                            <path d="M0 0h24v24H0z" opacity="5"></path>
+                            <path fill="#000" d="M12.55 15.768a.786.786 0 00.041-.048l6.183-6.36a.815.815 0 000-1.128.761.761 0 00-1.095 0l-5.68 5.844-5.678-5.844a.761.761 0 00-1.095 0 .816.816 0 000 1.127l6.182 6.361A.761.761 0 0012 16a.76.76 0 00.55-.232"></path>
+                          </g>
+                        </svg>
+                      </span>
+                    {% endif %}
+                  </div>
+                  {% if link.links != blank %}
+                    <ul class="child">
+                      {% for child_link in link.links %}
+                        <li class="child__nav_item">
+                          <div class="child__nav_item_header nav_item_header">
+                            <span class="link-title">{{ child_link.title }}</span>
+                            {% if child_link.links != blank %}
+                              <span hb-nav-dropdown-trigger class="target-link">
+                                <svg
+                                  width="16"
+                                  height="16"
+                                  viewBox="0 0 24 24"
+                                  fill="#a9abb3"
+                                  class="pull-right">
+                                  <g fill="none" fill-rule="evenodd">
+                                    <path d="M0 0h24v24H0z" opacity="1"></path>
+                                    <path fill="#a9abb3" d="M12.55 15.768a.786.786 0 00.041-.048l6.183-6.36a.815.815 0 000-1.128.761.761 0 00-1.095 0l-5.68 5.844-5.678-5.844a.761.761 0 00-1.095 0 .816.816 0 000 1.127l6.182 6.361A.761.761 0 0012 16a.76.76 0 00.55-.232"></path>
+                                  </g>
+                                </svg>
+                              </span>
+                            {% endif %}
+                          </div>
+                          {% if child_link.links != blank %}
+                            <ul class="grandchild">
+                              {% for grandchild_link in child_link.links %}
+                                <li
+                                  {% if grandchild_link.active %}
+                                  class="active {% if grandchild_link.child_active %}child-active{% endif %}"
+                                  {% endif %}>
+                                  <a href="{{ grandchild_link.url }}">{{ grandchild_link.title }}</a>
+                                </li>
+                              {% endfor %}
+                            </ul>
+                          {% endif %}
+                        </li>
+                      {% endfor %}
+                    </ul>
+                  {% endif %}
+                </li>
+              {% endfor %}
+            {% comment %} 
+                                                                      {%- if shop.customer_accounts_enabled -%} 
+                                                                      <li class="account_nav_item"> 
+                                                                      {% if customer %} 
+                                                                      <a href="{{ routes.account_url }}">Account</a> 
+                                                                      {% else %} 
+                                                                      <a href="{{ routes.account_login_url }}">Sign in</a> 
+                                                                      <a href="{{ routes.account_register_url }}">Register</a> 
+                                                                      {% endif %} 
+                                                                      </li> 
+                                                                      {% endif %} 
+                                                            {% endcomment %}
+            </ul>
+          </div>
+        </div>
+        <div class="hb__sidebar_inner hb__sidebar_inner_second_nav">
+          <div class="hb__sidebar_nav_wrap">
+            {% assign menu = settings.mbl_snd_menu %}
+            <ul class="parent">
+              {% for link in linklists[menu].links %}
+                <li class="parent__nav_item">
+                  <div class="parent__nav_item_header nav_item_header">
+                    {% assign link_title = link.title | downcase %}
+                    {% assign link_schema_title = settings.highlight_title | downcase %}
+                    {% assign link_schema_title_second = settings.highlight_title_snd | downcase %}
+                    <a href="{{link.url}}" class="link-title ">
+                      {{ link.title }}
+                      {% if link_title == link_schema_title or link_title == link_schema_title_second %}
+                        <span class="inner-text-{{settings.highlight_text}}">{{ settings.highlight_text }}</span>
+                      {% endif %}
+                    </a>
+                    {% if link.links != blank %}
+                      <span hb-nav-dropdown-trigger>
+                        <svg
+                          width="16"
+                          height="16"
+                          viewBox="0 0 24 24"
+                          fill="#a9abb3"
+                          class="pull-right">
+                          <g fill="none" fill-rule="evenodd">
+                            <path d="M0 0h24v24H0z" opacity="0.05"></path>
+                            <path fill="#a9abb3" d="M12.55 15.768a.786.786 0 00.041-.048l6.183-6.36a.815.815 0 000-1.128.761.761 0 00-1.095 0l-5.68 5.844-5.678-5.844a.761.761 0 00-1.095 0 .816.816 0 000 1.127l6.182 6.361A.761.761 0 0012 16a.76.76 0 00.55-.232"></path>
+                          </g>
+                        </svg>
+                      </span>
+                    {% endif %}
+                  </div>
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+        {% if section.settings.drawer_bottom_img != blank %}
+          <div class="drawer-bottom-bg-wrapper">
+            <img
+              class="drawer-bg-image"
+              src="{{section.settings.drawer_bottom_img | img_url: "master"}}"
+              alt="Drawer Image">
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </details>
+</header-drawer>
+
+<script>
+  let navDropdownTrigger = document.querySelectorAll('.nav_item_header .target-link');
+  navDropdownTrigger.forEach((item) => {
+    item.addEventListener('click', () => {
+      let targetItem = item.closest('li');
+      targetItem.classList.toggle('active');
+    });
+  });
+</script>

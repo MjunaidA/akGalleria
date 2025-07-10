@@ -1,0 +1,76 @@
+<style>
+  .studio-head-main-wrapper {
+    position: sticky;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 2;
+    background-color: #fff;
+    box-shadow: 0 1px 2px 0 rgba(148, 150, 159, .3);
+  }
+
+</style>
+<div class="studio-head-wraper">
+  <div class="studio-head-container p-5">
+    <div class="studio-head-row flex items-center text-center">
+      <div class="back-btn flex">
+        <button onclick="history.back()" class="bg-transparent border-remove w-full pointer">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+            class="w-6 h-6"
+            width="25"
+            height="25"
+          >
+            <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
+          </svg>
+        </button>
+      </div>
+      <h2 class="f-size-16 font-bold leading-5 lt-space-1 c-custom-grey pl-10">{{ section.settings.heading }}</h2>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Studio Header",
+  "class": "studio-head-main-wrapper",
+  "settings": [
+    {
+      "type": "text",
+      "label": "Select Text",
+      "id": "heading",
+      "default": "studio"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 80,
+      "step": 1,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 80,
+      "step": 1,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 10
+    }
+  ],
+  "presets": [
+    {
+      "name": "Studio Header",
+      "category": "custom content"
+    }
+  ]
+}
+{% endschema %}

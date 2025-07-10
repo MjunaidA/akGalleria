@@ -1,0 +1,34 @@
+.main-collection-wrapper .product-grid-container .collection .pagination-wrapper{}
+.main-collection-wrapper .product-grid-container .collection .pagination-wrapper nav.pagination ,
+.template-search .product-grid-container .collection .pagination-wrapper nav.pagination {
+    justify-content: center;
+    position: relative;
+}
+.main-collection-wrapper .product-grid-container .collection .pagination-wrapper nav.pagination .page-count__text,
+.template-search .product-grid-container .collection .pagination-wrapper nav.pagination .page-count__text{
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translate(-0,-50%);
+}
+.main-collection-wrapper .product-grid-container .collection .pagination-wrapper nav.pagination  ul.pagination__list,
+.template-search .product-grid-container .collection .pagination-wrapper nav.pagination  ul.pagination__list{ 
+    flex-wrap: nowrap;
+    gap:0 10px;
+}
+.main-collection-wrapper .product-grid-container .collection .pagination-wrapper nav.pagination  ul.pagination__list li.number,
+.template-search .product-grid-container .collection .pagination-wrapper nav.pagination  ul.pagination__list li.number {
+    margin-bottom: 0;
+    width: fit-content;
+    max-width: fit-content;
+}
+.main-collection-wrapper .product-grid-container .collection .pagination-wrapper nav.pagination  ul.pagination__list li.number a,
+.main-collection-wrapper .product-grid-container .collection .pagination-wrapper nav.pagination  ul.pagination__list li.number span,
+.template-search .product-grid-container .collection .pagination-wrapper nav.pagination  ul.pagination__list li.number a,
+.template-search .product-grid-container .collection .pagination-wrapper nav.pagination  ul.pagination__list li.number span{
+    padding: 0 14px;
+ }
+@media(min-width:990px){
+
+
+}

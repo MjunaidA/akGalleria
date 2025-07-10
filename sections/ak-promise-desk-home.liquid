@@ -1,0 +1,137 @@
+<style>
+  .promise-desk-main-wrapper {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+</style>
+
+<div class="promise-desk-main-wrapper">
+  <div class="page-width page-width-fluid">
+    <h2 class="home-desk-heading p-30">{{ section.settings.heading }}</h2>
+    <div class="promise-wrapper-inner promise-main m-auto overflow-hidden">
+      <div class="promise-row swiper-wrapper">
+        {% for block in section.blocks %}
+          <div class="promise-col swiper-slide text-center">
+            <a class="link text-no-decoration" href="{{block.settings.image_url}}">
+              <div class="content-box flex flex-col items-center">
+                <img
+                  class="image m-x-120"
+                  src="{{block.settings.image |  img_url: 'master'}}"
+                  loading="lazy"
+                  alt="brand Image">
+                <h3 class="text font-bold f-size-20 c-light-black m-0 uppercase pt-10 leading-4 text-center">{{ block.settings.head }}</h3>
+                <p class="text font-normal f-size-14 c-light-black m-0 pt-20 leading-4 text-center m-x-70">{{ block.settings.sub_head }}</p>
+              </div>
+            </a>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% schema %}
+  {
+    "name": "Ak Promises",
+    "settings": [
+      {
+        "type": "text",
+        "label": "Enter Heading",
+        "id": "heading",
+        "default": "OUR Promises"
+      },
+      {
+        "type": "range",
+        "id": "slide_show",
+        "min": 3,
+        "max": 7,
+        "step": 1,
+        "unit": "px",
+        "label": "slide Show",
+        "default": 5
+      },
+      {
+        "type": "range",
+        "id": "gap_between",
+        "min": 0,
+        "max": 50,
+        "step": 0.5,
+        "unit": "px",
+        "label": "Gap Between",
+        "default": 5
+      },
+      {
+        "type": "checkbox",
+        "label": "Enable Infinite",
+        "id": "enable_loop"
+      },
+      {
+        "type": "range",
+        "id": "padding_top",
+        "min": 0,
+        "max": 160,
+        "step": 2,
+        "unit": "px",
+        "label": "Padding Top",
+        "default": 16
+      }, {
+        "type": "range",
+        "id": "padding_bottom",
+        "min": 0,
+        "max": 160,
+        "step": 2,
+        "unit": "px",
+        "label": "Pdding Bottom",
+        "default": 16
+      }
+    ],
+    "blocks": [
+      {
+        "type": "Image",
+        "name": "Image Banner",
+        "settings": [
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image Banner"
+          }, {
+            "type": "text",
+            "id": "head",
+            "label": "Enter Heading"
+          }, {
+            "type": "text",
+            "id": "sub_head",
+            "label": "Enter Paragraph"
+          }, {
+            "type": "url",
+            "id": "image_url",
+            "label": "Image Url"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Ak Promises",
+        "category": "custom content"
+      }
+    ]
+  }
+{% endschema %}
+
+
+<script>
+  var slideGap = {{section.settings.gap_between}};
+  var slideQuantity = {{section.settings.slide_show}};
+  var infiniteScroll = {{section.settings.enable_loop}}
+  galleryMain = new Swiper('.promise-main', {
+    slidesPerView: slideQuantity,
+    loop: infiniteScroll,
+    spaceBetween:slideGap,
+    navigation: {
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev',
+    },
+  });
+</script>

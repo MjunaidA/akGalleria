@@ -1,0 +1,582 @@
+<style>
+  .modal-bg-gradient {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 4;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: none;
+  }
+  .sizechart-modal-wrapper {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100%;
+    max-width: 800px;
+    /* max-width: 600px; */
+    height: 100vh;
+    z-index: 15;
+    background-color: #fff;
+    box-shadow: 0 0 5px #d5d6d9;
+    overflow-y: scroll;
+    transition: 0.4s;
+    /* position: relative; */
+    /* transform: translateX(101%); */
+    transform: translateY(101%);
+  }
+  .sizechart-modal-wrapper .sizechart-modal-content {
+    display: flex;
+    flex-direction: column;
+  }
+  .sizechart-modal-wrapper .sizechart-modal-header {
+    z-index: 7;
+    background-color: #fff;
+  }
+  .sizechart-modal-wrapper .sizechart-modal-header .head-content {
+    display: flex;
+    padding: 40px 0 0 10px;
+    /* background-color: #afb1b8; */
+  }
+  .sizechart-modal-wrapper .sizechart-modal-header .sizechart_closebtn button {
+    position: absolute;
+    top: 0;
+    left: 0;
+    border: none;
+    background-color: #fff;
+    border: 0;
+    outline: 0;
+    padding: 0;
+    border-radius: 4px;
+    width: 35px;
+  }
+  .sizechart-modal-wrapper .sizechart-modal-header .sizechart_closebtn button svg {
+    width: 100%;
+  }
+  .sizechart-modal-wrapper .sizechart-modal-header .product-head_info {
+    margin-left: 19px;
+    display: flex;
+    flex-direction: column;
+  }
+  .sizechart-modal-wrapper .sizechart-modal-header .product-head_info p {
+    max-width: 370px;
+  }
+  .sizechart-modal-wrapper .sizechart-modal-header .img-box {
+    width: 80px;
+  }
+  .sizechart-modal-wrapper .sizechart-modal-header .product-head_info .prod_title {
+    max-width: 380px;
+  }
+  .sizechart-modal-wrapper .sizechart-modal-header .product-head_info .price .price-item {
+    color: #282c3f;
+    font-weight: 700;
+    font-size: 16px;
+  }
+  .sizechart-modal-wrapper .sizechart-modal-header .product-head_info .price .price-item span {
+    color: #94969f;
+    font-weight: 700;
+    font-size: 16px;
+  }
+
+  .sizechart-modal-wrapper .btn-content {
+    position: sticky;
+    top: 0;
+    background-color: #fff;
+    z-index: 999;
+  }
+  .sizechart-modal-wrapper .size-n-measure {
+    border: 1px solid #eaeaec;
+
+    /* position: sticky;
+    top: 0;
+    background-color: #fff;
+    z-index: 4; */
+  }
+  .sizechart-modal-wrapper .size-n-measure button {
+  }
+
+  .sizechart-modal-wrapper .sizechart-modal-body {
+    /* max-height: 60vh; */
+    /* overflow-y: scroll; */
+    transition: 0.4s;
+    z-index: 5;
+  }
+  .sizechart-modal-wrapper .sizechart-modal-body .measurement-wrapper {
+    display: flex;
+    justify-content: space-between;
+  }
+  .sizechart-modal-wrapper .sizechart-modal-body .measurement-wrapper .measurement-row {
+    margin: 16px;
+    border: 1px solid #eaeaec;
+    padding: 1px;
+    border-radius: 40px;
+    display: flex;
+  }
+
+  .sizechart-modal-wrapper .sizechart-modal-body .measurement-wrapper .measurement-row button {
+    border: none;
+    background-color: #fff;
+    font-size: 14px;
+    opacity: 0.4;
+    border-radius: 2px;
+    padding: 5px 10px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .sizechart-modal-wrapper .sizechart-modal-body .info-wrapper .row {
+    border-top: 1px solid #eaeaec;
+    text-align: center;
+    background-color: #fff;
+
+    position: relative;
+  }
+  .sizechart-modal-wrapper .sizechart-modal-body .info-wrapper .row:first-child input {
+    opacity: 0;
+  }
+  .sizechart-modal-wrapper .sizechart-modal-body .info-wrapper .row:first-child input::checked {
+    background-color: red;
+  }
+  .sizechart-modal-wrapper .sizechart-modal-body .info-wrapper .row input {
+    max-width: 30px;
+    position: relative;
+    visibility: hidden;
+    cursor: pointer;
+    /* position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%; */
+  }
+  .sizechart-modal-wrapper .sizechart-modal-body .info-wrapper .row input::before {
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    border: 1px solid #c3c2c9;
+    border-radius: 50%;
+    visibility: visible;
+    display: inline-block;
+    vertical-align: middle;
+    text-align: center;
+    border: 2px solid #ff3f6c !important;
+    top: 50%;
+    left: 12px;
+    transform: translateY(-50%);
+    /* opacity: 1; */
+  }
+
+  .sizechart-modal-wrapper .sizechart-modal-body .info-wrapper .row input:checked::before {
+    /* display: none; */
+    background: #ff3f6c;
+    -webkit-box-shadow: inset 0 0 0 3px #fff;
+    box-shadow: inset 0 0 0 3px #fff;
+  }
+  .sizechart-modal-wrapper .sizechart-modal-body .info-wrapper .row span {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+  .sizechart-modal-wrapper .sizechart-modal-body .info-wrapper .row.chart-flex1 {
+    display: none;
+  }
+  /* .sizechart-modal-wrapper .sizechart-modal-body .info-wrapper .row.chart-flex2 span {
+    flex: 0 0 48%;
+  }
+  .sizechart-modal-wrapper .sizechart-modal-body .info-wrapper .row.chart-flex3 span {
+    flex: 0 0 32%;
+  }
+  .sizechart-modal-wrapper .sizechart-modal-body .info-wrapper .row.chart-flex4 span {
+    flex: 0 0 23%;
+  }
+  .sizechart-modal-wrapper .sizechart-modal-body .info-wrapper .row.chart-flex4 span.hidden {
+    flex: 0 0 47%  
+  }
+  .sizechart-modal-wrapper .sizechart-modal-body .info-wrapper .row.chart-flex5 span {
+    flex: 0 0 19%;
+  }
+  .sizechart-modal-wrapper .sizechart-modal-body .info-wrapper .row.chart-flex6 span {
+    flex: 0 0 16%;
+  }
+  .sizechart-modal-wrapper .sizechart-modal-body .info-wrapper .row.chart-flex7 span {
+    flex: 0 0 13%;
+  }
+  .sizechart-modal-wrapper .sizechart-modal-body .info-wrapper .row.chart-flex8 span {
+    flex: 0 0 12%;
+  }
+  .sizechart-modal-wrapper .sizechart-modal-body .info-wrapper .row.chart-flex9 span {
+    flex: 0 0 10%;
+  }  */
+
+  .info-heading-row span,
+  .value-row span {
+    width: 33.33% !important;
+  }
+
+  .info-heading-row span.hidden + span.hidden ~ span:not(.hidden),
+  .value-row span.hidden + span.hidden ~ span:not(.hidden) {
+    /* .value-row .dynamic_value { */
+    width: 50% !important;
+  }
+
+  .sizechart-modal-wrapper .sizechart-modal-body .info-wrapper .row:last-child {
+    border-top: 1px solid #eaeaec;
+  }
+  /* .sizechart-modal-wrapper .sizechart-modal-body .flyer-wrapper {
+    border-top: 10px solid #f5f5f6;
+    border-bottom: 10px solid #f5f5f6;
+  } */
+  .sizechart-modal-wrapper .sizechart-modal-body .media_wrapper {
+    border-top: 10px solid #f5f5f6;
+    border-bottom: 10px solid #f5f5f6;
+  }
+  .sizechart-modal-wrapper .sizechart-modal-body .flyer-wrapper .flyer-text {
+    padding: 20px 0 20px 18px;
+  }
+  .btn-Active {
+    border-bottom: 2px solid #ff3f6c;
+    font-weight: 600;
+    color: #ff3f6c;
+  }
+  .measureBtn-Active {
+    font-weight: 700;
+    color: #fff;
+    padding: 6px;
+    border-radius: 16px !important;
+    opacity: 1 !important;
+    height: 100%;
+    background-color: #282c3f !important;
+    height: 30px;
+    width: 30px;
+  }
+  .trans-top {
+    transform: translateY(-40%);
+  }
+  .chartOpen {
+    transform: translateY(0);
+  }
+  .sizechart-modal-body .info-wrapper .value-row.fr-row1 {
+    display: none;
+  }
+
+  .sizechart-modal-wrapper .sizechart-modal-body .measurement-wrapper .country-col input[type='checkbox'] {
+    background-color: #ff3f6c;
+  }
+  .sizechart-modal-wrapper .sizechart-modal-body .measurement-wrapper .country-col input[type='checkbox']:checked:after {
+    /* content: "\2713"; 
+    color: #c3c2c9;  */
+    background: #ff3f6c;
+    
+
+}
+
+
+  .sizechart-modal-wrapper .sizechart-modal-body .measurement-wrapper .country-col input {
+    width: 16px;
+    height: 16px;
+    position: relative;
+  }
+  .sizechart-modal-wrapper .sizechart-modal-body .measurement-wrapper .country-col input:after {
+    content: '.';
+    box-sizing: border-box;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 1px solid #c3c2c9;
+    background: #fff;
+    border-radius: 2px;
+    padding: 7px;
+  }
+
+
+  .sizechart-modal-wrapper .sizechart-modal-body .measurement-wrapper .country-col svg{    
+    position: absolute;
+    top: 50%;
+    left: 4.4px;
+    transform: translate(0, -50%);
+    color: #fff;
+    width: 9px;
+    height: auto;
+    cursor: pointer;
+    pointer-events: none; 
+  }
+
+
+  .sizechart-modal-wrapper .sizechart-modal-body .measurement-wrapper .country-col input[type='checkbox'] ~ svg {
+    display: none;
+  }
+  .sizechart-modal-wrapper .sizechart-modal-body .measurement-wrapper .country-col input[type='checkbox']:checked ~ svg {
+    display: block;
+  }
+
+  @media (min-width: 990px) {
+    .sizechart-modal-wrapper {
+      transform: translateX(101%);
+    }
+    .chartOpen {
+      transform: translateX(0);
+    }
+    .sizechart-modal-wrapper .sizechart-modal-header .head-content {
+      display: flex;
+      padding: 76px 0 24px 36px;
+      /* background-color: #afb1b8; */
+    }
+
+    .sizechart-modal-wrapper .sizechart-modal-header .sizechart_closebtn button {
+      width: 48px; 
+    }
+
+    .sizechart-modal-wrapper .sizechart-modal-header .img-box {
+      width: 112px;
+    }
+
+    .sizechart-modal-wrapper .sizechart-modal-header .product-head_info {
+      margin-left: 36px;
+    }
+    .inches::after {
+      content: '(in)';
+      position: absolute;
+    }
+    .cm::after {
+      content: '(cm)';
+      position: absolute;
+    }
+    .garment-cm::after {
+      content: 'Cms';
+      padding-left: 2px;
+    }
+    .garment-inches::after {
+      content: 'inches';
+      padding-left: 2px;
+    }
+  }
+</style>
+<div class="modal-bg-gradient"></div>
+<div class="sizechart-modal-wrapper">
+  <div class="sizechart-modal-content">
+    <div class="sizechart-modal-header">
+      <div class="head-content">
+        <div class="sizechart_closebtn">
+          <button type="button">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              stroke-width="1"
+              stroke="currentColor"
+              fill="#afb1b8"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12"></path>
+            </svg>
+          </button>
+        </div>
+        <div class="img-box">
+          <img class="w-full" src="{{product.featured_image |  img_url: 'small'}}" alt="Product Image">
+        </div>
+        <div class="product-head_info">
+          <h3 class="prod_title font-bold f-size-20-lg f-size-16 c-custom-black lt-space-1 leading-6 my-0">
+            {{ product.title }}
+          </h3>
+          <p class="font-normal f-size-14 c-custom-black lt-space-1 leading-6 my-0 f-size-18-lg pt-5 pb-5 pt-10-lg pb-10-lg">
+            {{ block.settings.prod_heading }}
+          </p>
+          <div
+            class="prod-inner-block no-js-hidden {%if block.settings.desk_border_enable == true %}dsk-border{% endif %} {%if block.settings.mbl_border_enable == true %}mbl -border{% endif %}"
+            id="price-{{ section.id }}"
+            role="status"
+            {{ block.shopify_attributes }}
+          >
+            {%- render 'price', product: product, use_variant: true, show_badges: true, price_class: 'price--large' -%}
+
+            {% if block.settings.price_text != blank %}
+              <p class="pdp-info-clr font-bold f-size-14-lg pb-10 m-0 small-hide medium-hide">
+                {{ block.settings.price_text }}
+              </p>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="btn-content">
+      <div class="size-n-measure flex w-full">
+        <button
+          type="button"
+          id="chartbtn"
+          class="p-15 f-size-18-lg f-size-16 basis-2 bg-transparent border-remove c-custom-black btn-Active"
+        >
+          Size Chart
+        </button>
+        <button
+          type="button"
+          id="measurebtn"
+          class="measure_btn p-15 f-size-18-lg f-size-14 basis-2 bg-transparent border-remove c-custom-black"
+        >
+          How to measure
+        </button>
+      </div>
+    </div>
+    <div class="sizechart-modal-body">
+      <div class="measurement-wrapper flex w-full">
+        <div class="country-row flex items-center px-15">
+          {% if block.settings.country1 != blank %}
+            <div class="country-col flex items-center m-0 p-0 gap-10 relative">
+              <input
+                class="m-0"
+                type="checkbox"
+                id="ctry1"
+                name="vehicle1"
+                value="{{ block.settings.country1 |  handleize }}"
+              >
+              <svg
+                aria-hidden="true"
+                class="icon icon-checkmark"
+                width="1.1rem"
+                height="0.7rem"
+                viewBox="0 0 11 7"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path d="M1.5 3.5L2.83333 4.75L4.16667 6L9.5 1" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+              <label for="ctry1" class="f-size-12 font-bold c-custom-grey leading-1">{{ block.settings.country1 }}</label><br>
+            </div>
+          {% endif %}
+          {% if block.settings.country2 != blank %}
+            <div class="country-col flex items-center m-0 p-0 gap-10 relative">
+              <input
+                type="checkbox"
+                id="ctry2"
+                name="vehicle2"
+                class="m-0"
+                value="{{ block.settings.country2 |  handleize }}"
+              >
+              <svg
+                aria-hidden="true"
+                class="icon icon-checkmark"
+                width="1.1rem"
+                height="0.7rem"
+                viewBox="0 0 11 7"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path d="M1.5 3.5L2.83333 4.75L4.16667 6L9.5 1" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"></path>
+              </svg>
+              <label for="ctry2" class="f-size-12 font-bold c-custom-grey leading-1">{{ block.settings.country2 }}</label><br>
+            </div>
+          {% endif %}
+        </div>
+
+        <div class="measurement-row" data-measurement-info="{{block.settings.inches_cm | downcase }}">
+          <button
+            type="button"
+            id="measure_inch"
+            class="inches {%unless block.settings.inches_cm == "cm" or block.settings.inches_cm == "centimeter"%}measureBtn-Active{% endunless %} "
+          >
+            in
+          </button>
+          <button
+            type="button"
+            id="measure_cm"
+            class="centimeter {%if block.settings.inches_cm == "cm" or block.settings.inches_cm == "centimeter"%}measureBtn-Active{% endif %}"
+          >
+            cm
+          </button>
+        </div>
+      </div>
+      <div class="info-wrapper">
+        {% assign headNpara = block.settings.prod_value | split: '[head]' %}
+
+        <form action="/action_page.php">
+          {% assign chartInfo = headNpara[0] | split: ',' %}
+          {% for info in chartInfo %}
+            <div class="info-heading-row row flex">
+              {% assign measure_value = info | split: '-' %}
+              <input type="radio" id="html" name="fav_language" value="HTML">
+              {% comment %} <span > {% endcomment %}
+              {% comment %} {{ measure_value[0] | remove: 'and' }} {% endcomment %}
+
+              {% assign headDividevalue = measure_value[0] | split: ':' %}
+              {% for headDivide in headDividevalue %}
+                <span
+                  class="sizes font-bold f-size-13 {%if forloop.index0 == 1 %}hidden{%elsif forloop.index0 == 2 %}hidden{% endif %}"
+                  country_size="{%if forloop.index0 == 1 %}{{block.settings.country1 |  handleize }}{%elsif forloop.index0 == 2 %}{{block.settings.country2 |  handleize}}{% endif %}"
+                >
+                  {{ headDivide | remove: 'and' }}
+                </span>
+              {% endfor %}
+
+              {% comment %} </span> {% endcomment %}
+              {% assign infovalue = measure_value[1] | split: ':' %}
+              {% for informationValue in infovalue %}
+                <span class="cm-in font-bold text-center f-size-13">
+                  {{ informationValue }}
+                </span>
+              {% endfor %}
+            </div>
+          {% endfor %}
+
+          {% assign chartInfo = headNpara[1] | split: ',' %}
+          {% for info in chartInfo %}
+            <div class="value-row row flex fr-row{{forloop.index}}">
+              {% assign measure_value = info | split: '-' %}
+              <input
+                type="radio"
+                class="radio-check"
+                mesaureValue="{{measure_value[0] | downcase }}"
+                id="html"
+                name="fav_language"
+                value="HTML"
+              >
+              {% comment %}
+                <span
+                  class="sizes text-center f-size-13"
+                  sizeValue="{{measure_value[0] | downcase |   remove: 'and' }}"
+                >
+              {% endcomment %}
+              {% comment %} {{ measure_value[0] | remove: 'and' }} {% endcomment %}
+
+              {% assign infodividedvalue = measure_value[0] | split: ':' %}
+
+              {% assign myCounter = 0 %}
+              {% for informationDivideValue in infodividedvalue %}
+                <span
+                  class="sizes text-center f-size-13 {%if forloop.index0 == 1 %}hidden{%elsif forloop.index0 == 2 %}hidden{% endif %}"
+                  country_size="{%if forloop.index0 == 1 %}{{block.settings.country1 |  handleize }}{%elsif forloop.index0 == 2 %}{{block.settings.country2 |  handleize}}{% endif %}"
+                >
+                  {{ informationDivideValue | remove: 'and' }}
+                </span>
+                {% assign myCounter = myCounter | plus: 1 %}
+              {% endfor %}
+
+              {% comment %} </span> {% endcomment %}
+              {% assign infovalue = measure_value[1] | split: ':' %}
+              {% for informationValue in infovalue %}
+                <span class="dynamic_value text-center f-size-13" valurAttr="{{informationValue}}">
+                  {{ informationValue }}
+                </span>
+              {% endfor %}
+            </div>
+          {% endfor %}
+        </form>
+      </div>
+      {% comment %}
+        <div class="flyer-wrapper small-hide medium-hide">
+          <div class="flyer-text">Seller<span>Flyer</span></div>
+        </div>
+      {% endcomment %}
+      <div class="media_wrapper">
+        <p class="garment-text text-center font-normal f-size-12 c-custom-black lt-space-1 leading-5 my-0 f-size-13-lg pt-10 small-hide medium-hide">
+          {{ block.settings.garment_measure }}
+        </p>
+        <h3 class="font-bold f-size-14 c-custom-black lt-space-1 leading-5 my-0 f-size-16-lg pt-20 pb-20 pl-20">
+          {{ block.settings.measure_yourself }}
+        </h3>
+        <div class="img_box flex justify-center pb-10">
+          <img src="{{block.settings.prod_img |  img_url: 'master'}}">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,75 @@
+{% assign bts = block.settings %}
+
+<style>
+    .ak-counter-mbl-main-wrapper.ak-couter-{{block.id}}{
+      display: none;
+    }
+    @media(max-width:990px){
+      .ak-counter-mbl-main-wrapper.ak-couter-{{block.id}}{
+        padding-top: {{ bts.padding_top }}px;
+          padding-bottom: {{ bts.padding_bottom }}px;
+          display:block;
+      }
+      .ak-counter-mbl-main-wrapper.ak-couter-{{block.id}} .ak-counter-mbl-inner .time{
+        background-color: {{bts.bg_color}};
+        color: {{bts.text_color}};
+      }
+      .hide{
+        display: none;
+      }
+  }
+</style>
+
+<div class="ak-counter-mbl-main-wrapper ak-couter-{{block.id}} hide">
+  <div class="page-width">
+    <div class="ak-counter-mbl-inner">
+      <div class="ak-counter-mbl-row flex items-center justify-center gap-10">
+        <div class="ak-counter-mbl-col">
+          <p class="font-normal f-size-14 m-0 capitalize leading-4">{{ bts.countdown_text }}</p>
+        </div>
+        <div class="ak-counter-mbl-col flex items-center gap-5">
+          <p id="demo" class="px-5 my-0 rounded-5x font-normal f-size-14 m-0 capitalize leading-6"></p>
+          {% comment %}
+            <p class="time days px-5 my-0 rounded-5x font-normal f-size-14 m-0 capitalize leading-6"></p>
+            <span>:</span>
+          {% endcomment %}
+          <div class="timebox flex items-center gap-5">
+            <p class="time hour px-5 my-0 rounded-5x font-normal f-size-14 m-0 capitalize leading-6"></p>
+            <span>:</span>
+            <p class="time minute px-5 my-0 rounded-5x font-normal f-size-14 m-0 capitalize leading-6"></p>
+            <span>:</span>
+            <p class="time seconds px-5 my-0 rounded-5x font-normal f-size-14 m-0 capitalize leading-6"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', (event) => {
+    let count_timer = '{{bts.countdown}}';
+    document.querySelector('.ak-counter-mbl-main-wrapper').classList.remove('hide');
+    let timeBox = document.querySelector('.timebox');
+    var countDownDate = new Date(count_timer).getTime();
+
+    var x = setInterval(function () {
+      var now = new Date().getTime();
+      var distance = countDownDate - now;
+      var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      // (document.querySelector('.days').innerHTML = days + 'd'),
+      (document.querySelector('.hour').innerHTML = hours + 'h'),
+        (document.querySelector('.minute').innerHTML = minutes + 'm'),
+        (document.querySelector('.seconds').innerHTML = seconds + 's');
+
+      if (distance < 0) {
+        clearInterval(x);
+        document.getElementById('demo').innerHTML = 'EXPIRED';
+        timeBox.classList.add("hide")
+      }
+    });
+  });
+</script>

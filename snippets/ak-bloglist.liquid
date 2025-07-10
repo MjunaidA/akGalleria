@@ -1,0 +1,26 @@
+<div class="section-outer-container  ">
+  <div class="ak__blog__maincontainer">
+    <div class="ak__card-list">
+      <div class="ak__ep__heading">
+        {{ section.settings.titlename }}
+      </div>
+      {% for block in section.blocks %}
+        {% if block.type == 'article_row' %}
+          <div class="multi-row ak_custom_blog_v-article">
+            {% render 'article-card',
+              blog: section.settings.blog,
+              article: block.settings.article,
+              media_aspect_ratio: 0.70,
+              show_image: true,
+              show_excerpt: true,
+              show_author: false,
+              show_date: false,
+              show_additional_text: false,
+              show_article_text: true
+            %}
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</div>

@@ -1,0 +1,245 @@
+{% for block in section.blocks %}
+  {%- case block.type -%}
+    {%- when 'grid' -%}
+      {% render 'ak-landing-grid-desk', block: block %}
+  {%- endcase -%}
+{% endfor %}
+
+{% schema %}
+{
+  "name": "Landing Desktop",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "grid",
+      "name": "grid",
+      "settings": [
+        {
+          "type": "text",
+          "label": "Enter Heading",
+          "id": "heading"
+        },
+        {
+          "type": "checkbox",
+          "label": "Heading Extra Spacing From left",
+          "id": "heading_spacing"
+        },
+        {
+          "type": "header",
+          "content": "Grid Content"
+        },
+        {
+          "type": "checkbox",
+          "label": "Outer Spacing From left/right",
+          "id": "outer_spacing",
+          "default":true
+        },
+        {
+          "type": "checkbox",
+          "label": "Inner Spacing From left/right",
+          "id": "inner_spacing",
+          "default":true
+        },
+        {
+          "type": "header",
+          "content": "Image 1"
+        },
+        {
+          "type": "image_picker",
+          "label": "Pick Image",
+          "id": "image1"
+        },
+        {
+          "type": "url",
+          "label": "Paste Link",
+          "id": "link1"
+        },
+        {
+          "type": "header",
+          "content": "Image 2"
+        },
+        {
+          "type": "image_picker",
+          "label": "Pick Image",
+          "id": "image2"
+        },
+        {
+          "type": "url",
+          "label": "Paste Link",
+          "id": "link2"
+        },
+        {
+          "type": "header",
+          "content": "Image 3"
+        },
+        {
+          "type": "image_picker",
+          "label": "Pick Image",
+          "id": "image3"
+        },
+        {
+          "type": "url",
+          "label": "Paste Link",
+          "id": "link3"
+        },
+        {
+          "type": "header",
+          "content": "Image 4"
+        },
+        {
+          "type": "image_picker",
+          "label": "Pick Image",
+          "id": "image4"
+        },
+        {
+          "type": "url",
+          "label": "Paste Link",
+          "id": "link4"
+        },
+        {
+          "type": "header",
+          "content": "Image 5"
+        },
+        {
+          "type": "image_picker",
+          "label": "Pick Image",
+          "id": "image5"
+        },
+        {
+          "type": "url",
+          "label": "Paste Link",
+          "id": "link5"
+        },
+        {
+          "type": "header",
+          "content": "Image 6"
+        },
+        {
+          "type": "image_picker",
+          "label": "Pick Image",
+          "id": "image6"
+        },
+        {
+          "type": "url",
+          "label": "Paste Link",
+          "id": "link6"
+        },
+        {
+          "type": "header",
+          "content": "Image 7"
+        },
+        {
+          "type": "image_picker",
+          "label": "Pick Image",
+          "id": "image7"
+        },
+        {
+          "type": "url",
+          "label": "Paste Link",
+          "id": "link7"
+        },
+        {
+          "type": "header",
+          "content": "Image 8"
+        },
+        {
+          "type": "image_picker",
+          "label": "Pick Image",
+          "id": "image8"
+        },
+        {
+          "type": "url",
+          "label": "Paste Link",
+          "id": "link8"
+        },
+        {
+          "type": "header",
+          "content": "Image 9"
+        },
+        {
+          "type": "image_picker",
+          "label": "Pick Image",
+          "id": "image9"
+        },
+        {
+          "type": "url",
+          "label": "Paste Link",
+          "id": "link9"
+        },
+        {
+          "type": "header",
+          "content": "Image 10"
+        },
+        {
+          "type": "image_picker",
+          "label": "Pick Image",
+          "id": "image10"
+        },
+        {
+          "type": "url",
+          "label": "Paste Link",
+          "id": "link10"
+        },
+        {
+          "type": "header",
+          "content": "Image 11"
+        },
+        {
+          "type": "image_picker",
+          "label": "Pick Image",
+          "id": "image11"
+        },
+        {
+          "type": "url",
+          "label": "Paste Link",
+          "id": "link11"
+        },
+        {
+          "type": "header",
+          "content": "Image 12"
+        },
+        {
+          "type": "image_picker",
+          "label": "Pick Image",
+          "id": "image12"
+        },
+        {
+          "type": "url",
+          "label": "Paste Link",
+          "id": "link12"
+        },
+        {
+          "type": "header",
+          "content": "Section Spacing"
+        },
+        {
+          "type": "range",
+          "id": "padding_top",
+          "min": 0,
+          "max": 80,
+          "step": 1,
+          "unit": "px",
+          "label": "t:sections.all.padding.padding_top",
+          "default": 10
+        },
+        {
+          "type": "range",
+          "id": "padding_bottom",
+          "min": 0,
+          "max": 80,
+          "step": 1,
+          "unit": "px",
+          "label": "t:sections.all.padding.padding_bottom",
+          "default": 10
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "AK Landing Desktop",
+      "category": "customm content"
+    }
+  ]
+}
+{% endschema %}

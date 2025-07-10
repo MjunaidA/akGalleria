@@ -1,0 +1,604 @@
+{% for block in section.blocks %}
+  {%- case block.type -%}
+    {%- when 'slide' -%}
+      {% render 'ak-mbl-slider', block: block %}
+    {%- when 'ak_mbl_home_banner' -%}
+      {% render 'ak-mbl-banner', block: block %}
+    {%- when 'category_grid' -%}
+      {% render 'ak-category-grid-mbl', block: block %}
+  {%- endcase -%}
+{% endfor %}
+{% schema %}
+{
+  "name": "Landing Mobile",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "slide",
+      "settings": [
+        {
+          "type": "text",
+          "id": "section_key",
+          "label": "Enter Section Key"
+        },
+        {
+          "type": "select",
+          "id": "width_adjustment",
+          "label": "Select Image or Heading",
+          "options": [
+            {
+              "value": "full",
+              "label": "Full"
+            },
+            {
+              "value": "page_width",
+              "label": "Page Width"
+            }
+          ],
+          "default": "page_width"
+        },
+        {
+          "type": "image_picker",
+          "label": "Banner Img",
+          "id": "banner_img"
+        },
+        {
+          "type": "color",
+          "label": "Background color",
+          "id": "bg_color"
+        },
+        {
+          "type": "checkbox",
+          "label": "Enable Pagination",
+          "id": "enable_pagination"
+        },
+        {
+          "type": "header",
+          "content": "Grid Content"
+        },
+        {
+          "type": "select",
+          "id": "layout",
+          "label": "Set Layout",
+          "options": [
+            {
+              "value": "layout_first",
+              "label": "First Layout"
+            },
+            {
+              "value": "layout_second",
+              "label": "Second Layout"
+            }
+          ],
+          "default": "layout_first"
+        },
+        {
+          "type": "select",
+          "id": "txt_color",
+          "label": "Select Color",
+          "options": [
+            {
+              "value": "black",
+              "label": "Black"
+            },
+            {
+              "value": "white",
+              "label": "White"
+            }
+          ],
+          "default": "black"
+        },
+        {
+          "type": "range",
+          "id": "slider_limit",
+          "min": 1,
+          "max": 10,
+          "step": 0.1,
+          "unit": "px",
+          "label": "slide Limit",
+          "default": 3
+        },
+        {
+          "type": "range",
+          "id": "slider_gap",
+          "min": 0,
+          "max": 50,
+          "step": 0.5,
+          "unit": "px",
+          "label": "Slider Gap",
+          "default": 5
+        },
+        {
+          "type": "checkbox",
+          "label": "Enable Infinite",
+          "id": "enable_loop",
+          "default": true
+        },
+
+        {
+          "type": "header",
+          "content": "Text "
+        },
+        {
+          "type": "select",
+          "id": "snd_text_align",
+          "label": "Second Text As",
+          "info": "Second Text As Header/paragraph/Logo",
+          "options": [
+            {
+              "value": "para",
+              "label": "Paragraph"
+            },
+            {
+              "value": "heading",
+              "label": "Heading"
+            }
+          ],
+          "default": "para"
+        },
+        {
+          "type": "header",
+          "content": "Second Layout"
+        },
+        {
+          "type": "select",
+          "id": "text_align",
+          "label": "Banner Text Align",
+          "options": [
+            {
+              "value": "left",
+              "label": "Left"
+            },
+            {
+              "value": "center",
+              "label": "Center"
+            },
+            {
+              "value": "right",
+              "label": "Right"
+            }
+          ],
+          "default": "center"
+        },
+        {
+          "type": "range",
+          "id": "top_bottom",
+          "min": 2,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Space From Top",
+          "default": 50
+        },
+        {
+          "type": "range",
+          "id": "left_right",
+          "min": 1,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Space From Left",
+          "default": 50
+        },
+        {
+          "type": "range",
+          "id": "inner_width",
+          "min": 1,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "label": "Width",
+          "default": 50
+        },
+        {
+          "type": "header",
+          "content": "Section Spacing"
+        },
+        {
+          "type": "range",
+          "id": "padding_top",
+          "min": 0,
+          "max": 80,
+          "step": 1,
+          "unit": "px",
+          "label": "t:sections.all.padding.padding_top",
+          "default": 10
+        },
+        {
+          "type": "range",
+          "id": "padding_bottom",
+          "min": 0,
+          "max": 80,
+          "step": 1,
+          "unit": "px",
+          "label": "t:sections.all.padding.padding_bottom",
+          "default": 10
+        }
+      ]
+    },
+    {
+      "type": "ak_mbl_home_banner",
+      "name": "Banner",
+      "settings": [
+        {
+          "type": "select",
+          "id": "width_adjustment",
+          "label": "Width Adjust",
+          "options": [
+            {
+              "value": "full",
+              "label": "Full"
+            },
+            {
+              "value": "page_width",
+              "label": "Page Width"
+            }
+          ],
+          "default": "full"
+        },
+        {
+          "type": "checkbox",
+          "label": "Enable link",
+          "id": "banner_link_enable"
+        },
+        {
+          "type": "url",
+          "label": "Banner Link",
+          "id": "banner_link"
+        },
+        {
+          "type": "select",
+          "id": "image_or_text",
+          "label": "Select Image or Heading",
+          "options": [
+            {
+              "value": "image",
+              "label": "Image"
+            },
+            {
+              "value": "heading",
+              "label": "Heading"
+            }
+          ],
+          "default": "image"
+        },
+        {
+          "type": "image_picker",
+          "label": "Banner Img",
+          "id": "banner_img"
+        },
+        {
+          "type": "url",
+          "label": "Banner URL",
+          "id": "banner_img_url"
+        },
+        {
+          "type": "header",
+          "content": "Text Portion"
+        },
+        {
+          "type": "select",
+          "id": "text_align",
+          "label": "Banner Text Align",
+          "options": [
+            {
+              "value": "left",
+              "label": "Left"
+            },
+            {
+              "value": "center",
+              "label": "Center"
+            },
+            {
+              "value": "right",
+              "label": "Right"
+            },
+            {
+              "value": "inline",
+              "label": "Inline"
+            }
+          ],
+          "default": "center"
+        },
+        {
+          "type": "text",
+          "label": "First Text",
+          "id": "text_first"
+        },
+        {
+          "type": "header",
+          "content": "Second Text Content"
+        },
+        {
+          "type": "text",
+          "label": "Second Text",
+          "id": "text_second"
+        },
+        {
+          "type": "image_picker",
+          "label": "Logo Img / Second text",
+          "id": "logo_img"
+        },
+        {
+          "type": "select",
+          "id": "snd_text_align",
+          "label": "Second Text As",
+          "info": "Second Text As Header/paragraph/Logo",
+          "options": [
+            {
+              "value": "para",
+              "label": "Paragraph"
+            },
+            {
+              "value": "heading",
+              "label": "Heading"
+            },
+            {
+              "value": "logo",
+              "label": "Logo img"
+            }
+          ],
+          "default": "para"
+        },
+        {
+          "type": "header",
+          "content": "Button Content"
+        },
+        {
+          "type": "text",
+          "label": "Enter Button Text",
+          "id": "btn_txt"
+        },
+        {
+          "type": "url",
+          "label": "Paste Button Link",
+          "id": "btn_link"
+        },
+        {
+          "type": "color",
+          "label": "Button Background Color",
+          "id": "btn_bg",
+          "default": "#ff3f6c"
+        },
+        {
+          "type": "color",
+          "label": "Text Color",
+          "id": "text_color"
+        },
+        {
+          "type": "color",
+          "label": "Background Color",
+          "id": "bg_color"
+        },
+        {
+          "type": "range",
+          "id": "border_radius",
+          "min": 0,
+          "max": 20,
+          "step": 1,
+          "unit": "px",
+          "label": "Border Radius",
+          "default": 0
+        },
+        {
+          "type": "header",
+          "content": "Inner Spacing"
+        },
+        {
+          "type": "range",
+          "id": "inner_padding_top_bottom",
+          "min": 0,
+          "max": 80,
+          "step": 1,
+          "unit": "px",
+          "label": "Inner Top/Bottom Space",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "inner_padding_left_right",
+          "min": 0,
+          "max": 80,
+          "step": 1,
+          "unit": "px",
+          "label": "Inner Left/Right Space",
+          "default": 0
+        },
+        {
+          "type": "header",
+          "content": "Section Outer Spacing"
+        },
+        {
+          "type": "range",
+          "id": "padding_top",
+          "min": 0,
+          "max": 80,
+          "step": 1,
+          "unit": "px",
+          "label": "t:sections.all.padding.padding_top",
+          "default": 10
+        },
+        {
+          "type": "range",
+          "id": "padding_bottom",
+          "min": 0,
+          "max": 80,
+          "step": 1,
+          "unit": "px",
+          "label": "t:sections.all.padding.padding_bottom",
+          "default": 10
+        }
+      ]
+    },
+    {
+      "type": "category_grid",
+      "name": "Category Grid",
+      "settings": [
+        {
+          "type": "select",
+          "id": "width_adjustment",
+          "label": "Select Image or Heading",
+          "options": [
+            {
+              "value": "full",
+              "label": "Full"
+            },
+            {
+              "value": "page_width",
+              "label": "Page Width"
+            }
+          ],
+          "default": "full"
+        },
+        { 
+        "type": "image_picker",
+        "label": "Banner Image",
+        "id": "banner_img"
+        },
+        { 
+          "type": "color",
+          "label": "Background Color",
+          "id": "background_color"
+        },
+        {
+          "type": "header",
+          "content": "Grid Images"
+        },
+        {
+          "type": "select",
+          "id": "grid_quantity",
+          "label": "Grid Quantity",
+          "options": [
+            {
+              "value": "eight",
+              "label": "8"
+            },
+            {
+              "value": "nine",
+              "label": "9"
+            }
+          ],
+          "default": "eight"
+        },
+        {
+          "type": "image_picker",
+          "id": "grid_img1",
+          "label": "Grid Image 1"
+        },
+        {
+          "type": "url",
+          "id": "grid_link1",
+          "label": "Grid Link 1"
+        },
+        {
+          "type": "image_picker",
+          "id": "grid_img2",
+          "label": "Grid Image 2"
+        },
+        {
+          "type": "url",
+          "id": "grid_link2",
+          "label": "Grid Link 2"
+        },
+        {
+          "type": "image_picker",
+          "id": "grid_img3",
+          "label": "Grid Image 3"
+        },
+        {
+          "type": "url",
+          "id": "grid_link3",
+          "label": "Grid Link 3"
+        },
+        {
+          "type": "image_picker",
+          "id": "grid_img4",
+          "label": "Grid Image 4"
+        },
+        {
+          "type": "url",
+          "id": "grid_link4",
+          "label": "Grid Link 4"
+        },
+        {
+          "type": "image_picker",
+          "id": "grid_img5",
+          "label": "Grid Image 5"
+        },
+        {
+          "type": "url",
+          "id": "grid_link5",
+          "label": "Grid Link 5"
+        },
+        {
+          "type": "image_picker",
+          "id": "grid_img6",
+          "label": "Grid Image 6"
+        },
+        {
+          "type": "url",
+          "id": "grid_link6",
+          "label": "Grid Link 6"
+        },
+        {
+          "type": "image_picker",
+          "id": "grid_img7",
+          "label": "Grid Image 7"
+        },
+        {
+          "type": "url",
+          "id": "grid_link7",
+          "label": "Grid Link 7"
+        },
+        {
+          "type": "image_picker",
+          "id": "grid_img8",
+          "label": "Grid Image 8"
+        },
+        {
+          "type": "url",
+          "id": "grid_link8",
+          "label": "Grid Link 8"
+        },
+        {
+          "type": "image_picker",
+          "id": "grid_img9",
+          "label": "Grid Image 9"
+        },
+        {
+          "type": "url",
+          "id": "grid_link9",
+          "label": "Grid Link 9"
+        },
+        {
+          "type": "range",
+          "id": "padding_top",
+          "min": 0,
+          "max": 80,
+          "step": 1,
+          "unit": "px",
+          "label": "t:sections.all.padding.padding_top",
+          "default": 10
+        },
+        {
+          "type": "range",
+          "id": "padding_bottom",
+          "min": 0,
+          "max": 80,
+          "step": 1,
+          "unit": "px",
+          "label": "t:sections.all.padding.padding_bottom",
+          "default": 10
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "AK Landing Mobile",
+      "category": "customm content"
+    }
+  ]
+}
+{% endschema %}

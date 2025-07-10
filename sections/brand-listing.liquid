@@ -1,0 +1,458 @@
+<style>
+  .brand_listing-main-wrapper {
+    padding-top: {{ section.settings.space_y_mobile }}px;
+    padding-bottom: {{ section.settings.space_y_mobile }}px;
+  }
+
+  .brand_listing-main-wrapper .bl-parent {
+    background-color: #fff;
+    display: flex;
+    flex-flow: row wrap;
+    margin: 0 auto;
+    max-width: 144rem;
+    padding: 12px 48px;
+    position: relative;
+  }
+
+  .brand_listing-main-wrapper .bl-parent .bl-child1 {
+    position: sticky;
+    top: 80px;
+    width: auto;
+    max-width: 100%;
+    z-index: 2;
+    overflow: hidden;
+    display: flex;
+    flex: 1 100%;
+    font-size: 1.5rem;
+    background: #fff;
+  }
+
+  .brand_listing-main-wrapper .bl-parent .bl-child1 .letter {
+    font-size: 16px;
+    background-color: transparent;
+    cursor: pointer;
+    position: relative;
+    width: 100%;
+    min-width: 44px;
+    height: 44px;
+    margin: 4px 0 6px;
+    display: inline-block;
+    color: #222;
+    text-decoration: none;
+    text-align: center;
+    line-height: 44px;
+  }
+
+  .brand_listing-main-wrapper .bl-parent .search {
+    display: block;
+    flex: none;
+    margin: 24px 24px 0 0;
+    min-height: calc(100vh - 40.4rem);
+    padding-right: 26px;
+  }
+
+  .brand_listing-main-wrapper .bl-parent .search .search-container {
+    margin: 0 0 24px;
+    width: 25rem;
+    max-width: 100%;
+    position: sticky;
+    top: 150px;
+  }
+
+  .brand_listing-main-wrapper .bl-parent .search .search-container .search-inner {
+    width: 100%;
+    height: 44px;
+    padding: 0 0 0 10px;
+    align-items: center;
+    border: 1px solid #727272;
+    border-radius: 8px;
+    background-color: var(--colors-forms-primary-default-enabled-surface);
+    display: flex;
+    position: relative;
+  }
+
+  .brand_listing-main-wrapper .bl-parent .search .search-container .search-inner:focus-within {
+    box-shadow: inset 0 0 0 1.6px #222;
+  }
+
+  .brand_listing-main-wrapper .bl-parent .search .search-container .search-inner input {
+    border: 0;
+    color: #222;
+    font-size: 15px;
+    font-weight: 400;
+    opacity: .9;
+    letter-spacing: normal;
+    line-height: 22px;
+    padding: 0 0 0 10px;
+  }
+
+  .brand_listing-main-wrapper .bl-parent .bl-letters-child2 {
+    flex: 1;
+    margin: 24px 0 0 12px;
+    padding: 0 0 0 24px;
+    position: relative;
+    word-break: break-word;
+  }
+
+  .brand_listing-main-wrapper .bl-parent .bl-letters-child2 .sub-child2:first-child {
+    margin-top: 0;
+  }
+
+  .brand_listing-main-wrapper .bl-parent .bl-letters-child2 .sub-child2 {
+    display: inline-block;
+    margin: 24px 0 24px 12px;
+    padding: 0 0 0 6px;
+    vertical-align: top;
+    width: 100%;
+  }
+
+  .brand_listing-main-wrapper .bl-parent .bl-letters-child2 .sub-child2 .letter {
+    margin: 0 0 12px;
+    padding: 6px 0 12px;
+    text-transform: uppercase;
+    font-size: 22px;
+    line-height: 22px;
+    font-weight: 700;
+  }
+
+  .brand_listing-main-wrapper .bl-parent .bl-letters-child2 .sub-child2 .related-words {
+    display: flex;
+    flex-flow: row wrap;
+    transition: all 0.5s ease-in-out;
+    outline: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .brand_listing-main-wrapper .bl-parent .bl-letters-child2 .sub-child2 .related-words .related-words-list {
+    flex: 0 0 33%;
+    min-height: 4.4rem;
+    padding: 12px 0;
+    page-break-inside: avoid;
+    text-align: left;
+    font-size: 16px;
+    line-height: 22px;
+    list-style: none;
+  }
+
+  .brand_listing-main-wrapper .bl-parent .bl-letters-child2 .sub-child2 .related-words .related-words-list a {
+    font-size: 16px;
+    line-height: 22px;
+    background-color: transparent;
+    cursor: pointer;
+    color: #222;
+    text-decoration: none;
+  }
+
+  .brand_listing-main-wrapper .bl-parent .bl-letters-child2 .sub-child2 .related-words .related-words-list a:hover {
+    text-decoration: underline;
+  }
+
+
+  .Active {
+    background-color: #e6e6e6 !important;
+    border-radius: 4px;
+  }
+  @media (max-width: 576px) {
+    .brand_listing-main-wrapper .bl-parent .bl-letters-child2 .sub-child2 .related-words .related-words-list {
+      flex: 0 0 49%;
+    }
+    .brand_listing-main-wrapper .bl-parent .bl-letters-child2 {
+      margin: 0;
+      padding: 0;
+    }
+    .brand_listing-main-wrapper .bl-parent .bl-letters-child2 .sub-child2 {
+      margin: 0;
+      padding: 0;
+    }
+  }
+
+
+  @media (max-width: 575px) {
+    .brand_listing-main-wrapper .bl-parent .bl-letters-child2 .sub-child2 .related-words .related-words-list {
+      flex: 0 0 100%;
+    }
+  }
+
+
+  @media (max-width: 1323px) {
+    .brand_listing-main-wrapper .bl-parent .bl-child1 {
+      overflow: scroll;
+      padding-bottom:10px;
+    }
+    .bl-child1::-webkit-scrollbar {
+      width: 0;
+    }
+    .brand_listing-main-wrapper .bl-parent .search {
+      min-height: unset;
+      margin: 0;
+      padding: 0;
+    }
+  }
+
+  @media (max-width: 990px) {
+    .brand_listing-main-wrapper .bl-parent .search .search-container {
+      width: unset;
+    }
+  }
+
+  @media (max-width: 974px) {
+    .brand_listing-main-wrapper .bl-parent .bl-child1 {
+      top: 70px;
+    }
+    .brand_listing-main-wrapper .bl-parent .search{
+      z-index: 7;
+      position: sticky;
+      top: 135px;
+      background: #fff;
+    }
+
+    .brand_listing-main-wrapper .bl-parent .search .search-container {
+      width: unset;
+    }
+    .brand_listing-main-wrapper .bl-parent {
+      display: block;
+      padding: 12px;
+    }
+  }
+
+
+  @media (min-width: 750px) {
+    .brand_listing-main-wrapper {
+      padding-top: {{ section.settings.space_y_desktop }}px;
+      padding-bottom: {{ section.settings.space_y_desktop }}px;
+    }
+
+    .brand_listing-main-wrapper .inner-content .inner-items {
+      margin-left: -10px;
+      margin-right: -10px;
+    }
+  }
+
+  @media (max-width: 749px) {
+    .brand_listing-main-wrapper .page-width-fluid {
+      padding: 0;
+    }
+
+    .brand_listing-main-wrapper .inner-content .inner-items {
+      padding-right: 15px;
+    }
+  }
+</style>
+
+<div class="brand_listing-main-wrapper brand_listing-{{ section.id }}">
+  <div class="page-width page-width-fluid">
+    <div class="bl-parent">
+      <div class="bl-child1">
+        <a href="#a" class="letter">A</a>
+        <a href="#b" class="letter">B</a>
+        <a href="#c" class="letter">C</a>
+        <a href="#d" class="letter">D</a>
+        <a href="#e" class="letter">E</a>
+        <a href="#f" class="letter">F</a>
+        <a href="#g" class="letter">G</a>
+        <a href="#h" class="letter">H</a>
+        <a href="#i" class="letter">I</a>
+        <a href="#j" class="letter">J</a>
+        <a href="#k" class="letter">K</a>
+        <a href="#l" class="letter">L</a>
+        <a href="#m" class="letter">M</a>
+        <a href="#n" class="letter">N</a>
+        <a href="#o" class="letter">O</a>
+        <a href="#p" class="letter">P</a>
+        <a href="#q" class="letter">Q</a>
+        <a href="#r" class="letter">R</a>
+        <a href="#s" class="letter">S</a>
+        <a href="#t" class="letter">T</a>
+        <a href="#u" class="letter">U</a>
+        <a href="#v" class="letter">V</a>
+        <a href="#w" class="letter">W</a>
+        <a href="#x" class="letter">X</a>
+        <a href="#y" class="letter">Y</a>
+        <a href="#z" class="letter">Z</a>
+        <a href="#0-9" class="letter">0-9</a>
+      </div>
+      <div class="search">
+        <div class="search-container">
+          <div class="search-inner">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 30 30"
+              width="25px"
+              height="25px"
+              opacity=".3"
+            >
+              <path d="M 13 3 C 7.4889971 3 3 7.4889971 3 13 C 3 18.511003 7.4889971 23 13 23 C 15.396508 23 17.597385 22.148986 19.322266 20.736328 L 25.292969 26.707031 A 1.0001 1.0001 0 1 0 26.707031 25.292969 L 20.736328 19.322266 C 22.148986 17.597385 23 15.396508 23 13 C 23 7.4889971 18.511003 3 13 3 z M 13 5 C 17.430123 5 21 8.5698774 21 13 C 21 17.430123 17.430123 21 13 21 C 8.5698774 21 5 17.430123 5 13 C 5 8.5698774 8.5698774 5 13 5 z" />
+            </svg>
+            <input
+              value=""
+              data-testid="search-input"
+              placeholder="Search brands"
+              data-component="SearchInputControlled"
+              class="search-input"
+            >
+          </div>
+        </div>
+      </div>
+      <div class="bl-letters-child2">
+        {% for brands_against_alphabet in page.metafields.custom.all_brands.value.all_brands.value %}
+          <div class="sub-child2">
+            <h1 id="{{brands_against_alphabet.alphabet | downcase}}" class="letter">
+              {{ brands_against_alphabet.alphabet }}
+            </h1>
+            <ul class="related-words">
+              {% for brand_title in brands_against_alphabet.brands.value %}
+                <li class="related-words-list">
+                  <a href="{{ brand_title.brand_url }}">{{ brand_title.brand_name }}</a>
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Brand Listing",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Brand Listing",
+      "category": " Custom Section"
+    }
+  ]
+}
+{% endschema %}
+
+<script>
+  const searchInput = document.querySelector('[data-testid="search-input"]');
+  const relatedWords = document.querySelectorAll('.related-words-list');
+  const subChild2 = document.querySelectorAll('.sub-child2');
+
+  const filterRelatedWords = () => {
+    const searchTerm = searchInput.value;
+
+    relatedWords.forEach((anchor) => {
+      const anchorText = anchor.textContent;
+      const index = anchorText.toLocaleLowerCase().indexOf(searchTerm.toLocaleLowerCase());
+
+      if (index !== -1) {
+        const before = anchorText.substring(0, index);
+        const match = anchorText.substring(index, index + searchTerm.length);
+        const after = anchorText.substring(index + searchTerm.length);
+
+        let links = anchor.querySelector('a');
+        links.innerHTML = before + '<strong>' + match + '</strong>' + after;
+
+        anchor.classList.remove('hidden');
+      } else {
+        anchor.classList.add('hidden');
+      }
+    });
+
+    subChild2.forEach((item) => {
+      const list = item.querySelectorAll('.related-words .related-words-list');
+
+      const isHide = Array.from(list).every((i) => i.classList.contains('hidden'));
+      if (isHide) {
+        item.classList.add('hidden');
+      } else {
+        item.classList.remove('hidden');
+      }
+    });
+  };
+
+  searchInput.addEventListener('input', filterRelatedWords);
+
+  // <----------------------------------->
+  let letterLinks = document.querySelectorAll('.bl-child1 .letter');
+
+  if (window.screen.width > 767) {
+    letterLinks.forEach(function (link) {
+      link.addEventListener('click', function (event) {
+        event.preventDefault();
+
+        letterLinks.forEach(function (link) {
+          link.classList.remove('Active');
+        });
+
+        this.classList.add('Active');
+
+        let targetId = this.getAttribute('href');
+
+        if (targetId === '#0-9') {
+          let targetElement = document.getElementById('0-9');
+
+          if (targetElement) {
+            let offset = 150;
+            let elementPosition = targetElement.getBoundingClientRect().top;
+            let offsetPosition = elementPosition + window.pageYOffset - offset;
+
+            window.scrollTo({
+              top: offsetPosition,
+              behavior: 'smooth',
+            });
+          }
+        } else {
+          let targetElement = document.querySelector(targetId);
+
+          if (targetElement) {
+            let offset = 150;
+            let elementPosition = targetElement.getBoundingClientRect().top;
+            let offsetPosition = elementPosition + window.pageYOffset - offset;
+
+            window.scrollTo({
+              top: offsetPosition,
+              behavior: 'smooth',
+            });
+          }
+        }
+      });
+    });
+  } else {
+    letterLinks.forEach(function (link) {
+      link.addEventListener('click', function (event) {
+        event.preventDefault();
+
+        letterLinks.forEach(function (link) {
+          link.classList.remove('Active');
+        });
+
+        this.classList.add('Active');
+
+        let targetId = this.getAttribute('href');
+
+        if (targetId === '#0-9') {
+          let targetElement = document.getElementById('0-9');
+
+          if (targetElement) {
+            let offset = 180;
+            let elementPosition = targetElement.getBoundingClientRect().top;
+            let offsetPosition = elementPosition + window.pageYOffset - offset;
+
+            window.scrollTo({
+              top: offsetPosition,
+              behavior: 'smooth',
+            });
+          }
+        } else {
+          let targetElement = document.querySelector(targetId);
+
+          if (targetElement) {
+            let offset = 180;
+            let elementPosition = targetElement.getBoundingClientRect().top;
+            let offsetPosition = elementPosition + window.pageYOffset - offset;
+
+            window.scrollTo({
+              top: offsetPosition,
+              behavior: 'smooth',
+            });
+          }
+        }
+      });
+    });
+  }
+</script>

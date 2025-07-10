@@ -1,0 +1,109 @@
+{% assign bts = block.settings %}
+
+<style>
+    .landing-grid-desk-wrapper.ak-landing-{{block.id}} {
+      display:none;
+    }
+    @media(min-width:990px){
+      .landing-grid-desk-wrapper.ak-landing-{{block.id}} {
+          padding-top: {{ bts.padding_top }}px;
+          padding-bottom: {{ bts.padding_bottom }}px;
+          display:block;
+        }
+
+  }
+</style>
+
+<div class="landing-grid-desk-wrapper ak-landing-{{block.id}}">
+<div class="page-width {%if bts.outer_spacing == false %}p-0{% endif %}">
+    <div class="landing-slide-desk-inner">
+<h2 class="landing-desk-heading {%if bts.heading_spacing == true %}pl-90{% else %}pl-30{% endif %}">{{ bts.heading }}</h2>
+<div class="landing-grid-row  flex  {%if bts.outer_spacing == true %}pl-60 pr-30{% endif %}">
+        {% if bts.image1 != blank %}
+          <div class="landing-grid-col w-full ">
+        <a class="flex pr-3ll {%if bts.inner_spacing == true %}pr-30{% endif %}" href="{{bts.link1}}">
+              <img class="w-full" src="{{bts.image1 |  img_url: 'master'}}" alt="grid-img" loading="lazy">
+            </a>
+          </div>
+        {% endif %}
+        {% if bts.image2 != blank %}
+          <div class="landing-grid-col w-full">
+        <a class="flex w-full {%if bts.inner_spacing == true%}pr-30{%endif%}" href="{{bts.link2}}">
+              <img class="w-full" src="{{bts.image2 |  img_url: 'master'}}" alt="grid-img" loading="lazy">
+            </a>
+          </div>
+        {% endif %}
+        {% if bts.image3 != blank %}
+          <div class="landing-grid-col w-full">
+        <a class="flex w-full {%if bts.inner_spacing == true%}pr-30{%endif%}" href="{{bts.link3}}">
+              <img class="w-full" src="{{bts.image3 |  img_url: 'master'}}" alt="grid-img" loading="lazy">
+            </a>
+          </div>
+        {% endif %}
+        {% if bts.image4 != blank %}
+          <div class="landing-grid-col w-full">
+        <a class="flex w-full {%if bts.inner_spacing == true%}pr-30{%endif%}" href="{{bts.link4}}">
+              <img class="w-full" src="{{bts.image4 |  img_url: 'master'}}" alt="grid-img" loading="lazy">
+            </a>
+          </div>
+        {% endif %}
+        {% if bts.image5 != blank %}
+          <div class="landing-grid-col w-full">
+        <a class="flex w-full {%if bts.inner_spacing == true%}pr-30{%endif%}" href="{{bts.link5}}">
+              <img class="w-full" src="{{bts.image5 |  img_url: 'master'}}" alt="grid-img" loading="lazy">
+            </a>
+          </div>
+        {% endif %}
+        {% if bts.image6 != blank %}
+          <div class="landing-grid-col w-full">
+        <a class="flex w-full {%if bts.inner_spacing == true%}pr-30{%endif%}" href="{{bts.link6}}">
+              <img class="w-full" src="{{bts.image6 |  img_url: 'master'}}" alt="grid-img" loading="lazy">
+            </a>
+          </div>
+        {% endif %}
+        {% if bts.image7 != blank %}
+          <div class="landing-grid-col w-full">
+        <a class="flex w-full {%if bts.inner_spacing == true%}pr-30{%endif%}" href="{{bts.link7}}">
+              <img class="w-full" src="{{bts.image7 |  img_url: 'master'}}" alt="grid-img" loading="lazy">
+            </a>
+          </div>
+        {% endif %}
+        {% if bts.image8 != blank %}
+          <div class="landing-grid-col w-full pt-0">
+        <a class="flex w-full {%if bts.inner_spacing == true%}pr-30{%endif%}" href="{{bts.link8}}">
+              <img class="w-full" src="{{bts.image8 |  img_url: 'master'}}" alt="grid-img" loading="lazy">
+            </a>
+          </div>
+        {% endif %}
+        {% if bts.image9 != blank %}
+          <div class="landing-grid-col w-full">
+        <a class="flex w-full {%if bts.inner_spacing == true%}pr-30{%endif%}" href="{{bts.link9}}">
+              <img class="w-full" src="{{bts.image9 |  img_url: 'master'}}" alt="grid-img" loading="lazy">
+            </a>
+          </div>
+        {% endif %}
+        {% if bts.image10 != blank %}
+          <div class="landing-grid-col w-full">
+        <a class="flex w-full {%if bts.inner_spacing == true%}pr-30{%endif%}" href="{{bts.link10}}">
+              <img class="w-full" src="{{bts.image10 |  img_url: 'master'}}" alt="grid-img" loading="lazy">
+            </a>
+          </div>
+        {% endif %}
+        {% if bts.image11 != blank %}
+          <div class="landing-grid-col w-full">
+        <a class="flex w-full {%if bts.inner_spacing == true%}pr-30{%endif%}" href="{{bts.link11}}">
+              <img class="w-full" src="{{bts.image11 |  img_url: 'master'}}" alt="grid-img" loading="lazy">
+            </a>
+          </div>
+        {% endif %}
+        {% if bts.image12 != blank %}
+          <div class="landing-grid-col w-full">
+        <a class="flex w-full {%if bts.inner_spacing == true%}pr-30{%endif%}" href="{{bts.link12}}">
+              <img class="w-full" src="{{bts.image12 |  img_url: 'master'}}" alt="grid-img" loading="lazy">
+            </a>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>

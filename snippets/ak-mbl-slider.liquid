@@ -1,0 +1,104 @@
+{% assign bts = block.settings %}
+{% assign sectionType = block.type %}
+{% assign sectionkey = bts.section_key %}
+<style>
+  .slide-mbl-main-wrapper {
+    display:none;
+  }
+  @media(max-width:990px){
+    .slide-mbl-main-wrapper.slide-mbl-{{ sectionkey }} {
+      padding-top: {{ bts.padding_top }}px;
+      padding-bottom: {{ bts.padding_bottom }}px;
+      display:block;
+    }
+    .slide-mbl-main-wrapper.slide-mbl-{{ sectionkey }}{
+      background-color: {{bts.bg_color}};
+    }
+    .slide-mbl-main-wrapper.slide-mbl-{{ sectionkey }} .slide-mbl-inner .textbox {
+      top: {{bts.top_bottom}}%;
+      left: {{bts.left_right}}%;
+      transform: translate(-{{bts.left_right}}%, -{{bts.top_bottom}}%);
+      width:{{bts.inner_width}}%;
+    }
+
+  }
+</style>
+
+<div class="slide-mbl-main-wrapper slide-mbl-{{ sectionkey }}">
+  <div class="page-width {%if bts.width_adjustment == 'full'%}p-0{% endif %}">
+    <div class="top-banner-img">
+      {% if bts.banner_img != blank %}
+        <a href="{{ bts.banner_image_link }}">
+          <img class="w-full" src="{{bts.banner_img |  img_url: 'master'}}" alt="Banner Img" loading="lazy">
+        </a>
+      {% endif %}
+    </div>
+    <div class="slide-mbl-inner index-section overflow-hidden relative">
+      {% if bts.layout == 'layout_first' %}
+        <div class="swiper-wrapper">
+          {% for item in shop.metaobjects[sectionType][sectionkey][sectionType].value %}
+            <div class="slide-col swiper-slide text-center">
+              <a href="{{item.link.value}}" class="link text-center text-no-decoration w-full flex flex-col">
+                <img class="w-full" src="{{ item.image.value |  img_url: 'master' }}" alt="slider image" loading="lazy">
+                <p class="font-normal f-size-10 c-black m-0 capitalize pt-5 leading-4 {% if bts.txt_color == 'black' %}c-black{% else %}c-white{% endif %}">
+                  {{ item.heading.value }}
+                </p>
+              </a>
+            </div>
+          {% endfor %}
+        </div>
+        {% if bts.enable_pagination == true %}
+          <div class="swiper-pagination"></div>
+        {% endif %}
+      {% else %}
+        <div class="swiper-wrapper">
+          {% for item in shop.metaobjects[sectionType][sectionkey][sectionType].value %}
+            <div class="slide-col swiper-slide text-center">
+              <a href="{{item.link.value}}" class="link text-center text-no-decoration w-full flex flex-col">
+                <img class="w-full" src="{{ item.image.value |  img_url: 'master' }}" alt="slider image" loading="lazy">
+
+                <div class="textbox absolute z-10 {%if bts.text_align == "left" %}text-left{%elsif bts.text_align == "center" %}center{%else%}text-right{% endif %}">
+                  <p class="font-bold f-size-16 m-0 capitalize pt-5 leading-4 {% if bts.txt_color == 'black' %}c-black{% else %}c-white{% endif %}">
+                    {{ item.heading.value }}
+                  </p>
+
+                  {% if bts.snd_text_align == 'para' %}
+                    <p class="font-normal f-size-10 m-0 capitalize pt-5 leading-4 w-full {% if bts.txt_color == 'black' %}c-black{% else %}c-white{% endif %} ">
+                      {{ item.subheading.value }}
+                    </p>
+                  {% else %}
+                    <p class="font-bold f-size-16 m-0 capitalize pt-5 leading-4 w-full {% if bts.txt_color == 'black' %}c-black{% else %}c-white{% endif %} ">
+                      {{ item.subheading.value }}
+                    </p>
+                  {% endif %}
+                </div>
+              </a>
+            </div>
+          {% endfor %}
+        </div>
+        {% if bts.enable_pagination == true %}
+          <div class="swiper-pagination"></div>
+        {% endif %}
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<script>
+  var slideGap = {{bts.slider_gap}};
+  var slideQuantity = {{bts.slider_limit}};
+  var infiniteScroll = {{bts.enable_loop}}
+
+  var galleryMain = new Swiper('.slide-mbl-{{ sectionkey }} .index-section', {
+    slidesPerView: slideQuantity,
+    loop: infiniteScroll,
+    spaceBetween:slideGap,
+    autoplay: {
+      delay: 8500,
+      disableOnInteraction: false,
+    },
+    pagination: {
+      el: ".swiper-pagination",
+    }
+  });
+</script>

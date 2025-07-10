@@ -1,0 +1,116 @@
+<style>
+  .home-grand-slider {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+</style>
+
+<div class="home-grand-slider-wrapper">
+  <div class="page-width p-0">
+    <div class="grand-slider-inner ">
+      <h2 class="home-desk-heading p-30">{{ section.settings.heading }}</h2>
+      <div class="swiper grand-brand-slider ">
+        <div class="swiper-wrapper">
+          {% for block in section.blocks %}
+            <div class="swiper-slide">
+              <a href="{{block.settings.image_url}}">
+                <img
+                  class="grand-image w-full"
+                  src="{{ block.settings.image_dsk | img_url: 'master' }}"
+                  alt="Banner Image Desktop"
+                  width=""
+                  height=""
+                  loading="lazy"
+                >
+              </a>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Grand Global Brands",
+  "settings": [
+    {
+      "type": "text",
+      "label": "Enter Heading",
+      "id": "heading",
+      "default": "Grand Global Brands"
+    },
+    {
+      "type": "range",
+      "id": "slider_quantity",
+      "min": 2,
+      "max": 15,
+      "step": 1,
+      "unit": "%",
+      "label": "slider Qunaity",
+      "default": 6
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 80,
+      "step": 1,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 80,
+      "step": 1,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 10
+    }
+  ],
+  "blocks": [
+    {
+      "type": "Image",
+      "name": "Image Banner",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image_dsk",
+          "label": "Image Banner"
+        },
+        {
+          "type": "url",
+          "id": "image_url",
+          "label": "Image Url"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Grand Global Brands",
+      "category": "custom content"
+    }
+  ]
+}
+{% endschema %}
+
+<script>
+  let sliderQuantity = {{section.settings.slider_quantity}};
+  galleryMain = new Swiper('.grand-brand-slider', {
+    slidesPerView: sliderQuantity,
+    loop: true,
+    autoplay: {
+      delay: 2500,
+      disableOnInteraction: false,
+    },
+    navigation: {
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev',
+    },
+  });
+</script>

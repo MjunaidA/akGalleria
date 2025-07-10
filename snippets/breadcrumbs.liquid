@@ -1,0 +1,161 @@
+<style>
+
+  .breadcrumbs {
+    /* margin: 0 0 2em; */
+    background-color: {{ settings.breadcrumb_bg_color }};
+    padding-top: {{ settings.padding_top }}px;
+    padding-bottom: {{ settings.padding_bottom }}px;
+    /* padding-left: 25px; */
+  }
+
+  .breadcrumbs__list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .breadcrumbs__item {
+    display: inline-block;
+  }
+
+  .breadcrumbs__item:not(:last-child):after {
+    display: inline-block;
+    content: '\/';
+    margin: 0 2px;
+    color: #959fa5;
+    font-size: {{ settings.font_size }}px;
+  }
+
+
+  .breadcrumbs__link,
+  .breadcrumbs__item a{
+    text-decoration: none;
+    color: {{ settings.breadcrumb_text_color }};
+    font-size: {{ settings.font_size }}px;
+    text-transform: capitalize;
+
+  }
+
+  .breadcrumbs__link:hover {
+    text-decoration: none;
+  }
+
+  .breadcrumbs__link[aria-current="page"] {
+    color: #000 !important;
+    font-weight: bold;
+    text-decoration: none;
+    text-transform: capitalize;
+  }
+
+
+  .breadcrumbs__link[aria-current="page"]:hover,
+  .breadcrumbs__link[aria-current="page"]:focus {
+    text-decoration: none;
+  }
+
+  /* Remove the last "/" for blog breadcrumbs */
+
+  .breadcrumbs__item:last-child:after {
+    content: '';
+  }
+
+  /* Style for the last breadcrumb link */
+
+  .disabled-breadcrumb {
+    color: #999 !important;
+    pointer-events: none !important;
+    text-decoration: none !important;
+  }
+
+</style>
+
+{% unless template == 'index' or template == 'cart' or template == '404' %}
+  {% assign t = template | split: '.' | first %}
+
+  <nav
+class="breadcrumbs {%if template == 'collection'%}pl-25 {% elsif template == 'product' %} pt-30 pb-20 {% endif %} mbl-space"
+    role="navigation"
+    aria-label="breadcrumbs">
+    <ol class="breadcrumbs__list">
+      <li class="breadcrumbs__item">
+        <a class="breadcrumbs__link f-size-14-lg lt-space-1" href="/">Home</a>
+      </li>
+      {% case t %}
+        {% when 'page' %}
+          <li class="breadcrumbs__item">
+            <a
+              class="breadcrumbs__link f-size-14-lg lt-space-1"
+              href="{{ page.url }}"
+              aria-current="page">{{ page.title }}</a>
+          </li>
+        {% when 'product' %}
+
+          {%- if collection.url -%}
+            <li class="breadcrumbs__item collection f-size-14-lg lt-space-1 1111">
+              <span></span>
+              {{ collection.title | link_to: collection.url }}
+            </li>
+          {%- endif -%}
+          <li class="breadcrumbs__item">
+            <a
+              class="breadcrumbs__link f-size-14-lg lt-space-1 222"
+              href="{{ product.url }}"
+              aria-current="page".breadcrumbs__link
+            >
+              {{- product.title -}}
+            </a>
+          </li>
+          
+        {% when 'collection' %}
+          <li class="breadcrumbs__item">
+            <a class="breadcrumbs__link f-size-14-lg lt-space-1" href="/collections">Collections</a>
+          </li>
+          <li class="breadcrumbs__item">
+            <a
+              class="breadcrumbs__link f-size-14-lg lt-space-1"
+              href="{{ collection.url }}"
+              aria-current="page">{{ collection.title }}</a>
+          </li>
+        {%- when 'blog' -%}
+          {%- if current_tags -%}
+            <li class="breadcrumbs__item">
+              {{ blog.title | link_to: blog.url, class: "breadcrumbs__link f-size-14-lg lt-space-1" }}
+            </li>
+            <li class="breadcrumbs__item">
+              {%- capture tag_url -%}{{blog.url}}/tagged/{{ current_tags | join: "+" }}{%- endcapture -%}
+              <a
+                class="breadcrumbs__link f-size-14-lg lt-space-1"
+                href="{{ tag_url }}"
+                aria-current="page">{{ current_tags | join: ' + ' }}</a>
+            </li>
+          {%- else -%}
+            <li class="breadcrumbs__item">
+              <a
+                class="breadcrumbs__link f-size-14-lg lt-space-1"
+                href="{{ blog.url }}"
+                aria-current="page">{{ blog.title }}</a>
+            </li>
+          {%- endif -%}
+        {%- when 'article' -%}
+          <li class="breadcrumbs__item">
+            {{ blog.title | link_to: blog.url, class: "breadcrumbs__link f-size-14-lg lt-space-1" }}
+          </li>
+          <li class="breadcrumbs__item">
+            <a
+              class="breadcrumbs__link f-size-14-lg lt-space-1"
+              href="{{ article.url }}"
+              aria-current="page">{{ article.title }}</a>
+          </li>
+        {%- else -%}
+          <li class="breadcrumbs__item">
+            <a
+              class="breadcrumbs__link f-size-14-lg lt-space-1 disabled-breadcrumb"
+              href="{{ request.path }}"
+              aria-current="page">
+              {{- page_title -}}
+            </a>
+          </li>
+      {%- endcase -%}
+    </ol>
+  </nav>
+{% endunless %}

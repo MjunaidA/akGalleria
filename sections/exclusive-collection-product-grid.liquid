@@ -1,0 +1,410 @@
+{{ 'template-collection.css' | asset_url | stylesheet_tag }}
+{{ 'component-card.css' | asset_url | stylesheet_tag }}
+{{ 'component-price.css' | asset_url | stylesheet_tag }}
+{% comment %} {{ 'ajaxinate.js' | asset_url | script_tag }} {% endcomment %}
+{% comment %} {{ 'ajaxinate.min.js' | asset_url | script_tag }} {% endcomment %}
+
+{%- if section.settings.enable_quick_add -%}
+  {{ 'quick-add.css' | asset_url | stylesheet_tag }}
+  <script src="{{ 'quick-add.js' | asset_url }}" defer="defer"></script>
+  <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+{%- endif -%}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<style>
+  .exclusive_collection .exclusive-link-wrapper .exclusive-link-row .exclusive-link-col .menu-link:hover {
+    border-bottom: 1px solid;
+  }
+  .exclusive_collection .product-grid {
+    /* display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));*/
+    gap: 30px 10px;
+    /* border: 1px solid rgba(0,0,0,0.2); */
+  }
+
+  .exclusive_collection .product-grid .grid__item {
+    margin: 0;
+    width: unset;
+    max-width: unset;
+    flex: 0 0 calc(50% - 5px);
+  }
+
+  .exclusive_collection .product-grid .grid__item.description-card {
+    flex: 0 0 100%;
+  }
+
+  .exclusive_collection .wishlist-mbl {
+    display: none;
+  }
+  .exclusive_collection .loadmore {
+  }
+
+  @media only screen and (max-width: 990px) {
+  }
+  @media (min-width: 990px) {
+    .exclusive_collection .product-grid .grid__item {
+      flex: 0 0 calc(25% - 8px);
+    }
+    .exclusive_collection .product-grid .grid__item.description-card {
+      flex: 0 0 calc(50% - 5px);
+    }
+
+    .exclusive_collection .product-grid .grid__item:nth-child(1) {
+      order: 3;
+    }
+
+    .exclusive_collection .product-grid .grid__item:nth-child(2) {
+      order: 1;
+    }
+
+    .exclusive_collection .product-grid .grid__item:nth-child(3) {
+      order: 2;
+    }
+    .exclusive_collection .product-grid .grid__item:nth-child(4) {
+      order: 4;
+    }
+    .exclusive_collection .product-grid .grid__item:nth-child(5) {
+      order: 5;
+    }
+    .exclusive_collection .product-grid .grid__item:nth-child(6) {
+      order: 6;
+    }
+    .exclusive_collection .product-grid .grid__item:nth-child(7) {
+      order: 7;
+    }
+    .exclusive_collection .product-grid .grid__item:nth-child(8) {
+      order: 8;
+    }
+    .exclusive_collection .product-grid .grid__item:nth-child(9) {
+      order: 9;
+    }
+    .exclusive_collection .product-grid .grid__item:nth-child(10) {
+      order: 10;
+    }
+    .exclusive_collection .product-grid .grid__item:nth-child(11) {
+      order: 11;
+    }
+    .exclusive_collection .product-grid .grid__item:nth-child(12) {
+      order: 12;
+    }
+    .exclusive_collection .product-grid .grid__item:nth-child(13) {
+      order: 13;
+    }
+    .exclusive_collection .product-grid .grid__item:nth-child(14) {
+      order: 14;
+    }
+  }
+</style>
+
+{% paginate collection.products by 12 %}
+  {% assign current_page = paginate.current_page %}
+
+  {% assign cstm = paginate.current_page %}
+
+  {% comment %} our formula Start {% endcomment %}
+
+  {% assign c_page = paginate.current_page %}
+  {% assign c_page_new = c_page | times: 2 | minus: 1 %}
+
+  {% comment %} our formula End {% endcomment %}
+
+  <div class="section-{{ section.id }}-padding gradient color-{{ section.settings.color_scheme }} exclusive_collection">
+    <div class="page-width width-1360">
+      {{ 'component-facets.css' | asset_url | stylesheet_tag }}
+      <script src="{{ 'facets.js' | asset_url }}" defer="defer"></script>
+
+      <div class="exclusive-link-wrapper">
+        {% assign coll_title = collection.title %}
+        <ul class="exclusive-link-row flex justify-center items-center gap-x-20 p-0">
+          {% for link in section.settings.menu_link.links %}
+            <div class="exclusive-link-col">
+              <a
+                href="{{link.url}}"
+                class="menu-link text-no-decoration f-size-13 c-black leading-5 lt-space-1 uppercase font-bold {% if coll_title contains link.title %}border-b-1{% endif %}"
+              >
+                {{- link.title -}}
+              </a>
+            </div>
+          {% endfor %}
+        </ul>
+      </div>
+
+      {% comment %} <div id="AjaxinateContainer"> {% endcomment %}
+        <ul
+          id="product-grid"
+          data-id="{{ section.id }}"
+          class="product-grid grid--{{ section.settings.columns_mobile }}-col-tablet-down grid--layout-custom flex flex-wrap p-0 {{cstm}} c_page__{{c_page}} c_page_new__{{c_page_new}}"
+        >
+          {% assign MarketingBanners = section.blocks | where: 'type', 'marketing-card' %}
+          {% assign temptump = paginate.current_page | minus: 1 %}
+          {% assign desc_index = 2 | times: temptump %}
+          {% assign marketing_desc_index = 1 | times: temptump %}
+
+          {% assign bannerMetafields = collection.metafields.custom.collection_inner_banner_mobile.value %}
+          {% assign product_counter = 0 %}
+
+          {% assign show_banner = true %}
+          {% assign banner_index = c_page_new %}
+
+          {%- for product in collection.products -%}
+            {% assign lazy_load = false %}
+            {%- if forloop.index > 2 -%}
+              {%- assign lazy_load = true -%}
+            {%- endif -%}
+
+            {% assign indexx = start_index | plus: product | times: 6 %}
+
+            {% if show_banner and bannerMetafields %}
+              {% assign banner_counter = 1 %}
+              {% comment %} {% assign banner_index = 1 %} {% endcomment %}
+              {% for banner in bannerMetafields %}
+                {% if banner_counter == banner_index %}
+                  <li
+                    class="grid__item description-card list-none banner_counter-{{banner_counter}} banner_index-{{banner_index}} cstm_item__{{cstm}}"
+                    data-page="{{ paginate.current_page }}"
+                  >
+                    <a class="flex" href="{{ banner.link.value }}">
+                      <img class="w-full" src="{{ banner.banner.value | img_url: 'master' }}">
+                    </a>
+                  </li>
+                {% endif %}
+                {% assign banner_counter = banner_counter | plus: 1 %}
+              {% endfor %}
+
+              {% assign cstm = cstm | plus: 1 %}
+              {% assign banner_index = banner_index | plus: 1 %}
+              {% assign show_banner = false %}
+            {% endif %}
+
+            <li
+              class="grid__item list-none banner_counter-{{banner_counter}} banner_index-{{banner_index}}  counter{{counter}}"
+              data-page="{{ paginate.current_page }}"
+            >
+              {% if current_page == 1 and forloop.index0 == 4 %}
+                <img
+                  class="w-full"
+                  src="{{ section.settings.marketing_card_img |  img_url:"master"}}"
+                >
+                <a
+                  class="marketing-card-link text-no-decoration f-size-13 c-black leading-5 lt-space-1 uppercase font-bold border-b-1"
+                  href="{{ section.settings.marketing_card_url }}"
+                >
+                  {{- section.settings.marketing_card_text -}}
+                </a>
+                {% assign desc_index = desc_index | plus: 1 %}
+              {% else %}
+                {% render 'card-product',
+                  card_product: product,
+                  media_aspect_ratio: section.settings.image_ratio,
+                  image_shape: section.settings.image_shape,
+                  show_secondary_image: section.settings.show_secondary_image,
+                  show_rating: section.settings.show_rating,
+                  lazy_load: lazy_load,
+                  show_quick_add: section.settings.enable_quick_add,
+                  section_id: section.id
+                %}
+              {% endif %}
+            </li>
+
+            {% assign product_counter = product_counter | plus: 1 %}
+            {% if product_counter == 6 %}
+              {% assign product_counter = 0 %}
+              {% assign show_banner = true %}
+            {% endif %}
+
+            {% assign custom_count_start = custom_count_start | plus: 1 %}
+          {%- endfor -%}
+        </ul>
+      {% comment %} </div> {% endcomment %}
+
+      <div id="AjaxinatePagination">
+        <div class="loadmore flex justify-center items-center ">
+          {% if paginate.next %}
+            <a href="{{ paginate.next.url }} " class="loadmore-link text-no-decoration c-black leading-5 "
+              >Loading More</a
+            >
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+{% endpaginate %}
+
+{% schema %}
+{
+  "name": "Exclusive Collection",
+  "class": "exclusive-main-wrapper",
+  "presets": [
+    {
+      "name": "Exclusive Collection layout"
+    }
+  ],
+  "settings": [
+    {
+      "type": "link_list",
+      "id": "menu_link",
+      "label": "Menu"
+    },
+    {
+      "type": "range",
+      "id": "products_per_page",
+      "min": 8,
+      "max": 24,
+      "step": 2,
+      "default": 14,
+      "label": "t:sections.main-collection-product-grid.settings.products_per_page.label"
+    },
+    {
+      "type": "select",
+      "id": "tag_text",
+      "options": [
+        {
+          "value": "on",
+          "label": "ON"
+        },
+        {
+          "value": "off",
+          "label": "OFF"
+        }
+      ],
+      "default": "off",
+      "label": "Display New/New style Tag"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "info": "t:sections.all.colors.has_cards_info",
+      "default": "scheme-1"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_secondary_image",
+      "default": false,
+      "label": "t:sections.main-collection-product-grid.settings.show_secondary_image.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_vendor",
+      "default": false,
+      "label": "t:sections.main-collection-product-grid.settings.show_vendor.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_rating",
+      "default": false,
+      "label": "t:sections.main-collection-product-grid.settings.show_rating.label",
+      "info": "t:sections.main-collection-product-grid.settings.show_rating.info"
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "options": [
+        {
+          "value": "adapt",
+          "label": "t:sections.main-collection-product-grid.settings.image_ratio.options__1.label"
+        },
+        {
+          "value": "portrait",
+          "label": "t:sections.main-collection-product-grid.settings.image_ratio.options__2.label"
+        },
+        {
+          "value": "square",
+          "label": "t:sections.main-collection-product-grid.settings.image_ratio.options__3.label"
+        }
+      ],
+      "default": "adapt",
+      "label": "t:sections.main-collection-product-grid.settings.image_ratio.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.section_padding_heading"
+    },
+
+    {
+      "type": "header",
+      "content": "Exclusive Marketing Card"
+    },
+    {
+      "type": "image_picker",
+      "label": "Select Image",
+      "id": "marketing_card_img"
+    },
+    {
+      "type": "text",
+      "label": "Enter text",
+      "id": "marketing_card_text",
+      "default": "Shop Nowow"
+    },
+    {
+      "type": "url",
+      "label": "Select url",
+      "id": "marketing_card_url"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 36
+    }
+  ]
+}
+{% endschema %}
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var endlessScroll = new Ajaxinate({
+      container: '#AjaxinateContainer',
+      pagination: '#AjaxinatePagination',
+      method: 'scroll',
+      offset: 1000,
+    });
+  });
+</script>
+
+{% comment %}
+  // "blocks": [
+  //   {
+  //     "type": "marketing-card",
+  //     "name": "Marketing Card",
+  //     "settings": [
+  //       {
+  //         "type": "image_picker",
+  //         "label": "Select Image",
+  //         "id": "marketing_card_img"
+  //       },
+  //       {
+  //         "type": "url",
+  //         "label": "Select url",
+  //         "id": "marketing_card_url"
+  //       }
+  //     ]
+  //   }
+  // ]
+{% endcomment %}

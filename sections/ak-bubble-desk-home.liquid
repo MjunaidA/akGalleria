@@ -1,0 +1,109 @@
+<style>
+  .bubble-desk-main-wrapper {
+    padding-top: {{ section.settings.padding_top }}px;
+    padding-bottom: {{ section.settings.padding_bottom }}px;
+  }
+</style>
+<div class="bubble-desk-main-wrapper">
+  <div class="page-width width-1280">
+    <div class="bubble-wrapper-inner bubble-main overflow-hidden">
+      <div class="bubble-row swiper-wrapper justify-between">
+        {% for block in section.blocks %}
+          <div class="bubble-col swiper-slide text-center">
+            <a class="link text-center text-no-decoration" href="{{block.settings.link}}">
+              <div class="image-box flex p-5 overflow-hidden  rounded-full {% if section.settings.enable_border == true %}border-1 border-c-green {% endif %}">
+                <img
+                  class="image w-full"
+                  src="{{block.settings.image |  img_url: 'master'}}"
+                  loading="lazy"
+                  alt="bubble Image"
+                >
+              </div>
+              <p class="text font-normal f-size-14 c-light-black m-0 uppercase pt-10 leading-4">
+                {{ block.settings.text }}
+              </p>
+            </a>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+{% schema %}
+{
+  "name": "Bubble Section Desktop",
+  "settings": [
+    {
+      "type": "checkbox",
+      "label": "Enable Border",
+      "id": "enable_border"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 80,
+      "step": 1,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 10
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 80,
+      "step": 1,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 10
+    }
+  ],
+  "blocks": [
+    {
+      "type": "Bubble",
+      "name": "Bubble",
+      "settings": [
+        {
+          "type": "image_picker",
+          "label": "Select Image",
+          "id": "image"
+        },
+        {
+          "type": "text",
+          "label": "Enter Text",
+          "id": "text"
+        },
+        {
+          "type": "url",
+          "label": "Paste Url",
+          "id": "link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Bubble Section Desktop",
+      "category": "customm content"
+    }
+  ]
+}
+{% endschema %}
+
+<script>
+
+  galleryMain = new Swiper('.bubble-main', {
+    slidesPerView: 8,
+    spaceBetween:10,
+    loop: true,
+    breakpoints: {
+      1150: {
+        slidesPerView: 9,
+      },
+      1300: {
+        slidesPerView: 10,
+      },
+    },
+  });
+</script>
